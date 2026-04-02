@@ -1,0 +1,712 @@
+🧠 🔥 OVERALL USER FLOW (BIG PICTURE)
+Login → Home → Select Service → Booking Flow → Tracking → Completion → Rating → History
+
+For MVP we focus on:
+
+🚕 Ride Booking
+📦 Parcel Delivery
+📱 1. LOGIN FLOW
+🔹 Screen: Login Screen
+Components:
+📱 Phone Input Field
+🔘 "Send OTP" Button
+🔐 OTP Input (4–6 digits)
+🔘 "Verify OTP" Button
+🌐 Language Toggle (Hindi / English)
+⚙️ Backend Flow:
+User enters phone → Firebase OTP sent
+OTP verify → backend checks:
+If user exists → login
+Else → create new user
+🎯 UX Notes:
+Keep it 1 screen (no multiple steps)
+Autofill OTP if possible
+✅ Output:
+
+👉 User logged in → redirected to Home
+
+🏠 2. HOME SCREEN (MOST IMPORTANT SCREEN)
+🔹 Screen: Home (Map First UI)
+Components:
+🗺️ 1. Full Screen Map
+Shows current location
+Nearby drivers (icons)
+📍 2. Location Bar (Top)
+Pickup location (auto-detect)
+Tap to edit
+🔽 3. Bottom Sheet (Main Actions)
+
+Contains:
+
+🚕 Ride Booking Card
+"Book Ride"
+📦 Parcel Delivery Card
+"Send Parcel"
+👤 4. Profile Icon (Top Right)
+
+Options:
+
+Profile
+Ride History
+Support
+Logout
+⚙️ Backend:
+Fetch nearby drivers (based on location)
+Store user current location
+🎯 UX:
+1-tap booking
+No clutter
+✅ Output:
+
+👉 User chooses Ride OR Parcel
+
+🚕 3. RIDE BOOKING FLOW
+🔹 Screen: Enter Destination
+Components:
+Pickup (pre-filled)
+Drop location input
+Google autocomplete suggestions
+⚙️ Backend:
+Calculate distance
+Estimate fare
+✅ Next:
+
+👉 Move to vehicle selection
+
+🔹 Screen: Vehicle Selection
+Components:
+
+Each card shows:
+
+Vehicle type (Bike)
+Price (₹)
+ETA (5 min)
+Driver distance
+Buttons:
+"Book Bike"
+⚙️ Backend:
+Fetch available drivers
+Calculate ETA
+✅ Next:
+
+👉 Booking confirmation
+
+🔹 Screen: Booking Confirmation
+Components:
+Pickup & Drop
+Fare estimate
+Payment option:
+Cash
+UPI (later)
+Button:
+✅ Confirm Booking
+⚙️ Backend:
+Create ride entry
+Find nearest driver
+Send request
+✅ Next:
+
+👉 Driver assigned
+
+🔹 Screen: Searching Driver
+Components:
+Loader animation
+“Finding driver…”
+⚙️ Backend:
+Loop drivers until accepted
+✅ Next:
+
+👉 Driver found
+
+🔹 Screen: Driver Assigned
+Components:
+Driver name + photo
+Vehicle number
+ETA
+Call button
+Cancel ride
+Map:
+Live driver movement
+⚙️ Backend:
+Socket updates (location)
+✅ Next:
+
+👉 Ride start
+
+🔹 Screen: Ride in Progress
+Components:
+Map (live route)
+Time & distance
+SOS button 🚨
+Share ride
+🔐 OTP Start:
+User sees OTP
+Driver enters OTP
+⚙️ Backend:
+Ride status = started
+✅ Next:
+
+👉 Ride complete
+
+🔹 Screen: Ride Complete
+Components:
+Final fare
+Payment button
+Tip option
+⚙️ Backend:
+Calculate final fare
+Save ride
+✅ Next:
+
+👉 Rating
+
+🔹 Screen: Rating
+Components:
+⭐ Rating (1–5)
+Feedback text
+✅ Output:
+
+👉 Back to Home
+
+📦 4. PARCEL DELIVERY FLOW
+🔹 Screen: Parcel Details
+Components:
+Weight selection
+Parcel type (documents, fragile)
+Receiver name + phone
+✅ Next:
+
+👉 Address
+
+🔹 Screen: Pickup & Drop
+Same as ride
+✅ Next:
+
+👉 Fare estimate
+
+🔹 Screen: Confirmation
+Price
+Payment
+Confirm button
+⚙️ Backend:
+Create parcel order
+Assign driver
+🔹 Screen: Tracking
+Components:
+Live map
+Driver location
+Parcel status
+🔐 OTP Delivery
+Receiver gives OTP
+Driver confirms
+✅ Output:
+
+👉 Delivery complete
+
+📊 5. PROFILE SECTION
+🔹 Screen: Profile
+Components:
+Name
+Phone
+Language toggle
+Options:
+Ride History
+Support
+Logout
+🔹 Screen: Ride History
+Components:
+
+List of:
+
+Date
+Route
+Price
+Click item → Detail:
+Map
+Driver
+Fare breakdown
+🧩 END-TO-END FLOW (SIMPLIFIED)
+Login
+↓
+Home
+↓
+Select Ride
+↓
+Enter Destination
+↓
+Select Bike
+↓
+Confirm Booking
+↓
+Driver Assigned
+↓
+Ride Start (OTP)
+↓
+Ride Complete
+↓
+Payment
+↓
+Rating
+↓
+Back to Home
+🎯 IMPORTANT UX DECISIONS
+1. 3-Tap Rule
+
+Booking ≤ 3 taps
+
+2. Map Always Visible
+
+User should feel control
+
+3. Minimal Options
+
+Don’t overload
+
+🔥 PRO TIP (VERY IMPORTANT)
+
+👉 First version should feel like:
+
+“Rapido but simpler”
+
+NOT:
+
+“Super app”
+
+✅ WHAT YOU NOW HAVE
+
+You now have:
+
+Full user journey
+Screen breakdown
+Component-level clarity
+Backend connection logic
+
+
+
+
+
+
+
+
+Perfect — ab clear hai 🔥
+👉 You are building User Module in Vite + React (Web App) (not mobile)
+
+Toh ab main tumhe deta hoon:
+
+✅ Production-level folder structure (scalable + high traffic ready)
+✅ Component-wise breakdown
+✅ Feature-based architecture (best practice)
+✅ Performance optimized setup (React + Vite)
+
+🧠 📦 ROOT STRUCTURE (VITE + REACT)
+src/
+│
+├── app/                # App entry + routing
+├── pages/              # Route-level pages
+├── components/         # Reusable UI components
+├── features/           # Business logic modules
+├── services/           # API, socket, external services
+├── store/              # Global state (Redux/Zustand)
+├── hooks/              # Custom hooks
+├── layouts/            # Page layouts
+├── utils/              # Helper functions
+├── constants/          # Static data
+├── assets/             # Images, icons
+├── styles/             # Global styles
+├── config/             # Env, config
+└── types/              # Types (TS optional)
+🔥 1. APP (ROUTING + ENTRY)
+app/
+│
+├── App.jsx
+├── routes.jsx
+├── ProtectedRoute.jsx
+└── ErrorBoundary.jsx
+📌 Responsibilities:
+Routing (React Router)
+Auth protection
+Lazy loading
+📄 2. PAGES (SCREEN LEVEL)
+
+👉 These are actual routes
+
+pages/
+│
+├── auth/
+│   ├── Login.jsx
+│   └── VerifyOTP.jsx
+│
+├── home/
+│   └── Home.jsx
+│
+├── ride/
+│   ├── EnterLocation.jsx
+│   ├── VehicleSelection.jsx
+│   ├── SearchingDriver.jsx
+│   ├── RideTracking.jsx
+│   ├── RideComplete.jsx
+│   └── Rating.jsx
+│
+├── parcel/
+│   ├── ParcelDetails.jsx
+│   ├── ParcelAddress.jsx
+│   ├── ParcelTracking.jsx
+│   └── ParcelComplete.jsx
+│
+├── profile/
+│   ├── Profile.jsx
+│   ├── RideHistory.jsx
+│   └── RideDetail.jsx
+│
+└── common/
+    ├── NotFound.jsx
+    └── Splash.jsx
+🧩 3. COMPONENTS (REUSABLE UI)
+components/
+│
+├── ui/                     # Atomic components
+│   ├── Button.jsx
+│   ├── Input.jsx
+│   ├── Modal.jsx
+│   ├── Loader.jsx
+│   ├── Card.jsx
+│   └── Badge.jsx
+│
+├── map/
+│   ├── MapContainer.jsx
+│   ├── DriverMarker.jsx
+│   └── RoutePath.jsx
+│
+├── ride/
+│   ├── VehicleCard.jsx
+│   ├── DriverInfo.jsx
+│   ├── RideStatus.jsx
+│   └── OTPBox.jsx
+│
+├── parcel/
+│   ├── ParcelForm.jsx
+│   ├── WeightSelector.jsx
+│   └── ReceiverDetails.jsx
+│
+├── layout/
+│   ├── Header.jsx
+│   ├── Sidebar.jsx
+│   ├── BottomSheet.jsx
+│   └── PageWrapper.jsx
+│
+└── feedback/
+    ├── RatingStars.jsx
+    └── FeedbackBox.jsx
+🚀 4. FEATURES (MOST IMPORTANT FOR SCALE)
+
+👉 This makes your app enterprise-level
+
+features/
+│
+├── auth/
+│   ├── authAPI.js
+│   ├── authSlice.js
+│   └── useAuth.js
+│
+├── ride/
+│   ├── rideAPI.js
+│   ├── rideSlice.js
+│   ├── rideSocket.js
+│   └── useRide.js
+│
+├── parcel/
+│   ├── parcelAPI.js
+│   ├── parcelSlice.js
+│   └── useParcel.js
+│
+├── location/
+│   ├── locationService.js
+│   └── useLocation.js
+│
+└── user/
+    ├── userAPI.js
+    └── userSlice.js
+🌐 5. SERVICES (CORE INFRA)
+services/
+│
+├── api/
+│   ├── axiosInstance.js
+│   ├── endpoints.js
+│   └── interceptors.js
+│
+├── socket/
+│   ├── socketClient.js
+│   ├── socketEvents.js
+│   └── useSocket.js
+│
+├── maps/
+│   ├── googleMaps.js
+│   └── directions.js
+│
+└── storage/
+    ├── localStorage.js
+    └── sessionStorage.js
+🧠 6. STORE (STATE MANAGEMENT)
+store/
+│
+├── index.js
+├── rootReducer.js
+└── middleware.js
+
+👉 Use:
+
+Redux Toolkit (best for scale)
+OR
+Zustand (simple + fast)
+🪝 7. HOOKS
+hooks/
+│
+├── useDebounce.js
+├── useThrottle.js
+├── useSocketListener.js
+├── useAuthGuard.js
+└── useGeoLocation.js
+🎨 8. LAYOUTS
+layouts/
+│
+├── MainLayout.jsx
+├── AuthLayout.jsx
+└── DashboardLayout.jsx
+⚙️ 9. UTILS
+utils/
+│
+├── formatPrice.js
+├── distanceCalc.js
+├── timeFormat.js
+├── validators.js
+└── helpers.js
+🎯 COMPONENT HIERARCHY (REAL EXAMPLE)
+🏠 Home Page
+Home
+│
+├── Header
+│
+├── MapContainer
+│   ├── DriverMarker
+│   └── RoutePath
+│
+├── LocationInput
+│
+├── BottomSheet
+│   ├── RideCard
+│   └── ParcelCard
+│
+└── ProfileMenu
+⚡ PERFORMANCE (HIGH TRAFFIC READY)
+✅ 1. Code Splitting
+const Home = React.lazy(() => import('@/pages/home/Home'));
+✅ 2. Memoization
+export default React.memo(VehicleCard);
+✅ 3. API Optimization
+Debounce search input
+Cache responses
+✅ 4. Socket Optimization
+Single global connection
+Clean listeners on unmount
+✅ 5. Virtualization
+
+Use for lists:
+
+react-window / react-virtualized
+✅ 6. State Optimization
+Avoid global state overload
+Keep feature-level state
+🔥 BEST PRACTICES (VERY IMPORTANT)
+1. Pages = UI only
+2. Features = logic
+3. Components = reusable
+4. Services = external calls
+🏁 FINAL RESULT
+
+With this structure:
+
+✅ Handles heavy traffic
+✅ Easy to scale (add cab sharing later)
+✅ Clean architecture
+✅ Team-friendly (multiple devs work easily)
+
+
+
+
+
+🧠 🎯 TOTAL PAGES (MVP)
+
+👉 For your MVP (Ride + Parcel), you need:
+
+✅ TOTAL = 15 CORE PAGES
+
+Breakdown:
+
+Module	Pages
+Auth	2
+Home	1
+Ride Flow	6
+Parcel Flow	4
+Profile	3
+Common	1
+📄 1. AUTH MODULE (2 Pages)
+🔹 1. Login Page
+📌 Purpose:
+User enters phone number
+Flow:
+Enter phone → click “Send OTP” → go to OTP page
+🔹 2. Verify OTP Page
+📌 Purpose:
+OTP verify → login complete
+Flow:
+Verify → redirect to Home
+🏠 2. HOME MODULE (1 Page)
+🔹 3. Home Page
+📌 Purpose:
+Main entry point
+Contains:
+Map
+Pickup location
+Buttons:
+🚕 Book Ride
+📦 Send Parcel
+Flow:
+Login → Home → Select Ride / Parcel
+🚕 3. RIDE MODULE (6 Pages)
+🔹 4. Enter Location Page
+Purpose:
+Enter drop location
+Flow:
+
+👉 Home → EnterLocation
+
+🔹 5. Vehicle Selection Page
+Purpose:
+Show bike options + fare
+Flow:
+
+👉 EnterLocation → VehicleSelection
+
+🔹 6. Ride Searching Page
+Purpose:
+Find driver
+UI:
+Loader + “Finding driver…”
+🔹 7. Ride Tracking Page
+Purpose:
+Track driver + ride
+Contains:
+Map
+Driver info
+OTP
+🔹 8. Ride Complete Page
+Purpose:
+Show fare + payment
+🔹 9. Rating Page
+Purpose:
+Rate driver
+🔁 FULL RIDE FLOW:
+Home
+→ Enter Location
+→ Vehicle Selection
+→ Searching Driver
+→ Ride Tracking
+→ Ride Complete
+→ Rating
+→ Home
+📦 4. PARCEL MODULE (4 Pages)
+🔹 10. Parcel Details Page
+Purpose:
+Weight + parcel type
+🔹 11. Parcel Address Page
+Purpose:
+Pickup + drop + receiver
+🔹 12. Parcel Tracking Page
+Purpose:
+Live tracking
+🔹 13. Parcel Complete Page
+Purpose:
+Delivery confirmation
+🔁 FULL PARCEL FLOW:
+Home
+→ Parcel Details
+→ Address
+→ Tracking
+→ Complete
+→ Home
+👤 5. PROFILE MODULE (3 Pages)
+🔹 14. Profile Page
+Purpose:
+User info
+Options:
+Ride history
+Logout
+🔹 15. Ride History Page
+Purpose:
+Show all rides
+🔹 16. Ride Detail Page
+Purpose:
+Full ride details
+📦 6. COMMON (1 Page)
+🔹 17. Not Found / Error Page
+Purpose:
+Invalid routes
+⚠️ NOTE (IMPORTANT)
+
+Earlier count = 15, but with detail pages included:
+
+👉 Final total = 17 pages
+
+🧩 PAGE FLOW (MASTER FLOW)
+Auth
+ ↓
+Home
+ ↓
+Choose Service
+ ↓
+Ride Flow OR Parcel Flow
+ ↓
+Complete
+ ↓
+Rating
+ ↓
+Back to Home
+ ↓
+Profile / History (optional)
+🎯 PAGE CONNECTION (SIMPLIFIED TREE)
+Login
+ └── OTP
+      └── Home
+           ├── Ride Flow
+           │     ├── Enter Location
+           │     ├── Vehicle Selection
+           │     ├── Searching
+           │     ├── Tracking
+           │     ├── Complete
+           │     └── Rating
+           │
+           ├── Parcel Flow
+           │     ├── Details
+           │     ├── Address
+           │     ├── Tracking
+           │     └── Complete
+           │
+           └── Profile
+                 ├── History
+                 └── Ride Detail
+🔥 UX FLOW RULES (VERY IMPORTANT)
+1. Linear Flow
+No confusion
+One step → next step
+2. Back Navigation Allowed
+User can go back anytime
+3. No Dead Ends
+Every page → next action clear
+🚀 FINAL UNDERSTANDING
+
+After this, you have:
+
+✅ Total pages clarity
+✅ Exact flow mapping
+✅ Navigation understanding
+✅ MVP-ready structure

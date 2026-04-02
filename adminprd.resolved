@@ -1,0 +1,107 @@
+# ShivRide Admin Panel: Enterprise PRD & SOP Guide
+
+This document provides an exhaustive overview of the **ShivRide Admin Panel**, covering its technical requirements, functional screens, and standard operating procedures for daily business operations.
+
+---
+
+## 1. Product Requirements Document (PRD)
+
+### 1.1 Project Vision
+To provide a robust, scalable, and real-time management interface for taxi and delivery business owners. The system is built on **Laravel 12** and **Vue 3 (Inertia.js)** for a seamless Single Page Application (SPA) experience.
+
+### 1.2 Target Personas
+1.  **Super Admin**: Full access to system configuration, payments, and master data.
+2.  **Dispatcher**: Manages live ride requests and manual assignments.
+3.  **Fleet Owner**: Manages their own set of drivers and vehicles.
+4.  **Support Staff**: Handles tickets, SOS alerts, and customer queries.
+
+---
+
+### 1.3 Functional Modules (A-Z)
+
+#### [A] Dashboard & Analytics
+| Screen | Description | Key Metric |
+| :--- | :--- | :--- |
+| **Main Dashboard** | Overview of global operations. | Total Bookings, Active Drivers, Revenue. |
+| **Owner Dashboard** | Fleet-specific statistics. | Fleet Revenue, Driver Performance. |
+| **Real-time Charts** | Visual data trends. | Peak Hour Demand, Earnings vs. Payouts. |
+
+#### [B] User Management
+- **Passenger List**: Master record of all registered users. Includes personal details, wallet history, and ride logs.
+- **Delete Requests**: Privacy compliance module to manage and approve account deletion requests.
+- **Bulk Import**: Utility to import user data from external systems via CSV.
+
+#### [C] Driver & Vehicle Operations
+- **Driver Verification**: Multi-stage approval process for license, RC, and insurance documents.
+- **Vehicle Types**: Configuration of categories (Budget, Luxury, Cargo, Outstation).
+- **Driver Wallet**: Managing driver payouts, credit/debit adjustments, and negative balance thresholds.
+- **Ratings & Reviews**: Feedback loops to maintain service quality.
+
+#### [D] Geo-Spatial Management
+- **Service Locations**: Onboarding new cities/regions into the network.
+- **Zone Geometry**: Drawing polygonal boundaries for specific pricing or restrictions.
+- **Heat Maps**: Dynamic visualization of high-demand areas.
+- **God's Eye**: Live GPS tracking of all "Online" drivers on a single map interface.
+
+#### [E] Pricing & Financials
+- **Fare Configuration**: Base fare, distance charges, time charges, and waiting fees per zone.
+- **Rental & Outstation**: Specialized pricing models for long-distance or hourly bookings.
+- **Subscription Engine**: Tools for drivers to purchase plans instead of paying per-ride commissions.
+- **Promotions**: Coupon code generation with complex logic (expiry, usage limits, user-specific).
+
+#### [F] System Configuration
+- **Third-Party Gateways**: API integration for Stripe, PayPal, Razorpay, Twilio, and Firebase.
+- **Notifications**: Centralized push notification center for mass alerts.
+- **CMS Builder**: Managing landing page content, FAQs, and legal documents (Privacy Policy).
+
+---
+
+## 2. Standard Operating Procedures (SOP)
+
+### 2.1 Driver Onboarding SOP
+> [!IMPORTANT]
+> A driver cannot receive ride requests until their status is "Approved" and "Document Verified".
+
+1.  **Step 1**: Monitor `Driver Management > Pending Drivers` for new registrations.
+2.  **Step 2**: Open the Profile and click the **Documents** tab.
+3.  **Step 3**: Verify validity dates on the License and Insurance.
+4.  **Step 4**: Assign a **Vehicle Type** (Economy/Premium).
+5.  **Step 5**: Toggle the status to **Approved**.
+
+### 2.2 New Zone & Pricing Setup SOP
+1.  **Creation**: Go to `Geo Fencing > Zone`. Use the drawing tool to mark the area.
+2.  **Mapping**: Connect the Zone to a **Service Location** (City).
+3.  **Pricing**: Navigate to `Price Management > Set Price`. Choose the Zone and Vehicle.
+4.  **Surge Logic**: Add **Peak Zones** for specific times (e.g., peak office hours) if required.
+5.  **Activation**: Ensure the "Active" toggle is ON.
+
+### 2.3 Emergency (SOS) Management SOP
+> [!CAUTION]
+> SOS alerts should be addressed within 60 seconds of appearing on the dashboard.
+
+1.  **Detection**: Click the blinking SOS icon on the top header.
+2.  **Investigation**: View the live location and contact details of the Passenger and Driver.
+3.  **Action**: Attempt to call both parties. If no response, escalate to local help authorities.
+4.  **Tracking**: Use 'God's Eye' to see if any nearby drivers can assist.
+5.  **Closure**: Document the incident and mark as "Resolved".
+
+### 2.4 Payout & Withdrawal SOP
+1.  **Report**: Pull the **Finance Report** at the end of the settlement cycle.
+2.  **Verification**: Navigate to `Driver Wallet > Withdrawal Requests`.
+3.  **Approval**: Verify the driver's current balance is > (Requested Amount + Charges).
+4.  **Transfer**: Process the fund transfer via the integrated gateway.
+5.  **Finalization**: Mark the status as "Paid" in the panel to update ledger entries.
+
+---
+
+## 3. Technical Reference
+
+- **Frontend Core**: `resources/js/Pages/pages/overall-menu.vue` (Defines the sitemap).
+- **Backend Logic**: `app/Http/Controllers/` (Each module has a dedicated controller).
+- **Routes**: `routes/web/` folder contains modularized route definitions for each business area.
+- **Mobile API**: `routes/api.php` handles the mobile app interactions.
+
+---
+
+> [!TIP]
+> Use the **Audit Logs** (Others module) to track which admin made specific changes to pricing or driver status to ensure accountability.

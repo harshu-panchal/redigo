@@ -1,0 +1,1546 @@
+﻿Total pages: 32
+
+--- PAGE 1 ---
+PRODUCT REQUIREMENT
+DOCUMENT
+Redigo
+Smart Mobility & Local Logistics Platform
+Product: Redigo ù Unified Ride, Rental & Delivery Super App
+Market: Tier-2 / Tier-3 Indian Cities ù Starting: Indore, MP
+Stack: MERN + React Native / Flutter + Socket.io
+Version: 1.0 ù Initial PRD
+Date: March 28, 2026
+Classification: Confidential
+This document is strictly confidential and intended solely for the named recipient. Unauthorized distribution or reproduction is
+prohibited.
+
+--- PAGE 2 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 2
+TABLE OF CONTENTS
+1
+Executive Summary
+3
+2
+Product Vision & Mission Statement
+3
+3
+Market Context & Opportunity
+4
+4
+Target Users & User Personas
+4
+5
+Platform Overview
+5
+6
+Core Module 1 ù Ride Booking (Bike / Auto / Cab)
+6
+7
+Core Module 2 ù Bike Rental (Self-Drive)
+7
+8
+Core Module 3 ù Intercity Travel
+8
+9
+Core Module 4 ù Temple & Spiritual Travel
+9
+10
+Core Module 5 ù Parcel Delivery
+10
+11
+Core Module 6 ù Cab Sharing (USP Feature)
+11
+12
+Admin Panel ù Full Feature Specification
+12
+13
+System Architecture
+13
+14
+Technology Stack
+14
+15
+Third-Party Integrations
+14
+16
+Real-Time Features
+15
+17
+UI/UX Design Guidelines
+15
+18
+Security & Compliance
+16
+19
+Monetization Strategy
+16
+20
+Key Performance Indicators (KPIs)
+17
+21
+Development Phases
+17
+22
+Out of Scope
+18
+23
+Risks & Assumptions
+18
+24
+Future Roadmap
+19
+
+--- PAGE 3 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 3
+01
+EXECUTIVE SUMMARY
+This document is the formal Product Requirement Document (PRD) for Redigo, a unified mobility and local
+logistics super-app targeting the underserved tier-2 and tier-3 city market in India, with Indore, Madhya Pradesh
+as the launch market. Redigo is designed to solve a fragmented local transportation and delivery landscape by
+consolidating six distinct service verticals into a single, seamless digital platform.
+The platform will serve daily commuters, students, small business owners, and local travelers by providing
+affordable, hyper-local access to bike taxis, auto and cab booking, self-drive bike rentals, intercity travel,
+spiritual and temple tour packages, parcel delivery, and a differentiated cab-sharing feature with real-time seat
+visualization. A robust Admin Panel enables the platform operator to manage users, drivers, pricing, packages,
+and analytics from a centralized web interface.
+The backend is built on the MERN stack (MongoDB, Express.js, React.js, Node.js) with a React Native or Flutter
+mobile client. Real-time functionality is delivered via Socket.io. Payments are processed through Razorpay,
+authentication via Firebase OTP, and location services via Google Maps API. This PRD defines all functional
+modules, user personas, architecture, technology decisions, integration requirements, security measures,
+monetization logic, and phased delivery plan.
+Product Name
+Redigo ù Smart Mobility & Local Logistics Platform
+Launch Market
+Indore, Madhya Pradesh (Tier-2 India expansion model)
+Service Verticals
+Bike Taxi, Cab Booking, Self-Drive Rental, Intercity Travel, Spiritual Tours,
+Parcel Delivery, Cab Sharing
+Platforms
+Mobile App (User) + Web Panel (Admin)
+Tech Stack
+MERN + React Native / Flutter + Socket.io + Firebase + Razorpay + Google
+Maps API
+Document Version
+Version 1.0 ù Initial Product Requirement Document
+02
+PRODUCT VISION & MISSION STATEMENT
+Redigo's product vision is to become the default mobility and logistics layer for tier-2 and tier-3 Indian cities ù
+markets that are currently underserved by national aggregators like Ola, Uber, and Rapido, which are primarily
+focused on metro and tier-1 expansion. These smaller cities have dense daily commuter populations, growing
+smartphone penetration, and a strong cultural preference for local, affordable, and trustworthy services.
+Vision Statement: "One app for everything travel and delivery in local India ù fast, affordable, and hyper-local. Built for
+Indore. Designed for Bharat."
+The platform is built on four core strategic pillars:
+Hyper-Local Focus: Built ground-up for Indore and designed to expand city by city with local driver networks,
+local pricing intelligence, and culturally relevant features such as temple tour packages unique to the Malwa and
+Nimar belt of Madhya Pradesh.
+
+--- PAGE 4 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 4
+Unified Super-App Model: Rather than building six separate applications, Redigo consolidates all mobility and
+delivery needs into a single user account, single wallet, and single interface ù reducing friction and increasing
+session frequency per user.
+Affordability by Design: Pricing structures are calibrated for the tier-2 income demographic: bike taxis for daily
+micro-commutes, cab sharing to split intercity costs, and hourly bike rental for short-duration needs ù all at
+price points accessible to students and daily wage earners.
+Driver & Vendor Ecosystem: Redigo creates livelihood opportunities for local two-wheeler and four-wheeler
+drivers, fleet owners who can register their vehicles for rental, and local travel vendors who can offer curated
+spiritual tour packages through the platform.
+
+--- PAGE 5 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 5
+03
+MARKET CONTEXT & OPPORTUNITY
+India's mobility market is one of the largest and fastest-growing in the world, yet the vast majority of investment,
+innovation, and product development has been concentrated in tier-1 metro cities. Tier-2 and tier-3 cities like
+Indore, Bhopal, Nagpur, Surat, and Coimbatore represent a combined population of over 300 million people with
+rapidly rising smartphone adoption, growing middle-class income, and an acute shortage of reliable, app-based
+local mobility solutions.
+3.1 Why Indore as the Launch Market
+Indore is the commercial capital of Madhya Pradesh with a population exceeding 3.5 million, making it one of
+the largest tier-2 cities in central India.
+The city has been ranked India's cleanest city for seven consecutive years, reflecting strong civic
+engagement and a growing urban middle class.
+Home to a large student population (IIM Indore, IIT Indore, DAVV, and numerous colleges) representing an
+ideal high-frequency, price-sensitive user segment for bike taxis and cab sharing.
+Indore serves as the nearest major gateway city for pilgrimage destinations including Ujjain (Mahakal
+Jyotirlinga) and Omkareshwar ù making spiritual travel packages a high-demand, low-competition niche.
+Existing app-based mobility options in Indore are limited ù Ola and Uber have inconsistent availability
+outside core urban areas, and Rapido's bike taxi presence is nascent.
+Strong local SME and retail economy generating consistent demand for same-day intra-city parcel delivery.
+3.2 Competitive Landscape
+Competitor
+Strength
+Redigo Advantage
+Ola / Uber
+Brand recognition, cab supply
+Not present in tier-2 micro-commutes; no bike taxi, no parcel, no
+cab sharing
+Rapido
+Bike taxi network in select
+cities
+No rental, no intercity, no cab sharing, no spiritual tours
+Local Cab Operators
+Local driver trust
+No app, no tracking, no digital payments, unreliable availability
+Dunzo / Porter
+Parcel / logistics focus
+No ride booking, no rental, no spiritual travel ù not a super-app
+
+--- PAGE 6 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 6
+04
+TARGET USERS & USER PERSONAS
+Redigo serves two distinct user groups: Consumers (end users who book rides, rentals, and deliveries) and
+Supply-Side Partners (drivers, fleet owners, and vendors who fulfill those bookings). Both groups are first-class
+citizens of the platform with dedicated experiences.
+4.1 Consumer Personas (User App)
+Persona
+Profile
+Primary Use Cases
+Key Needs
+The Student
+Commuter
+Age 18û25. College
+student in Indore. Relies
+on two-wheelers.
+Budget-conscious.
+Daily bike taxi to college, weekend
+bike rental for outings, cab sharing
+for intercity trips home.
+Low fares, fast booking (under 2
+minutes), UPI/wallet payment,
+Hindi interface option.
+The Office
+Commuter
+Age 25û40. Working
+professional. Wants
+reliability over price.
+Daily cab or auto booking,
+occasional intercity business
+travel, parcel sending.
+Reliable driver arrival, clean
+vehicles, invoice/receipt,
+corporate billing option.
+The Local Traveler
+Age 30û60. Family traveler
+or pilgrim. Less
+tech-savvy.
+Spiritual tour packages
+(Ujjain/Omkareshwar), intercity
+family trips, local sightseeing.
+Pre-packaged tours, group
+booking, phone support,
+Hindi-first interface.
+The Small Business
+Owner
+Age 25û50. Runs a shop,
+bakery, or small business.
+Sends frequent local
+deliveries.
+Same-day parcel delivery across
+the city, occasional intercity
+shipment.
+Weight-based transparent
+pricing, live tracking,
+OTP-verified delivery, delivery
+history.
+4.2 Supply-Side Personas (Driver / Vendor App or Panel)
+Role
+Description
+Platform Access
+Bike Rider / Driver
+Registered two-wheeler or four-wheeler driver
+completing ride bookings.
+Driver mobile app with ride assignment,
+earnings, and navigation.
+Fleet Owner
+Owns multiple vehicles listed for self-drive rental on the
+platform.
+Admin panel or dedicated fleet
+management view.
+Travel Vendor
+Local travel agency offering curated spiritual tour
+packages.
+Vendor portal to create, price, and
+manage trip packages.
+Delivery Agent
+On-ground personnel fulfilling parcel delivery
+assignments.
+Driver app with parcel queue, navigation,
+and OTP verification.
+
+--- PAGE 7 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 7
+05
+PLATFORM OVERVIEW
+Redigo is a two-sided marketplace platform delivered across three distinct interfaces: a consumer-facing mobile
+application, a driver/partner-facing mobile application, and an operator-facing web admin panel. All three
+interfaces are served by a single shared backend API, ensuring data consistency and operational efficiency.
+Interface
+Type
+Primary Users
+Key Responsibilities
+User App
+Mobile (iOS + Android via
+React Native / Flutter)
+End consumers ù
+riders, renters,
+senders, travelers
+Browse and book all six service verticals, track
+live ride/delivery, manage wallet and payment,
+view history.
+Driver / Partner
+App
+Mobile (iOS + Android)
+Drivers, delivery
+agents, fleet owners
+Receive ride and delivery requests, navigate
+to pickup/drop, update status, view earnings,
+manage availability.
+Admin Panel
+Web App (React.js ù
+Desktop)
+Platform operator and
+admin
+Manage all users, drivers, pricing, packages,
+bookings, analytics, KYC approvals, and
+system configuration.
+5.1 Service Verticals Summary
+#
+Service Vertical
+Description
+Differentiation Level
+1
+Ride Booking
+(Bike/Auto/Cab)
+On-demand local ride hailing across vehicle types
+with live GPS tracking.
+Standard ù built on proven
+model
+2
+Bike Rental (Self-Drive)
+Hourly and daily self-drive two-wheeler rental with DL
+verification and deposit.
+Medium ù underserved in tier-2
+3
+Intercity Travel
+Scheduled city-to-city cab booking with
+distance-based pricing and round-trip option.
+Medium ù local operator
+advantage
+4
+Temple & Spiritual Tours
+Curated spiritual travel packages to Ujjain,
+Omkareshwar, and regional temples.
+High ù hyper-local niche unique
+to Indore geography
+5
+Parcel Delivery
+Intra-city and intercity parcel delivery with weight
+pricing and OTP verification.
+Medium ù logistics demand
+from SME segment
+6
+Cab Sharing
+Real-time seat-based ride sharing with live seat
+visualization and dynamic pricing.
+Very High ù primary product
+differentiator
+
+--- PAGE 8 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 8
+06
+CORE MODULE 1 ù RIDE BOOKING (BIKE / AUTO / CAB)
+The Ride Booking module is the foundational service of the Redigo platform. It enables users to book
+on-demand rides across four vehicle categories within the city. The experience is designed to match or exceed
+the booking speed and reliability of national competitors while being priced specifically for the Indore
+micro-commute use case.
+6.1 Vehicle Categories
+Vehicle Type
+Capacity
+Use Case
+Pricing Basis
+Bike
+1 passenger
+Budget micro-commutes, college routes,
+solo travel.
+Per km (base fare + per-km rate)
+Auto Rickshaw
+Up to 3
+passengers
+Short hops, market trips, elderly-friendly.
+Metered or fixed zone pricing
+Mini Cab
+(Hatchback)
+Up to 4
+passengers
+Comfortable city travel, small groups.
+Per km with AC surcharge
+Sedan
+Up to 4
+passengers
+Premium city rides, airport/station
+transfers.
+Per km (premium tier)
+6.2 Booking Flow
+Step 1 ù Location Input: User sets pickup location (auto-detected via GPS or manually entered) and drop
+location via Google Maps autocomplete.
+Step 2 ù Vehicle Selection: App displays available vehicle types with estimated fare, estimated arrival time,
+and nearest driver distance for each.
+Step 3 ù Booking Confirmation: User confirms booking. Driver receives ride request with 30-second accept
+window.
+Step 4 ù Driver Matching: System matches nearest eligible driver using proximity and acceptance rate
+algorithm. If driver declines, request is sent to next closest.
+Step 5 ù Live Tracking: User sees real-time driver location on map with ETA countdown during driver
+approach.
+Step 6 ù OTP Ride Start: Driver enters user-displayed OTP to initiate the ride ù prevents unauthorized trip
+starts.
+Step 7 ù Ride Completion: Fare is calculated on actual route. Payment via in-app wallet, UPI, or cash.
+Receipt generated.
+Step 8 ù Rating: User rates driver (1û5 stars). Driver rates user.
+6.3 Feature Specifications
+Fare Estimation: Distance and time-based fare shown before booking with surge multiplier indicator during
+peak hours.
+Scheduled Rides: Users can book a ride up to 48 hours in advance with a fixed estimated fare locked at
+booking time.
+Ride History: Complete history of all past rides including route map, fare breakdown, driver name, and rating
+given.
+
+--- PAGE 9 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 9
+SOS / Safety Button: In-ride emergency button that shares live location with a pre-configured emergency
+contact.
+Driver Details View: Before ride start, user sees driver photo, name, vehicle number, and ratings.
+Cancellation Policy: Free cancellation within 2 minutes of booking. Cancellation fee applies thereafter.
+Multi-Stop Support: User can add intermediate stops during booking for an adjusted fare.
+Tip Feature: Optional tip amount selectable at ride completion.
+
+--- PAGE 10 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 10
+07
+CORE MODULE 2 ù BIKE RENTAL (SELF-DRIVE)
+The Bike Rental module enables users to book self-drive two-wheelers on an hourly or daily basis. This module
+targets the large segment of users who need a vehicle for a defined duration ù for errands, day trips, or
+weekend use ù without the commitment or cost of ownership. It also creates a platform-based monetization
+channel for fleet owners who wish to list their vehicles.
+7.1 Rental Types & Pricing Structure
+Rental Type
+Duration
+Pricing Model
+Fuel Policy
+Hourly Rental
+Minimum 1 hour, billed
+per hour
+Fixed hourly rate per vehicle type
+Fuel included (up to a defined km
+allowance)
+Half-Day Rental
+4-hour block
+Fixed block rate
+Fuel included up to allowance
+Daily Rental
+24-hour period
+Fixed daily rate with per-km
+overage beyond limit
+User responsible for fuel refill
+Multi-Day Rental
+2+ days
+Discounted daily rate
+User responsible for fuel
+7.2 Booking Flow
+Step 1 ù Browse Inventory: User browses available vehicles filtered by city zone, vehicle type
+(scooter/motorcycle), and price range.
+Step 2 ù Vehicle Detail: Each listing shows photos, vehicle name and year, daily/hourly rate, fuel policy, km
+limit, and availability calendar.
+Step 3 ù Date & Duration Selection: User selects pickup date/time and return date/time. System calculates
+total cost.
+Step 4 ù Document Upload: First-time users must upload a clear image of their valid Driving License (DL).
+KYC verification happens before first rental is confirmed.
+Step 5 ù Security Deposit: A refundable security deposit is collected via Razorpay at booking. Deposit
+amount varies by vehicle category.
+Step 6 ù Pickup: User collects the vehicle from the registered pickup point. Condition photos are captured
+by both parties within the app.
+Step 7 ù Return: User returns vehicle at the specified time. Post-return inspection is logged. Deposit is
+refunded within 24û48 hours after clearance.
+7.3 Fleet Owner Features
+Fleet owners register their two-wheelers on the platform with photos, RC document, insurance, and PUC
+certificate.
+Owner sets their own availability calendar, pricing, and km limit per rental period.
+Platform reviews and verifies all vehicle documents before the listing goes live.
+Fleet owners receive earnings via bank transfer after each completed rental, minus platform commission.
+Dashboard showing total rentals completed, earnings, vehicle utilization rate, and ratings received.
+Owner can temporarily disable any listing (e.g., for maintenance) without deleting it from the platform.
+
+--- PAGE 11 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 11
+08
+CORE MODULE 3 ù INTERCITY TRAVEL
+The Intercity Travel module provides users with the ability to book dedicated cab rides between cities. Unlike the
+local ride booking module, intercity trips are pre-scheduled, distance-based, and serve both individual travelers
+and family groups requiring a complete vehicle for a longer journey. This module competes directly with local
+cab operators who rely on phone-based bookings with no digital tracking or price transparency.
+8.1 Trip Types
+Trip Type
+Description
+Pricing Logic
+One-Way
+Single trip from origin city to destination city.
+Fixed price based on origin-destination distance
++ vehicle type.
+Round Trip
+Same driver/vehicle retained for return
+journey on a specified date.
+One-way fare x 2 with a discount applied (e.g.,
+10û15% off return leg).
+Multi-City / Tour
+Driver retained for a multi-stop journey over
+1û3 days.
+Daily driver rate + per-km pricing + driver
+allowance for overnight stays.
+8.2 Feature Specifications
+City-to-City Route Selection: User selects origin and destination city from a predefined list covering major
+routes from Indore (Bhopal, Ujjain, Mumbai, Delhi, Nagpur, etc.).
+Scheduled Booking: All intercity trips are pre-scheduled. User selects travel date and preferred departure
+time (morning / afternoon / flexible).
+Vehicle Type Selection: Mini cab, Sedan, or SUV options displayed with fare and passenger capacity for
+each.
+Fare Transparency: Full fare breakdown shown before booking ù base fare, tolls estimate, driver allowance
+for overnight trips.
+Driver Assignment: System assigns a verified intercity-eligible driver at least 12 hours before the trip.
+Live Tracking: Full GPS tracking during the intercity journey accessible by the user and their shared
+contacts.
+Advance Payment: Full or partial payment collected at booking. Balance collected on trip completion.
+Popular Routes Widget: A pre-populated list of most-booked routes from Indore displayed on the intercity
+home screen for faster booking.
+Corporate Booking Mode: Companies can book intercity trips for employees with centralized billing and trip
+history.
+8.3 Pricing Engine
+Intercity fares are calculated using a pre-configured rate card stored in the Admin Panel. The formula combines
+a fixed base fare (covering initial distance and driver pickup costs) with a per-kilometer rate applied to the total
+route distance. Admin can create and maintain the rate card for each origin-destination pair and update it
+without a code change.
+
+--- PAGE 12 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 12
+09
+CORE MODULE 4 ù TEMPLE & SPIRITUAL TRAVEL
+The Temple and Spiritual Travel module is one of Redigo's most geographically unique offerings. Indore's
+proximity to world-famous pilgrimage destinations ù Ujjain (home of the Mahakal Jyotirlinga), Omkareshwar
+(one of the twelve Jyotirlingas), and Maheshwar ù creates a natural and high-demand use case for curated
+spiritual travel packages. No national platform currently serves this niche with a structured, app-based booking
+experience.
+9.1 Package Structure
+Package
+Destination
+Duration
+Inclusions
+Group Size
+Mahakal Darshan
+Package
+Ujjain
+Day trip
+(approx. 12 hrs)
+Cab from Indore, guided temple visit,
+fast-pass darshan assistance.
+2û8 persons
+Omkareshwar
+Pilgrimage
+Omkareshwar
+Day trip
+(approx. 10 hrs)
+Cab from Indore, boat ride, guided
+darshan.
+2û8 persons
+Ujjain + Omkareshwar
+Combo
+Both
+Overnight (2
+days / 1 night)
+Cab, accommodation (basic), both
+temple visits, guided support.
+2û6 persons
+Maheshwar Heritage
+Tour
+Maheshwar
+Day trip
+(approx. 8 hrs)
+Cab from Indore, Ahilya Fort,
+Narmada Ghat visit.
+2û8 persons
+Custom Pilgrimage
+User-defined
+Flexible
+Vehicle + driver, itinerary based on
+user preference.
+Any size
+9.2 Feature Specifications
+Package Listing: All available packages displayed with full itinerary, included services, pricing per person,
+group size options, and photo gallery of the destination.
+Group Booking: User specifies number of passengers. System automatically selects appropriate vehicle size
+(Sedan, Innova, Tempo Traveller) and adjusts pricing.
+Advance Booking: Spiritual trips are pre-scheduled bookings. User selects travel date from an availability
+calendar.
+Vendor-Based Fulfillment: Registered travel vendors create and price their own packages through the
+Vendor Portal, subject to Admin approval and quality review.
+Customization Option: Users can request custom trip itineraries by specifying destinations, duration, and
+group size. A vendor responds with a custom quote.
+Darshan Timing Guidance: Each temple package includes recommended arrival times and current puja
+schedule information within the app.
+Multilingual Description: Package details available in both Hindi and English given the primary demographic.
+Vendor Rating & Reviews: Each completed spiritual trip generates a vendor rating from the user, building
+trust and quality accountability.
+Admin Package Creation: Admin can directly create platform-managed packages (not vendor-dependent) for
+highest-demand routes.
+9.3 Vendor Portal
+Vendors register with GSTIN, trade license, and vehicle documentation.
+
+--- PAGE 13 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 13
+Vendor creates packages with title, destination, duration, inclusions, exclusions, pricing, and availability
+dates.
+Admin reviews and approves or rejects each package before it goes live.
+Vendor receives booking notifications and manages trip confirmations through the portal.
+Vendor earnings are disbursed after trip completion minus platform commission (configurable per vendor
+agreement).
+
+--- PAGE 14 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 14
+10
+CORE MODULE 5 ù PARCEL DELIVERY
+The Parcel Delivery module enables users to send parcels within the city (intra-city) and between cities
+(intercity) using the same driver and vehicle network that serves the ride-booking module. This creates asset
+utilization efficiency ù vehicles that are idle between rides can fulfill delivery assignments. The module targets
+small business owners, e-commerce sellers, and individuals who need reliable, trackable same-day delivery.
+10.1 Delivery Types
+Type
+Scope
+Vehicle Used
+Delivery Speed
+Intra-City Express
+Within Indore city limits
+Bike (lightweight parcels),
+Auto/Mini Cab (larger
+items)
+Same day (target: 2û4 hrs)
+Intercity Parcel
+City to city, Indore + route network
+Cab or designated intercity
+vehicle
+Next day or scheduled date
+Scheduled Delivery
+User sets a specific pickup and
+delivery time window
+Bike or Cab based on size
+At user's chosen time
+10.2 Booking Flow
+Step 1 ù Parcel Details: User enters parcel weight (weight brackets: up to 2kg, 2û5kg, 5û10kg, 10kg+),
+dimensions, and item category (documents / fragile / general goods).
+Step 2 ù Pickup & Drop: User sets pickup address and delivery address. For intercity, user selects
+destination city and specific address.
+Step 3 ù Receiver Details: User enters receiver name and phone number. The receiver is notified via
+SMS/app notification when the parcel is picked up.
+Step 4 ù Fare Estimate: System calculates fare based on weight bracket, distance, and delivery type.
+Breakdown shown transparently before payment.
+Step 5 ù Payment: User pays via in-app wallet, UPI, or cash on pickup.
+Step 6 ù Driver Assignment: Nearest available delivery agent is assigned. Agent receives pickup address
+and parcel details.
+Step 7 ù Pickup: Agent arrives at pickup address. User hands over parcel. Agent captures parcel photo
+within the app as proof of condition.
+Step 8 ù Live Tracking: Both sender and receiver can track the parcel's live location until delivery.
+Step 9 ù OTP Delivery Verification: Receiver provides a 4-digit OTP shown in their notification/app to the
+delivery agent to confirm receipt.
+Step 10 ù Delivery Confirmation: System marks delivery complete. Sender receives confirmation notification
+with delivery timestamp.
+10.3 Pricing Logic
+Parcel pricing is calculated using a weight-bracket base rate combined with a per-kilometer distance charge.
+The formula is: Base Rate (by weight bracket) + (Distance in km x Per-km Rate). Additional surcharges apply for
+fragile items, declared high-value parcels, and time-specific deliveries. All rates are managed via the Admin
+Pricing Panel and can be updated without code changes.
+
+--- PAGE 15 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 15
+11
+CORE MODULE 6 ù CAB SHARING (USP FEATURE)
+Cab Sharing is Redigo's primary product differentiator. No competitor in the Indore market currently offers real-time
+seat-based ride sharing with live visual seat maps. This module is positioned as the platform's flagship feature and is
+expected to drive the highest frequency of social sharing, word-of-mouth growth, and media coverage at launch.
+The Cab Sharing module allows multiple unrelated users to book individual seats in a single vehicle traveling
+along a common route ù splitting the cost of the ride proportionally. A real-time visual seat layout shows users
+which seats are already booked and which are available before they confirm their booking.
+11.1 How Cab Sharing Works
+A driver (or the platform on behalf of a driver) creates a shared ride trip with a defined route (e.g., Vijay
+Nagar to Rajwada, Indore), departure time, number of available seats, and per-seat price.
+The trip appears in the Cab Sharing section of the user app for users whose origin and destination are within
+the defined route corridor.
+Users can view the trip details: route on map, departure time, driver details, per-seat price, and a real-time
+visual seat layout showing available and booked seats.
+User selects their preferred seat from the visual layout and books it via payment.
+As each seat is booked, the visual layout updates in real time for all other users browsing the same trip using
+Socket.io.
+When all seats are filled (or the trip departs), the trip is marked as full and removed from the available
+listings.
+Driver picks up all confirmed passengers from their individual pickup points along the route.
+Each passenger pays their per-seat fare independently. No single user bears the cost of unfilled seats.
+11.2 Seat Visualization UI
+The visual seat layout is a core UX element of this module. It renders an overhead schematic of the vehicle
+interior showing individual seat positions. Color coding communicates seat status clearly:
+Status Color
+Meaning
+User Interaction
+Green
+Seat is available and can be booked
+Tap to select and proceed to payment
+Red / Gray
+Seat is already booked by another
+user
+Non-interactive ù shown for context only
+Orange (pulsing)
+Seat is currently being selected by
+another user in real time
+Shown for 30 seconds while in another user's checkout
+flow
+Blue (selected)
+Seat selected by the current user in
+the current session
+Confirmed on payment
+11.3 Dynamic Pricing Logic
+Base per-seat price is set by the driver or the platform when the trip is created.
+As seat occupancy increases, per-seat price decreases slightly for remaining seats ù rewarding early
+booking and incentivizing fill rate.
+Surge pricing applies during peak hours (morning and evening commute windows) raising the base per-seat
+price by a configurable multiplier.
+
+--- PAGE 16 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 16
+If fewer than 2 seats are booked by 1 hour before departure, the admin has the option to auto-cancel the trip
+and refund all booked passengers.
+
+--- PAGE 17 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 17
+12
+ADMIN PANEL ù FULL FEATURE SPECIFICATION
+The Admin Panel is a desktop-optimized web application (React.js) providing the platform operator with
+centralized control over all aspects of the Redigo platform. It is accessible only by authorized admin users and is
+the single source of truth for platform configuration, operational management, and reporting.
+12.1 Overview Dashboard
+Real-time summary cards: Total registered users, Active drivers online, Live rides in progress, Today's
+completed bookings, Today's revenue.
+Booking volume chart: bookings by service vertical (rides / rental / intercity / parcel / spiritual / cab sharing)
+for the selected date range.
+Revenue chart: daily, weekly, and monthly revenue with trend comparison.
+Heatmap: geographic density of bookings on a map view.
+Alert panel: pending KYC approvals, low driver supply zones, flagged complaints.
+12.2 User Management
+View complete user list with search, filter by registration date, activity status, and booking count.
+View individual user profile: contact details, booking history, wallet balance, ratings given, and support
+tickets.
+Block or unban user accounts with reason logging.
+KYC verification queue: review uploaded DL documents for bike rental eligibility and approve or reject.
+Export user data to CSV or Excel.
+12.3 Driver Management
+Driver registration approvals: review submitted documents (DL, RC, insurance, police verification, selfie) and
+approve or reject.
+View driver profile: vehicle details, current status (online / on trip / offline), rating, total trips, earnings.
+Assign drivers to specific zones or intercity routes.
+Suspend or permanently remove a driver with reason documentation.
+Live driver map: real-time positions of all online drivers on a map.
+Driver earnings report: per driver, per period, with commission breakdown.
+12.4 Booking & Order Management
+Live rides view: all ongoing rides and deliveries with real-time status, driver location, and ETA.
+Historical bookings: complete record of all bookings across all verticals with advanced filtering.
+Manual ride assignment: admin can manually assign a driver to a specific booking in edge cases.
+Parcel delivery queue: view all pending, active, and completed deliveries with parcel condition photos.
+Intercity trip management: view all upcoming and ongoing intercity trips with route and driver details.
+Spiritual package bookings: view all confirmed temple tour bookings with vendor assignment and status.
+
+--- PAGE 18 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 18
+12.5 Pricing Control
+Base fare configuration: set and update per-km rates and base fares for each vehicle type and service
+vertical.
+Surge pricing rules: define surge multipliers by time of day, day of week, or geographic zone.
+Intercity rate card: maintain a distance-based price table for each origin-destination city pair.
+Parcel pricing table: configure weight bracket rates and per-km charges for delivery pricing.
+Rental pricing: configure hourly and daily rates for each vehicle category in the rental inventory.
+Commission rates: set platform commission percentage per service vertical.
+12.6 Package Management (Spiritual Tours)
+Create and publish platform-managed spiritual tour packages with full itinerary, pricing, vehicle assignment,
+and availability calendar.
+Review and approve or reject vendor-submitted packages before they go live on the user app.
+Edit existing packages, update pricing, adjust availability, or take packages offline temporarily.
+View all bookings per package with traveler details and vendor payout status.
+12.7 Analytics & Reporting
+Revenue analytics: gross revenue, net revenue (after driver/vendor payouts), revenue by vertical, and
+month-on-month growth.
+User analytics: DAU (Daily Active Users), MAU (Monthly Active Users), new user registrations, and churn
+indicators.
+Driver analytics: fleet utilization rate, average trips per driver per day, completion rate, and rejection rate.
+KPI dashboard: all platform KPIs tracked in real time (see Section 20).
+Export all reports to CSV or Excel for offline analysis.
+12.8 Notifications & Communications
+Send push notifications to all users, a specific segment (e.g., all users in a zone), or an individual user.
+Configure automated notifications for booking confirmations, driver arrivals, OTP messages, and delivery
+updates.
+SMS gateway management for OTP and critical alerts.
+In-app message broadcast for platform announcements (e.g., new feature launches, offers).
+
+--- PAGE 19 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 19
+13
+SYSTEM ARCHITECTURE
+Redigo is built on a service-oriented backend with a shared API layer serving all three client interfaces. The
+architecture is designed for horizontal scalability to handle concurrent ride requests, real-time Socket.io
+connections, and high-frequency database writes from GPS tracking events.
+Mobile Client Layer: React Native (or Flutter) cross-platform mobile application serving both iOS and Android
+from a single codebase. Separate app builds for User App and Driver App. Google Maps SDK embedded for
+in-app mapping and navigation.
+Admin Web Layer: React.js single-page application (SPA) styled with Tailwind CSS. Desktop-first layout
+optimized for management workflows. Served as a static build via Nginx. Role-protected routes enforced by
+JWT middleware.
+API Gateway / Backend Layer: Node.js + Express.js REST API layer organized into domain modules: Auth,
+Rides, Rentals, Intercity, Parcels, SpiritualTrips, CabSharing, Users, Drivers, Pricing, Notifications, Analytics. All
+routes protected by JWT authentication. Role-based guards per route.
+Real-Time Layer: Socket.io server running alongside the Express API for bidirectional real-time events: live
+driver GPS updates, cab sharing seat status changes, booking notifications, parcel tracking updates, and OTP
+events.
+Database Layer: MongoDB Atlas (cloud-hosted) as the primary database. Collections designed for each
+domain entity. Mongoose ODM for schema enforcement. Indexed on geo-coordinates (2dsphere index) for
+location queries, and on frequently queried fields (status, userId, driverId, createdAt).
+Infrastructure Layer: Deployed on AWS EC2 (or equivalent VPS). Nginx as reverse proxy for both
+HTTP/REST and WebSocket traffic. PM2 for Node.js process management. SSL/TLS via Let's Encrypt. CI/CD
+pipeline for automated deployments. MongoDB Atlas handles database replication and automated backups.
+
+--- PAGE 20 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 20
+14
+TECHNOLOGY STACK
+Layer
+Technology
+Purpose
+Mobile Framework
+React Native (preferred) /
+Flutter
+Cross-platform iOS & Android app for User App and Driver App
+Admin Frontend
+React.js + Tailwind CSS
+Admin Panel web application (desktop)
+Backend Runtime
+Node.js
+Server-side JavaScript runtime
+HTTP Framework
+Express.js
+REST API routing and middleware
+Database
+MongoDB Atlas
+Primary NoSQL database (cloud-hosted)
+ODM
+Mongoose
+Schema modeling and validation for MongoDB
+Real-Time
+Socket.io
+WebSocket layer for live tracking and seat updates
+Authentication
+Firebase Auth (OTP) + JWT
+Phone OTP for user auth; JWT for API session management
+Maps & Location
+Google Maps Platform
+Geocoding, routing, fare distance, in-app map rendering
+Payments
+Razorpay
+UPI, cards, wallets, and net banking payment processing
+Push Notifications
+Firebase Cloud Messaging
+(FCM)
+In-app and background push notifications
+SMS / OTP
+Firebase Auth / MSG91
+Phone OTP for login and delivery verification
+File Storage
+AWS S3 / Cloudinary
+DL uploads, vehicle photos, parcel condition images
+Web Server
+Nginx
+Reverse proxy, WebSocket proxying, SSL termination
+Process Manager
+PM2
+Node.js process management and clustering
+Hosting
+AWS EC2 / VPS
+Production server infrastructure
+Version Control
+Git + GitHub / GitLab
+Source code management and CI/CD
+
+--- PAGE 21 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 21
+15
+THIRD-PARTY INTEGRATIONS
+Integration
+Provider
+Usage Scope
+Client Dependency
+Google Maps
+Platform
+Google Cloud
+Geocoding, distance matrix, route
+optimization, in-app maps.
+Client must provide Google Maps API
+key with billing enabled.
+Razorpay
+Razorpay India
+Payment processing for all booking
+types, security deposit collection,
+vendor/driver payouts.
+Client must have registered Razorpay
+business account.
+Firebase Auth
+Google Firebase
+Phone number OTP-based user
+authentication.
+Firebase project setup required.
+Firebase Cloud
+Messaging
+Google Firebase
+Push notifications for all booking
+events to mobile app users.
+Same Firebase project as Auth.
+AWS S3 /
+Cloudinary
+AWS / Cloudinary
+Storage for user-uploaded documents
+(DL, RC) and photos.
+Client must provision S3 bucket or
+Cloudinary account.
+MSG91 / Twilio
+(optional)
+MSG91 or Twilio
+SMS fallback for OTP delivery where
+Firebase SMS quota is exceeded.
+API key from provider required.
+16
+REAL-TIME FEATURES
+Real-time functionality is a core requirement of the Redigo platform and is delivered via Socket.io WebSocket
+connections maintained between the backend and all connected mobile app and admin panel clients. The
+following events are handled in real time:
+Real-Time Event
+Triggered By
+Received By
+Socket Event Name
+Driver GPS Location
+Update
+Driver App (every 3û5
+seconds on trip)
+User App (map), Admin
+Panel (live map)
+driver:location_update
+Ride Request Notification
+System (on user booking)
+Driver App
+ride:new_request
+Ride Accepted
+Driver App
+User App (driver en route
+confirmation)
+ride:accepted
+Ride Status Change
+Driver App
+User App, Admin Panel
+ride:status_changed
+Parcel Tracking Update
+Driver App
+Sender App, Receiver
+SMS/App
+parcel:location_update
+Cab Seat Booked
+User checkout (on payment)
+All users viewing same
+trip
+seat:booked
+Seat Reservation
+(pending)
+User enters checkout flow
+All users viewing same
+trip
+seat:reserved
+Seat Reservation Expired
+System (30s timeout)
+All users viewing same
+trip
+seat:released
+Delivery OTP Verified
+Driver App
+Sender App (delivery
+confirmed)
+parcel:delivered
+
+--- PAGE 22 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 22
+New Booking Alert
+User App (on booking)
+Admin Panel dashboard
+admin:new_booking
+
+--- PAGE 23 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 23
+17
+UI/UX DESIGN GUIDELINES
+Redigo's visual identity and user experience are designed to feel simultaneously modern and locally familiar.
+The design language balances the clean efficiency expected of a tech product with warmth and accessibility
+appropriate for the tier-2 Indian demographic, including users with limited prior experience of app-based mobility
+services.
+Color System: Primary: Orange (#E85D04) ù energy, action, movement, Indian warmth. Secondary: Amber
+(#F48C06) ù highlights, warm CTAs, icons. Neutral: White (#FFFFFF) for backgrounds, Dark Gray (#1C2833)
+for primary text. Success/Error states use standard green (#10B981) and red (#EF4444). The orange-dominant
+palette is culturally resonant in Madhya Pradesh and differentiates Redigo from the black-and-yellow of Ola or
+the blue of Uber.
+Typography: Primary typeface: Inter or Poppins (clean, high legibility on mobile screens at small sizes). Hindi
+language support via Noto Sans Devanagari for all Hindi-language interface strings. Font sizes follow an 8-point
+scale. Minimum body text 14sp on mobile.
+Booking Speed: The booking flow for any service must be completable in 3 taps or fewer from the home
+screen. Home screen features large, icon-driven service cards for instant navigation. The most recent booking
+type is remembered and pre-selected on next app open.
+Map-First Design: The default home screen state centers on a full-screen map view showing the user's location
+and nearby drivers. Service selection overlays appear from the bottom as sheets rather than navigating away
+from the map context. This creates a spatially grounded experience.
+Hindi Language Toggle: The app includes a Hindi/English language toggle accessible from the profile screen.
+All UI strings, package descriptions, and booking confirmations are translated into Hindi for the toggle state.
+Driver communication suggestions also appear in Hindi.
+Animation & Motion: Framer Motion (React Native Reanimated on mobile) for screen transitions and
+gesture-driven interactions. Lottie animations for loading states, booking confirmation, and empty states. Driver
+icon on map uses smooth interpolated movement rather than jumping between GPS coordinates.
+Accessibility: Minimum touch target size of 44x44pt for all interactive elements. Sufficient color contrast ratios
+per WCAG AA standards. Screen reader labels on all icon-only buttons.
+
+--- PAGE 24 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 24
+18
+SECURITY & COMPLIANCE
+User Authentication: Firebase Phone Auth with OTP verification for all user registrations and logins. OTPs
+expire in 60 seconds. Accounts can be suspended on admin command.
+API Authentication: All backend API endpoints protected by JWT Bearer token middleware. Tokens expire in
+24 hours with a refresh token mechanism. Role guards enforce admin vs. user vs. driver access per endpoint.
+Driver KYC Verification: All drivers must submit: Driving License (front and back), Vehicle RC, Insurance
+Certificate, PUC Certificate, and a live selfie. Admin manually verifies all documents before the driver goes live.
+Periodic re-verification scheduled.
+Payment Security: All payment processing via Razorpay's PCI-DSS compliant infrastructure. No raw card data
+is ever stored on Redigo servers. Refunds and payouts handled via Razorpay's payout API with audit logs.
+Data Security: All sensitive fields (passwords where applicable) hashed with bcrypt. Personally identifiable
+information (PII) fields encrypted at rest. Database access restricted to application server IPs.
+Transport Security: HTTPS enforced across all API and WebSocket connections. SSL/TLS via Let's Encrypt
+with auto-renewal. HTTP to HTTPS redirect at Nginx level with HSTS headers.
+User Safety Features: In-ride SOS button sharing live location with emergency contacts. Ride sharing: both
+rider and driver share masked phone numbers via platform relay to protect PII. Trip sharing: users can share live
+trip link with family/friends.
+Data Retention & Privacy: User data retained per applicable Indian IT Act and DPDPA (Digital Personal Data
+Protection Act) requirements. Users can request account deletion, which anonymizes personal data while
+retaining transactional records for compliance.
+
+--- PAGE 25 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 25
+19
+MONETIZATION STRATEGY
+Redigo operates a commission-based, multi-vertical monetization model. The platform earns a percentage of
+each transaction across all service categories. Secondary revenue streams include surge pricing margins,
+vendor commissions, and future premium features.
+Revenue Stream
+Source
+Rate / Model
+Notes
+Ride Commission
+Bike, Auto, Cab
+bookings
+10û25% of fare per
+completed ride
+Rate configurable per vehicle type via admin panel
+Rental Margin
+Bike rental bookings
+15û20%
+commission on
+rental revenue
+Applied to fleet owner payouts
+Intercity Commission
+Intercity cab
+bookings
+10û15% per
+completed intercity
+trip
+Higher margin on long-distance routes
+Parcel Delivery Margin
+Parcel booking
+revenue
+20û25% of delivery
+fare
+Reflects asset utilization efficiency
+Spiritual Tour
+Commission
+Temple/tour
+package bookings
+15û20% of
+package price from
+vendor
+Vendor sets package price; platform deducts
+commission
+Cab Sharing
+Commission
+Per-seat cab sharing
+fares
+10û20% of each
+seat fare
+Multiple commissions earned per ride (one per
+seat booked)
+Surge Pricing Margin
+All ride verticals
+during peak
+Additional 0û100%
+multiplier applied;
+platform retains the
+surge margin over
+base driver payout
+Configurable by time and zone
+Security Deposit
+Interest
+Bike rental deposits
+Float income on
+held deposits
+Minor secondary stream
+20
+KEY PERFORMANCE INDICATORS (KPIS)
+The following KPIs will be tracked in real time on the Admin Dashboard and used to evaluate platform health,
+growth, and operational efficiency post-launch.
+KPI
+Definition
+Target
+Benchmark
+Measured How
+Daily Active Users
+(DAU)
+Unique users who open the app
+and perform at least one action
+per day.
+Growing MoM by
+20%+
+Firebase Analytics event tracking
+Monthly Active Users
+(MAU)
+Unique users who complete at
+least one booking in a calendar
+month.
+DAU/MAU ratio
+target: 25%+
+Booking database count
+
+--- PAGE 26 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 26
+Ride Completion Rate
+Completed rides / Total ride
+requests accepted by a driver.
+Greater than 90%
+Ride status logs
+Average Booking Time
+Time from app open to booking
+confirmation.
+Under 2 minutes
+In-app event timestamps
+Driver Utilization Rate
+Hours a driver spends on active
+trips / Total hours online.
+Greater than 60%
+Driver session and trip logs
+Revenue Per User
+Total platform revenue / Total
+active users in the period.
+Growing MoM
+Revenue + user records
+Cab Sharing Seat Fill
+Rate
+Average seats booked per cab
+sharing trip / Total seats
+available.
+Greater than 70%
+Cab sharing booking records
+Parcel Delivery Success
+Rate
+Parcels delivered successfully
+with OTP confirmation / Total
+parcel bookings.
+Greater than 95%
+Parcel delivery logs
+Driver Acceptance Rate
+Ride requests accepted by
+assigned driver / Total requests
+sent.
+Greater than 85%
+Ride assignment logs
+Customer Rating
+Average
+Average user rating of drivers
+across all verticals.
+Greater than 4.2 /
+5
+Rating records
+
+--- PAGE 27 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 27
+21
+DEVELOPMENT PHASES
+The Redigo platform is delivered across three sequential development phases. Each phase builds on the
+previous and represents a functional, testable milestone. No timeline is committed in this document ù sprint
+duration will be scoped separately during the project kick-off based on final team composition and resource
+allocation.
+Phase 1 ù MVP ù Core Ride & Delivery Launch
+Phase 1 establishes the foundational platform with the two highest-demand service verticals. The goal is to get a
+working, tested, and deployable product into the market as quickly as possible to begin acquiring users,
+onboarding drivers, and generating real-world operational data.
+User App: Ride booking (Bike, Auto, Mini Cab, Sedan) with live GPS tracking and OTP ride start.
+User App: Parcel delivery (intra-city) with weight-based pricing, live tracking, and OTP verification.
+Driver App: Ride and delivery assignment, navigation, status updates, OTP handling.
+Admin Panel: Core dashboard with live rides and driver map, user management, driver management with
+KYC review, and basic pricing configuration.
+Authentication: Firebase OTP login for users and drivers. JWT-secured API.
+Payments: Razorpay integration for ride and delivery payments (UPI, cards).
+Notifications: Push notifications for booking confirmation, driver assigned, and ride status.
+Google Maps: Full integration for pickup/drop selection, fare estimation, and live tracking.
+Phase 2 ù Advanced Verticals & Payments Expansion
+Phase 2 expands the platform to include three additional service verticals and deepens the payment,
+notification, and analytics capabilities. At this stage, Redigo becomes a true multi-vertical platform and the
+monetization model fully activates.
+User App: Bike rental module with DL upload, availability calendar, security deposit via Razorpay, and fleet
+owner listing.
+User App: Intercity travel module with route selection, scheduled booking, vehicle choice, and advance
+payment.
+User App: Temple and spiritual tour packages with vendor-curated listings, group booking, and custom
+request form.
+Driver App: Enhancements for intercity trip support (pre-trip notification, multi-day tracking).
+Vendor Portal: Web interface for travel vendors to create, manage, and track spiritual tour package bookings.
+Admin Panel: Full Pricing Control Panel (surge pricing, intercity rate card, rental pricing, commission rates).
+Admin Panel: Package Management module for spiritual tours (create, approve, edit, track).
+Analytics Dashboard: Revenue by vertical, DAU/MAU, driver utilization, completion rates.
+Wallet System: In-app credit wallet with top-up via Razorpay and auto-deduction on bookings.
+Intercity Parcel: Extend parcel delivery module to support intercity shipments.
+
+--- PAGE 28 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 28
+Phase 3 ù USP Launch, Scaling & Intelligence
+Phase 3 introduces Redigo's flagship differentiator ù the Cab Sharing module with real-time seat visualization
+ù and focuses on platform scalability, performance optimization, and advanced analytics. This phase positions
+Redigo for city-wide launch campaigns and regional expansion.
+User App: Cab Sharing module with full real-time seat visualization UI, Socket.io-powered live updates, and
+dynamic pricing.
+Driver App: Cab sharing trip creation and management view.
+Admin Panel: Cab sharing management ù trip creation, seat configuration, auto-cancel rules, and reporting.
+Performance Optimization: Database indexing review, API response caching (Redis layer), Socket.io
+connection scaling.
+Advanced Analytics: Cohort analysis, revenue per vertical trend, zone-based demand heatmaps, driver
+supply vs. demand gap reports.
+Hindi Language Interface: Full Hindi string translation deployed across User App.
+SOS & Safety Features: In-ride SOS button with emergency contact notification.
+Rating & Review System: Comprehensive two-way rating with review text for all verticals.
+Expansion Readiness: City configuration system allowing new city launch with a new zone, rate card, and
+driver network without code changes.
+
+--- PAGE 29 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 29
+22
+OUT OF SCOPE
+The following items are explicitly excluded from all three delivery phases defined in this document. Any inclusion
+of the below requires a separate scope document and change order.
+Item
+Detail
+Four-Wheeler Rental
+(Self-Drive Cars)
+Car rental is not included. Only two-wheeler (bike/scooter) rental is in scope.
+Food / Grocery Delivery
+No food or grocery delivery functionality is included in any phase.
+Hotel / Accommodation
+Booking
+Accommodation booking for intercity or spiritual trips is out of scope (only vehicle +
+driver is included).
+Fleet Insurance Management
+The platform does not provide or manage vehicle insurance on behalf of fleet owners.
+In-App Chat Between User and
+Driver
+Text or voice chat within the app is out of scope. Phone relay (masked number) is the
+communication mechanism.
+Aadhaar-Based KYC
+Automated Aadhaar API-based KYC is not included. DL verification is manual admin
+review.
+Multi-City Simultaneous
+Launch
+Phase 1û3 covers Indore only. Expansion to other cities is post-Phase 3 and requires a
+separate roadmap engagement.
+Native iOS/Android App in
+Swift/Kotlin
+The mobile app is built in React Native or Flutter (cross-platform). Native language
+development is out of scope.
+AI/ML Demand Prediction
+Machine learning-based demand forecasting for driver supply allocation is a future
+feature.
+Corporate Billing Portal
+(Phase 1 & 2)
+Full corporate account management with invoice consolidation is a Phase 3+ feature.
+23
+RISKS & ASSUMPTIONS
+23.1 Client-Side Assumptions
+Client will provide Google Maps Platform API key with billing enabled before development begins.
+Client has or will register a Razorpay business account and provide API credentials before payment
+integration.
+Client is responsible for Firebase project setup and provisioning of Firebase Auth and FCM credentials.
+Client will manage driver onboarding and initial ground operations (recruiting drivers, conducting physical
+vehicle checks) independent of the platform.
+Client will provide timely feedback within 48 hours on design mockups, milestone reviews, and UAT findings.
+Cloud server provisioning (AWS EC2 or equivalent) and associated infrastructure costs are the client's
+responsibility.
+All third-party API usage costs (Google Maps, Razorpay transaction fees, Firebase, SMS) are the client's
+operational expenses.
+23.2 Risk Register
+
+--- PAGE 30 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 30
+Risk
+Probability
+Impact
+Mitigation
+Low initial driver supply
+before launch
+High
+High ù
+affects user
+experience
+on Day 1
+Client must run parallel driver onboarding campaign. Platform
+should show 'Coming Soon' for low-supply zones.
+Google Maps API cost
+overrun
+Medium
+Medium ù
+budget
+impact at
+scale
+Implement caching of frequent geocoding results. Monitor API
+usage in admin. Set billing alerts.
+Razorpay onboarding
+delay
+Low
+High ù
+blocks
+payment
+integration
+Begin Razorpay registration process immediately at project
+kick-off. Use test mode during development.
+Socket.io scalability
+under concurrent
+connections
+Low
+High ù
+real-time
+features
+degraded
+Load test WebSocket connections in Phase 3. Redis pub/sub
+adapter for Socket.io multi-server scaling.
+Driver KYC fraud (fake
+documents)
+Medium
+High ù
+regulatory
+and safety
+risk
+Admin manual review of all documents + periodic
+re-verification. Third-party document verification API (future).
+Regulatory compliance
+for bike taxi in MP
+Medium
+High ù
+operational
+shutdown
+risk
+Legal review of Motor Vehicle Aggregator Guidelines for
+Madhya Pradesh before Phase 1 launch.
+Scope creep from client
+feature requests
+High
+Medium ù
+timeline
+extension
+All post-sign-off changes go through formal change order
+process with written approval.
+
+--- PAGE 31 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 31
+24
+FUTURE ROADMAP
+The following features represent the planned evolution of the Redigo platform beyond the three phases defined
+in this document. They are acknowledged as strategic priorities but are out of scope for this engagement.
+Feature
+Description
+Strategic Value
+Multi-City Expansion
+City-specific zone configuration, driver networks, and rate
+cards for expansion beyond Indore to Bhopal, Ujjain,
+Nagpur.
+Core growth lever ù
+replicates Indore model city
+by city.
+AI Demand Prediction
+ML model predicting ride demand by zone and time window
+for proactive driver positioning and surge pricing
+optimization.
+Reduces supply-demand
+mismatch; improves driver
+earnings.
+Self-Drive Car Rental
+Expand rental module to four-wheeler (hatchback/sedan)
+self-drive rental.
+Higher-margin rental
+category with strong urban
+demand.
+In-App Chat / Relay Calling
+Masked phone relay or in-app messaging between user and
+driver to eliminate PII sharing.
+Safety and privacy
+enhancement.
+Subscription / Pass Plans
+Monthly commuter passes offering a fixed number of rides at
+a discounted per-ride rate.
+Locks in high-frequency
+users; reduces churn.
+Corporate Accounts
+Dedicated corporate billing, employee ride policies,
+centralized invoice management.
+B2B revenue stream
+targeting Indore's growing
+corporate sector.
+Aadhaar KYC API
+Automated government ID verification for drivers and DL
+verification for rental users.
+Reduces manual KYC
+workload; speeds driver
+onboarding.
+Women's Safety Mode
+Option to request female drivers for female passengers; live
+trip sharing mandatory.
+Addresses a key adoption
+barrier for female users in
+tier-2 cities.
+EV Integration
+Support for electric two-wheelers in the ride booking and
+rental modules with EV-specific range display.
+Sustainability positioning;
+lower fuel cost for drivers.
+B2B Parcel API
+API for businesses to integrate Redigo parcel delivery
+directly into their order management systems.
+Scales parcel volume
+without user-level
+acquisition cost.
+Document Agreement & Sign-Off
+By signing below, both parties confirm that they have read, understood, and agreed to the product scope,
+module definitions, technical specifications, assumptions, and phased delivery plan defined in this document.
+Development Team / Agency
+Client
+Name: _________________________________
+Name: _________________________________
+
+--- PAGE 32 ---
+PRODUCT REQUIREMENT DOCUMENT  |  REDIGO
+Smart Mobility & Local Logistics Platform
+Confidential  |  March 28, 2026  |  Version 1.0
+Page 32
+Signature: _____________________________
+Signature: _____________________________
+Date: __________________________________
+Date: __________________________________
+Title: _________________________________
+Title / Company: _______________________
+ Document Reference: PRD-REDIGO-MOB-001 | Version 1.0 | March 28, 2026 | Confidential
+ 
