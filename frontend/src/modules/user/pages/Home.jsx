@@ -9,31 +9,24 @@ import BottomNavbar from '../components/BottomNavbar';
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-[#F5F5F5] pb-28 max-w-lg mx-auto relative overflow-hidden font-sans no-scrollbar">
-      {/* Header with User Name (Single Row) */}
-      <HeaderGreeting name="hritik raghuwanshi" />
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] pb-32 max-w-lg mx-auto relative overflow-hidden font-sans no-scrollbar">
+      <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-orange-100/60 blur-3xl pointer-events-none" />
+      <div className="absolute top-52 left-[-60px] h-52 w-52 rounded-full bg-emerald-100/60 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-28 right-[-40px] h-40 w-40 rounded-full bg-blue-100/60 blur-3xl pointer-events-none" />
 
-      {/* SEARCH/LOCATION TOP SECTION */}
-      <LocationCard location="Fetching location..." />
-
-      {/* QUICK SERVICES ICONS (Bike, Delivery, etc.) */}
-      <ServiceGrid />
-
-      {/* ACTION SECTION (Compact Ride/Delivery) */}
-      <ActionsSection />
-
-      {/* VERTICAL PROMO & HORIZONTAL "IN A HURRY" CARDS */}
-      <PromoBanners />
-
-      {/* EXPLORE CITY SECTION (Horizontal with images) */}
-      <ExplorerSection />
-      
-      {/* City footer line art as background at the bottom before navbar */}
-      <div className="absolute bottom-24 left-0 right-0 h-24 opacity-10 pointer-events-none">
-         <img src="/city_skyline_footer.png" alt="City" className="w-full h-full object-bottom" />
+      <div className="relative z-10 space-y-5 pb-6">
+        <HeaderGreeting name="hritik raghuwanshi" />
+        <LocationCard location="Fetching location..." />
+        <ServiceGrid />
+        <ActionsSection />
+        <PromoBanners />
+        <ExplorerSection />
       </div>
 
-      {/* Fixed Sticky Bottom Navigation */}
+      <div className="absolute bottom-24 left-0 right-0 h-24 opacity-[0.08] pointer-events-none">
+        <img src="/city_skyline_footer.png" alt="City" className="w-full h-full object-bottom" />
+      </div>
+
       <BottomNavbar />
     </div>
   );

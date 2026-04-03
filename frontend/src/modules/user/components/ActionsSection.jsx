@@ -1,64 +1,64 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
-const ActionCard = ({ title, subtitle, image, bgColor, textColor, buttonColor, buttonText, path }) => {
+const ActionCard = ({ title, description, image, surfaceClass, titleClass, buttonClass, buttonText, path }) => {
   const navigate = useNavigate();
-  
+
   return (
-    <div className={`relative flex-1 rounded-[32px] p-4 md:p-5 overflow-hidden ${bgColor} group transition-all active:scale-[0.98] shadow-sm`}>
-      <div className="relative z-10 flex flex-col h-full justify-between pr-8">
-        <div className="max-w-[130px] mb-4">
-          <h3 className={`text-[19px] font-black leading-tight tracking-tight ${textColor}`}>{title}</h3>
-          <p className={`text-[11px] font-bold mt-1 opacity-70 leading-tight ${textColor}`}>{subtitle}</p>
+    <div className={`relative min-h-[182px] flex-1 overflow-hidden rounded-[20px] border border-white/80 px-5 pt-5 pb-2 shadow-[0_18px_40px_rgba(15,23,42,0.07)] ${surfaceClass}`}>
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <div className="max-w-[126px]">
+          <h3 className={`text-[24px] font-black leading-none tracking-tight ${titleClass}`}>{title}</h3>
+          <p className="mt-3 text-[12px] font-bold leading-relaxed text-gray-600">{description}</p>
         </div>
-        <div className="mt-auto">
-          <button 
+
+        <div className="mt-auto -ml-2">
+          <button
             onClick={(e) => {
               e.stopPropagation();
               navigate(path);
             }}
-            className={`px-4 py-2.5 rounded-full text-[13px] font-black whitespace-nowrap shadow-xl shadow-black/5 transition-all active:scale-95 ${buttonColor} text-white self-start`}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[11px] font-black whitespace-nowrap shadow-md shadow-black/5 transition-all active:scale-95 ${buttonClass} text-white self-start`}
           >
             {buttonText}
+            <ArrowRight size={12} strokeWidth={3} />
           </button>
         </div>
       </div>
-      <div className="absolute top-1/2 -right-6 -translate-y-1/2 w-[115px] md:w-[135px] opacity-90 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
+      <div className="absolute bottom-2 right-2 w-[104px] opacity-95 pointer-events-none">
         <img src={image} alt={title} className="w-full h-auto object-contain drop-shadow-2xl" />
       </div>
     </div>
   );
 };
 
-
 const ActionsSection = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="px-5 mb-4">
-      <h2 className="text-[19px] font-black text-gray-900 mb-2 ml-1 tracking-tight">What do you need today?</h2>
+    <div className="px-5">
+      <div className="mb-3 ml-1">
+        <h2 className="text-[19px] font-black text-gray-900 tracking-tight">What do you need today?</h2>
+      </div>
 
-      <div className="flex gap-4">
-        {/* Ride Now Section */}
-        <ActionCard 
-          title="Ride Now"
-          subtitle="Bikes & Autos available"
+      <div className="grid grid-cols-2 gap-4">
+        <ActionCard
+          title="Ride"
+          description="Bike taxis, autos, and cabs."
           image="/1_Bike.png"
-          bgColor="bg-[#FFF4E6]"
-          textColor="text-[#8B4513]"
-          buttonColor="bg-[#E85D04]"
-          buttonText="Book Ride"
+          surfaceClass="bg-[linear-gradient(135deg,#FFF8ED_0%,#FFE8CC_100%)]"
+          titleClass="text-[#7C3A00]"
+          buttonClass="bg-[#F97316]"
+          buttonText="Book Now"
           path="/ride/select-location"
         />
 
-        {/* Delivery Section */}
-        <ActionCard 
+        <ActionCard
           title="Delivery"
-          subtitle="SEND ANYTHING"
+          description="Parcel pickup across the city."
           image="/5_Parcel.png"
-          bgColor="bg-[#F0EEFF]"
-          textColor="text-[#483D8B]"
-          buttonColor="bg-[#6366F1]"
+          surfaceClass="bg-[linear-gradient(135deg,#F6F2FF_0%,#E8E1FF_100%)]"
+          titleClass="text-[#4C3D91]"
+          buttonClass="bg-[#6366F1]"
           buttonText="Send Now"
           path="/parcel/type"
         />
