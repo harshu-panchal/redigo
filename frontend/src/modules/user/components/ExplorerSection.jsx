@@ -3,9 +3,9 @@ import { ArrowRight } from 'lucide-react';
 
 const ExplorerSection = () => {
   const cities = [
-    { title: 'Airport Indore', image: '/airport_illustration.png', label: '10 min', code: 'IDR' },
+    { title: 'Airport Indore', image: '/Gemini_Generated_Image_ob17d1ob17d1ob17.png', label: '10 min', code: 'IDR' },
     { title: 'Indore Junction', image: '/train_station_illustration.png', label: '5 min', code: 'JCT' },
-    { title: 'Rajwada', image: '/city_skyline_footer.png', label: '15 min', code: 'RAJ' },
+    { title: 'Rajwada', image: '/Gemini_Generated_Image_17lko817lko817lk.png', label: '15 min', code: 'RAJ' },
   ];
 
   return (
@@ -45,11 +45,11 @@ const ExplorerSection = () => {
           </div>
         ))}
 
-        <div className="flex-shrink-0 w-[168px] flex flex-col justify-center items-center gap-3 bg-white/72 border border-dashed border-gray-200 rounded-[20px] active:scale-95 transition-all text-gray-400 font-black h-[136px] self-start shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
-          <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center">
-            <ArrowRight size={22} strokeWidth={2.5} className="text-gray-300" />
+        <div className="flex-shrink-0 w-[128px] flex flex-col justify-center items-center gap-2 bg-white/75 border border-white/80 rounded-[18px] active:scale-95 transition-all text-slate-500 font-black h-[136px] self-start shadow-[0_14px_32px_rgba(15,23,42,0.05)]">
+          <div className="w-10 h-10 rounded-full bg-slate-50 border border-white/80 shadow-sm flex items-center justify-center">
+            <ArrowRight size={18} strokeWidth={2.5} className="text-slate-300" />
           </div>
-          <span className="text-[12px] uppercase tracking-[0.16em]">View All</span>
+          <span className="text-[11px] uppercase tracking-[0.14em]">View All</span>
         </div>
       </div>
     </div>

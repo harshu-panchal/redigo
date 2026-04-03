@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Wallet } from 'lucide-react';
+import { MapPin, Search, Wallet } from 'lucide-react';
 import RedigoLogo from '@/assets/redigologo.png';
 
 const fallingCoins = [
@@ -10,32 +10,51 @@ const fallingCoins = [
   { id: 3, left: '72%', delay: 1.2 },
 ];
 
-const HeaderGreeting = ({ name = 'hritik raghuwanshi' }) => {
+const HeaderGreeting = () => {
   const navigate = useNavigate();
 
   return (
     <div className="px-5 pt-6">
-      <div className="flex items-center justify-between gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: -8, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="relative inline-flex items-center rounded-full border border-white/80 bg-white/90 px-4 py-3 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur-md"
-        >
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <motion.div
-            aria-hidden="true"
-            className="absolute inset-x-4 inset-y-2 rounded-full bg-emerald-100/70 blur-md"
-            animate={{ opacity: [0.3, 0.75, 0.3], scale: [0.92, 1.06, 0.92] }}
-            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.img
-            src={RedigoLogo}
-            alt="Redigo"
-            className="relative z-10 h-9 object-contain drop-shadow-sm"
-            animate={{ y: [0, -2, 0], scale: [1, 1.02, 1] }}
-            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </motion.div>
+            initial={{ opacity: 0, y: -8, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="relative inline-flex items-center rounded-full border border-white/80 bg-white/90 px-2.5 py-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] backdrop-blur-md"
+          >
+            <motion.div
+              aria-hidden="true"
+              className="absolute inset-x-3 inset-y-1.5 rounded-full bg-emerald-100/70 blur-md"
+              animate={{ opacity: [0.3, 0.75, 0.3], scale: [0.92, 1.06, 0.92] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.img
+              src={RedigoLogo}
+              alt="Redigo"
+              className="relative z-10 h-6 object-contain drop-shadow-sm"
+              animate={{ y: [0, -2, 0], scale: [1, 1.02, 1] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.03, ease: 'easeOut' }}
+            whileTap={{ scale: 0.99 }}
+            onClick={() => navigate('/ride/select-location')}
+            className="group flex min-w-0 flex-1 items-center gap-2 rounded-lg bg-transparent px-0 py-0 text-left transition-opacity active:opacity-80"
+          >
+            <MapPin size={16} className="text-slate-500 transition-colors group-hover:text-slate-700" strokeWidth={2.5} />
+
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-black uppercase tracking-[0.22em] text-slate-400">Location</p>
+              <p className="truncate text-[11px] font-black tracking-tight text-slate-900">Tulsi Nagar, Telada House</p>
+            </div>
+          </motion.button>
+        </div>
 
         <button
           onClick={() => navigate('/wallet')}
@@ -78,18 +97,25 @@ const HeaderGreeting = ({ name = 'hritik raghuwanshi' }) => {
         </button>
       </div>
 
-      <div className="mt-4 rounded-[20px] border border-white/80 bg-white/88 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.07)] backdrop-blur-md">
-        <h1 className="text-[24px] font-bold leading-tight tracking-tight text-gray-900">
-          Good Morning, <span className="capitalize">{name}</span>
-        </h1>
-
-        <div className="mt-3 flex items-center gap-2 text-[12px] font-black text-gray-500">
-          <MapPin size={14} className="text-orange-500" strokeWidth={2.5} />
-          <span>Indore, Madhya Pradesh</span>
-          <span className="text-gray-300">-</span>
-          <span>Live availability across core zones</span>
-        </div>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.05, ease: 'easeOut' }}
+        className="mt-3 space-y-2.5"
+      >
+        <motion.button
+          type="button"
+          whileTap={{ scale: 0.99 }}
+          onClick={() => navigate('/ride/select-location')}
+          className="flex w-full items-center gap-2 rounded-[18px] border border-white/80 bg-white/92 px-3.5 py-3 text-left shadow-[0_12px_26px_rgba(15,23,42,0.06)]"
+        >
+          <Search size={16} className="text-slate-500" strokeWidth={2.5} />
+          <span className="min-w-0 flex-1 truncate text-[12px] font-bold text-slate-500">
+            Search destination
+          </span>
+          <span className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-600">Go</span>
+        </motion.button>
+      </motion.div>
     </div>
   );
 };

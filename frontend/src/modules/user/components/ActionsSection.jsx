@@ -6,28 +6,46 @@ const ActionCard = ({ title, description, image, surfaceClass, titleClass, butto
   const navigate = useNavigate();
 
   return (
-    <div className={`relative min-h-[182px] flex-1 overflow-hidden rounded-[20px] border border-white/80 px-5 pt-5 pb-2 shadow-[0_18px_40px_rgba(15,23,42,0.07)] ${surfaceClass}`}>
-      <div className="relative z-10 flex h-full flex-col justify-between">
-        <div className="max-w-[126px]">
-          <h3 className={`text-[24px] font-black leading-none tracking-tight ${titleClass}`}>{title}</h3>
-          <p className="mt-3 text-[12px] font-bold leading-relaxed text-gray-600">{description}</p>
+    <div
+      className={`group relative flex min-h-[176px] flex-1 flex-col overflow-hidden rounded-2xl border border-white/80 p-4 shadow-[0_14px_34px_rgba(2,6,23,0.10)] transition-transform duration-200 hover:-translate-y-0.5 focus-within:-translate-y-0.5 ${surfaceClass}`}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(120px_90px_at_12%_20%,rgba(255,255,255,0.85),transparent_65%)]" aria-hidden="true" />
+
+      <div className="relative z-10 flex flex-1 flex-col">
+        <div className="max-w-[160px]">
+          <h3 className={`text-[22px] font-black leading-none tracking-tight ${titleClass}`}>{title}</h3>
+          <p className="mt-2 text-[12px] font-semibold leading-snug text-slate-600">{description}</p>
         </div>
 
-        <div className="mt-auto -ml-2">
+        <div className="mt-auto pt-3">
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               navigate(path);
             }}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[11px] font-black whitespace-nowrap shadow-md shadow-black/5 transition-all active:scale-95 ${buttonClass} text-white self-start`}
+            className="relative inline-flex items-center rounded-full px-3.5 py-2 text-[11px] font-black whitespace-nowrap text-white shadow-[0_12px_26px_rgba(2,6,23,0.16)] backdrop-blur-md bg-white/10 border border-white/35 overflow-hidden transition-all active:scale-95"
           >
-            {buttonText}
-            <ArrowRight size={12} strokeWidth={3} />
+            <span aria-hidden="true" className={`absolute inset-0 ${buttonClass} opacity-40`} />
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0))] opacity-70"
+            />
+            <span className="relative z-10 inline-flex items-center gap-2">
+              {buttonText}
+              <ArrowRight size={13} strokeWidth={3} className="translate-y-[0.5px]" />
+            </span>
           </button>
         </div>
       </div>
-      <div className="absolute bottom-2 right-2 w-[104px] opacity-95 pointer-events-none">
-        <img src={image} alt={title} className="w-full h-auto object-contain drop-shadow-2xl" />
+
+      <div className="pointer-events-none absolute bottom-12 right-2 w-[82px] opacity-95 transition-transform duration-300 group-hover:scale-[1.03]">
+        <img
+          src={image}
+          alt=""
+          aria-hidden="true"
+          className="w-full h-auto object-contain drop-shadow-[0_22px_38px_rgba(2,6,23,0.18)]"
+        />
       </div>
     </div>
   );
@@ -43,22 +61,22 @@ const ActionsSection = () => {
       <div className="grid grid-cols-2 gap-4">
         <ActionCard
           title="Ride"
-          description="Bike taxis, autos, and cabs."
+          description="Bike, auto, and cab rides."
           image="/1_Bike.png"
-          surfaceClass="bg-[linear-gradient(135deg,#FFF8ED_0%,#FFE8CC_100%)]"
-          titleClass="text-[#7C3A00]"
-          buttonClass="bg-[#F97316]"
+          surfaceClass="bg-gradient-to-br from-orange-50/80 via-white/80 to-orange-100/60"
+          titleClass="text-slate-900"
+          buttonClass="bg-orange-500"
           buttonText="Book Now"
           path="/ride/select-location"
         />
 
         <ActionCard
           title="Delivery"
-          description="Parcel pickup across the city."
+          description="Send parcels across the city."
           image="/5_Parcel.png"
-          surfaceClass="bg-[linear-gradient(135deg,#F6F2FF_0%,#E8E1FF_100%)]"
-          titleClass="text-[#4C3D91]"
-          buttonClass="bg-[#6366F1]"
+          surfaceClass="bg-gradient-to-br from-indigo-50/80 via-white/80 to-indigo-100/60"
+          titleClass="text-slate-900"
+          buttonClass="bg-indigo-500"
           buttonText="Send Now"
           path="/parcel/type"
         />

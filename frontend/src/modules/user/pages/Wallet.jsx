@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Plus, Download, History, CreditCard, Gift, Send } from 'lucide-react';
@@ -26,7 +26,10 @@ const Wallet = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans mb-32">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto flex flex-col font-sans pb-24 relative overflow-x-hidden">
+      <div className="absolute -top-20 right-[-40px] h-48 w-48 rounded-full bg-orange-100/55 blur-3xl pointer-events-none" />
+      <div className="absolute top-64 left-[-60px] h-56 w-56 rounded-full bg-emerald-100/50 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-24 right-[-40px] h-44 w-44 rounded-full bg-blue-100/50 blur-3xl pointer-events-none" />
       {/* ADD MONEY MODAL */}
       <AnimatePresence>
         {showAddMoney && (
@@ -62,7 +65,7 @@ const Wallet = () => {
               ) : (
                 <div className="space-y-8">
                   <div className="relative group">
-                    <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-black text-gray-400 group-focus-within:text-orange-500 transition-colors">₹</span>
+                    <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-black text-gray-400 group-focus-within:text-orange-500 transition-colors">â‚¹</span>
                     <input 
                        type="number"
                        value={amount}
@@ -81,7 +84,7 @@ const Wallet = () => {
                           amount === val ? 'bg-orange-500 border-orange-500 text-white shadow-lg shadow-orange-200' : 'bg-white border-gray-100 text-gray-500'
                         }`}
                       >
-                        +₹{val}
+                        +â‚¹{val}
                       </button>
                     ))}
                   </div>
@@ -105,14 +108,18 @@ const Wallet = () => {
       </AnimatePresence>
 
       {/* HEADER */}
-      <header className="bg-white px-5 pt-12 pb-6 flex items-center gap-4 sticky top-0 z-20 border-b border-gray-50/20">
+      <header className="sticky top-0 z-30">
+        <div className="bg-white/70 backdrop-blur-md border-b border-white/70 shadow-[0_10px_20px_rgba(15,23,42,0.05)]">
+          <div className="px-5 py-4 flex items-center gap-3">
         <button 
           onClick={() => navigate(-1)}
-          className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center active:scale-95 transition-transform"
+          className="w-9 h-9 rounded-full bg-white/80 border border-white/80 shadow-sm flex items-center justify-center active:scale-95 transition-transform"
         >
           <ArrowLeft size={20} className="text-gray-900" strokeWidth={2.5} />
         </button>
         <h1 className="text-[19px] font-black text-gray-900 tracking-tight">My Wallet</h1>
+          </div>
+        </div>
       </header>
 
       {/* BALANCE CARD */}
@@ -120,30 +127,63 @@ const Wallet = () => {
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ y: -2 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
           className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[36px] p-8 text-white shadow-2xl relative overflow-hidden group"
         >
+          <motion.div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(260px_180px_at_20%_25%,rgba(249,115,22,0.18),transparent_60%)]"
+            animate={{ opacity: [0.1, 0.22, 0.1], x: [0, 10, 0], y: [0, -6, 0] }}
+            transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+          />
           <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-[80px] -mr-32 -mt-32 group-hover:bg-orange-500/20 transition-colors"></div>
           
           <div className="relative z-10 flex flex-col gap-8">
             <div className="space-y-1">
               <p className="text-white/30 font-black uppercase tracking-[0.2em] text-[8px]">Current Liquidity</p>
-              <h2 className="text-4xl font-black tracking-tighter">₹1,250<span className="text-white/20 text-2xl">.00</span></h2>
+              <motion.h2
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut', delay: 0.05 }}
+                className="text-4xl font-black tracking-tighter"
+              >
+                ₹1,250<span className="text-white/20 text-2xl">.00</span>
+              </motion.h2>
             </div>
             
             <div className="flex items-center gap-3">
-              <button 
+              <motion.button
+                type="button"
                 onClick={() => setShowAddMoney(true)}
-                className="flex-1 bg-orange-500 text-white h-14 rounded-2xl font-black text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-orange-500/20 active:shadow-none"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
+                className="group/cta relative flex-1 bg-white/10 text-white h-14 rounded-2xl font-black text-[13px] uppercase tracking-widest flex items-center justify-center gap-2 border border-white/15 shadow-lg shadow-orange-500/10 overflow-hidden backdrop-blur-md"
               >
-                <Plus size={16} strokeWidth={3} />
-                Refill
-              </button>
-              <button 
+                <span aria-hidden="true" className="absolute inset-0 bg-orange-500/55" />
+                <motion.span
+                  aria-hidden="true"
+                  className="absolute -left-16 top-0 h-full w-24 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.55),transparent)] opacity-60"
+                  animate={{ x: [0, 320] }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut', repeatDelay: 1.2 }}
+                />
+                <motion.span aria-hidden="true" className="relative z-10" whileHover={{ y: -1 }} transition={{ duration: 0.18, ease: 'easeOut' }}>
+                  <Plus size={16} strokeWidth={3} />
+                </motion.span>
+                <span className="relative z-10">Refill</span>
+              </motion.button>
+
+              <motion.button
+                type="button"
                 onClick={() => navigate('/activity')}
-                className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white active:scale-95 transition-all hover:bg-white/10"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                className="w-14 h-14 bg-white/10 border border-white/15 rounded-2xl flex items-center justify-center text-white shadow-sm backdrop-blur-md"
               >
-                <History size={20} strokeWidth={2.5} />
-              </button>
+                <motion.span aria-hidden="true" whileHover={{ rotate: -12 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
+                  <History size={20} strokeWidth={2.5} />
+                </motion.span>
+              </motion.button>
             </div>
           </div>
         </motion.div>
@@ -184,7 +224,7 @@ const Wallet = () => {
                <Gift size={24} strokeWidth={2.5} />
             </div>
             <div className="flex-1">
-               <h4 className="text-[15px] font-black text-gray-900 tracking-tight">Refer & Earn ₹50</h4>
+               <h4 className="text-[15px] font-black text-gray-900 tracking-tight">Refer & Earn â‚¹50</h4>
                <p className="text-[11px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">Invite friends to Redigo</p>
             </div>
             <ArrowLeft size={20} className="text-orange-200 rotate-180 group-hover:text-orange-500 transition-colors" />
@@ -210,7 +250,7 @@ const Wallet = () => {
                   <p className="text-[11px] font-bold text-gray-400 mt-1 uppercase tracking-widest">Today, 10:24 AM</p>
                </div>
                <div className="text-right shrink-0">
-                  <h4 className="text-[16px] font-black text-gray-900 tracking-tight">-₹450</h4>
+                  <h4 className="text-[16px] font-black text-gray-900 tracking-tight">-â‚¹450</h4>
                   <div className="flex items-center gap-1 justify-end mt-0.5">
                      <span className="text-[8px] font-black text-red-400 uppercase tracking-widest">Debit</span>
                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
@@ -227,7 +267,7 @@ const Wallet = () => {
                   <p className="text-[11px] font-bold text-gray-400 mt-1 uppercase tracking-widest">Yesterday, 04:12 PM</p>
                </div>
                <div className="text-right shrink-0">
-                  <h4 className="text-[16px] font-black text-emerald-600 tracking-tight">+₹1,000</h4>
+                  <h4 className="text-[16px] font-black text-emerald-600 tracking-tight">+â‚¹1,000</h4>
                   <div className="flex items-center gap-1 justify-end mt-0.5">
                      <span className="text-[8px] font-black text-emerald-400 uppercase tracking-widest">Credit</span>
                      <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
@@ -241,3 +281,4 @@ const Wallet = () => {
 };
 
 export default Wallet;
+

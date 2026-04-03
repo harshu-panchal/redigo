@@ -1,44 +1,63 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Bike, Box, ChevronRight, Calendar, Clock, Headset } from 'lucide-react';
+import { ArrowLeft, Calendar, ChevronRight, Clock, Headset } from 'lucide-react';
 import BottomNavbar from '../components/BottomNavbar';
 
-const ActivityItem = ({ id, type, title, address, date, time, status, price, onClick }) => (
-  <motion.div 
+const TABS = ['All', 'Rides', 'Parcels', 'Support'];
+
+const ActivityItem = ({ type, title, address, date, time, status, price, onClick }) => (
+  <motion.button
+    type="button"
     whileTap={{ scale: 0.98 }}
-    onClick={() => onClick(id)}
-    className="bg-white rounded-[24px] p-4 mb-3 border border-gray-50 shadow-sm flex items-center gap-4 cursor-pointer hover:border-gray-100 transition-all active:bg-gray-50/50"
+    onClick={onClick}
+    className="w-full text-left bg-white/85 backdrop-blur-sm rounded-[22px] p-4 border border-white/80 shadow-[0_14px_34px_rgba(15,23,42,0.07)] flex items-center gap-4 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_44px_rgba(15,23,42,0.09)] active:translate-y-0"
   >
-    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-        type === 'ride' ? 'bg-orange-50 text-orange-600' : 'bg-blue-50 text-blue-600'
-    }`}>
-        {type === 'ride' ? <Bike size={22} strokeWidth={2.5} /> : <Box size={22} strokeWidth={2.5} />}
+    <div
+      className="w-12 h-12 rounded-2xl border border-white/80 bg-white/70 shadow-sm flex items-center justify-center shrink-0 overflow-hidden"
+    >
+      <img
+        src={type === 'ride' ? '/1_Bike.png' : '/5_Parcel.png'}
+        alt={type === 'ride' ? 'Ride' : 'Parcel'}
+        className="h-10 w-10 object-contain drop-shadow-[0_10px_18px_rgba(2,6,23,0.18)]"
+        draggable={false}
+      />
     </div>
+
     <div className="flex-1 min-w-0">
-        <div className="flex items-center justify-between">
-            <h4 className="text-[15px] font-black text-gray-900 leading-none truncate">{title}</h4>
-            <span className="text-[14px] font-black text-gray-900">₹{price}</span>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h4 className="text-[15px] font-black text-slate-900 leading-tight truncate">{title}</h4>
+          <p className="text-[12px] font-bold text-slate-500 mt-1 truncate max-w-[210px]">{address}</p>
         </div>
-        <p className="text-[12px] font-bold text-gray-400 mt-1 truncate max-w-[180px]">{address}</p>
-        <div className="flex items-center gap-3 mt-2">
-            <div className="flex items-center gap-1 text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
-                <Calendar size={11} strokeWidth={3} />
-                <span>{date}</span>
-            </div>
-            <div className="flex items-center gap-1 text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
-                <Clock size={11} strokeWidth={3} />
-                <span>{time}</span>
-            </div>
-            <span className={`text-[9px] font-black px-2 py-0.5 rounded leading-none ${
-                status === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-            }`}>
-                {status.toUpperCase()}
-            </span>
+        <span className="text-[14px] font-black text-slate-900 shrink-0">₹{price}</span>
+      </div>
+
+      <div className="flex items-center gap-3 mt-2.5">
+        <div className="flex items-center gap-1 text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+          <Calendar size={11} strokeWidth={3} />
+          <span>{date}</span>
         </div>
+        <div className="flex items-center gap-1 text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+          <Clock size={11} strokeWidth={3} />
+          <span>{time}</span>
+        </div>
+        <span
+          className={`ml-auto text-[9px] font-black px-2 py-1 rounded-full leading-none border ${
+            status === 'Completed'
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+              : 'bg-rose-50 text-rose-700 border-rose-100'
+          }`}
+        >
+          {status.toUpperCase()}
+        </span>
+      </div>
     </div>
-    <ChevronRight size={16} className="text-gray-200" strokeWidth={3} />
-  </motion.div>
+
+    <div className="w-8 h-8 rounded-full bg-slate-50 border border-white/80 flex items-center justify-center text-slate-300 shadow-sm">
+      <ChevronRight size={16} strokeWidth={3} />
+    </div>
+  </motion.button>
 );
 
 const Activity = () => {
@@ -46,18 +65,46 @@ const Activity = () => {
   const navigate = useNavigate();
 
   const activities = [
-    { id: '8231', type: 'ride', title: 'Ride with Kishan Kumawat', address: 'Vijay Nagar, Indore', date: '29 Mar', time: '12:45 PM', status: 'Completed', price: '22' },
-    { id: '4492', type: 'parcel', title: 'Gift for Rahul', address: 'Bhawarkua, Indore', date: '28 Mar', time: '11:20 AM', status: 'Completed', price: '45' },
-    { id: '1105', type: 'ride', title: 'Ride with Rajesh', address: 'LIG Colony, Indore', date: '28 Mar', time: '09:12 AM', status: 'Cancelled', price: '0' },
+    {
+      id: '8231',
+      type: 'ride',
+      title: 'Ride with Kishan Kumawat',
+      address: 'Vijay Nagar, Indore',
+      date: '29 Mar',
+      time: '12:45 PM',
+      status: 'Completed',
+      price: '22',
+    },
+    {
+      id: '4492',
+      type: 'parcel',
+      title: 'Gift for Rahul',
+      address: 'Bhawarkua, Indore',
+      date: '28 Mar',
+      time: '11:20 AM',
+      status: 'Completed',
+      price: '45',
+    },
+    {
+      id: '1105',
+      type: 'ride',
+      title: 'Ride with Rajesh',
+      address: 'LIG Colony, Indore',
+      date: '28 Mar',
+      time: '09:12 AM',
+      status: 'Cancelled',
+      price: '0',
+    },
   ];
 
-  // Filter based on active tab
-  const filtered = activities.filter((a) => {
-    if (activeTab === 'All') return true;
-    if (activeTab === 'Rides') return a.type === 'ride';
-    if (activeTab === 'Parcels') return a.type === 'parcel';
-    return false; // Support tab shows empty state
-  });
+  const filtered = useMemo(() => {
+    return activities.filter((activity) => {
+      if (activeTab === 'All') return true;
+      if (activeTab === 'Rides') return activity.type === 'ride';
+      if (activeTab === 'Parcels') return activity.type === 'parcel';
+      return false;
+    });
+  }, [activeTab]);
 
   const handleItemClick = (item) => {
     if (item.type === 'parcel') {
@@ -67,74 +114,90 @@ const Activity = () => {
     }
   };
 
-
-
+  const helperText = activeTab === 'Support' ? 'Tickets and help requests' : 'Your recent trips and deliveries';
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans pb-32">
-      <header className="bg-white px-5 py-8 flex items-center gap-6 sticky top-0 z-20 border-b border-gray-50/50 shadow-sm">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-95 transition-all">
-            <ArrowLeft size={24} className="text-gray-900" strokeWidth={3} />
-         </button>
-         <div>
-            <h1 className="text-[20px] font-extrabold text-gray-900 tracking-tight leading-none uppercase tracking-widest text-xs opacity-50 mb-2">My Bookings</h1>
-            <h2 className="text-[17px] font-black text-gray-950 leading-none">Recent Activity</h2>
-         </div>
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto flex flex-col font-sans pb-24 relative overflow-hidden">
+      <div className="absolute -top-20 right-[-40px] h-48 w-48 rounded-full bg-orange-100/55 blur-3xl pointer-events-none" />
+      <div className="absolute top-64 left-[-60px] h-56 w-56 rounded-full bg-emerald-100/50 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-24 right-[-40px] h-44 w-44 rounded-full bg-blue-100/50 blur-3xl pointer-events-none" />
+
+      <header className="relative z-20 sticky top-0">
+        <div className="bg-white/70 backdrop-blur-md border-b border-white/70 shadow-[0_10px_20px_rgba(15,23,42,0.05)]">
+          <div className="px-5 pt-4 pb-3 flex items-start gap-3">
+            <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-95 transition-all rounded-full">
+              <ArrowLeft size={22} className="text-slate-900" strokeWidth={3} />
+            </button>
+            <div className="min-w-0">
+              <p className="text-[10px] font-black uppercase tracking-[0.26em] text-slate-400">My bookings</p>
+              <h1 className="mt-1 text-[18px] font-black text-slate-900 tracking-tight leading-none truncate">
+                Recent activity
+              </h1>
+              <p className="mt-1 text-[11px] font-bold text-slate-500">{helperText}</p>
+            </div>
+          </div>
+
+          <div className="px-5 pb-4">
+            <div className="inline-flex max-w-full gap-1.5 overflow-x-auto no-scrollbar rounded-full border border-white/80 bg-white/75 p-1 shadow-sm">
+              {TABS.map((tab) => (
+                <button
+                  key={tab}
+                  type="button"
+                  onClick={() => setActiveTab(tab)}
+                  className={`shrink-0 px-4 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.16em] transition-all active:scale-[0.99] ${
+                    activeTab === tab
+                      ? 'bg-slate-900 text-white shadow-[0_10px_18px_rgba(15,23,42,0.18)]'
+                      : 'text-slate-500 hover:bg-white/80'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </header>
 
-      <div className="px-5 py-4 flex gap-2 overflow-x-auto no-scrollbar">
-          {['All', 'Rides', 'Parcels', 'Support'].map((tab) => (
-              <button 
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`shrink-0 px-6 py-2.5 rounded-full text-[12px] font-black uppercase tracking-widest transition-all ${
-                    activeTab === tab ? 'bg-primary text-white shadow-lg shadow-orange-100 scale-100' : 'bg-gray-50 text-gray-400'
-                }`}
-              >
-                {tab}
-              </button>
-          ))}
-      </div>
-
-      <div className="flex-1 px-5 pt-2">
-         {activeTab === 'Support' ? (
-           <motion.div
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
-             className="flex flex-col items-center justify-center py-20 text-center gap-5"
-           >
-             <div className="w-20 h-20 bg-orange-50 rounded-3xl flex items-center justify-center">
-               <Headset size={36} className="text-primary" />
-             </div>
-             <div className="space-y-1">
-               <h3 className="text-[17px] font-black text-gray-900">No support tickets</h3>
-               <p className="text-[13px] font-bold text-gray-400">You haven't raised any support tickets yet.</p>
-             </div>
-             <button
-               onClick={() => navigate('/support')}
-               className="mt-2 bg-primary text-white px-8 py-3.5 rounded-full text-sm font-black uppercase tracking-widest shadow-lg shadow-orange-100 active:scale-95 transition-all"
-             >
-               Contact Us
-             </button>
-           </motion.div>
-         ) : filtered.length === 0 ? (
-           <motion.div
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             className="flex flex-col items-center justify-center py-20 text-center gap-3"
-           >
-             <div className="text-5xl">📭</div>
-             <p className="text-[15px] font-black text-gray-400">No {activeTab.toLowerCase()} found</p>
-           </motion.div>
-         ) : (
-           filtered.map((a, idx) => (
-             <ActivityItem
-               key={idx}
-               {...a}
-               onClick={() => handleItemClick(a)}
-             />
-           ))
-         )}
+      <div className="relative z-10 flex-1 px-5 pt-4">
+        {activeTab === 'Support' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-20 text-center gap-5"
+          >
+            <div className="w-20 h-20 bg-white/80 border border-white/80 shadow-sm rounded-3xl flex items-center justify-center">
+              <Headset size={36} className="text-orange-500" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-[17px] font-black text-slate-900">No support tickets</h3>
+              <p className="text-[13px] font-bold text-slate-500">You haven't raised any support tickets yet.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/support')}
+              className="mt-2 bg-slate-900 text-white px-7 py-3 rounded-full text-[12px] font-black uppercase tracking-[0.18em] shadow-[0_16px_34px_rgba(15,23,42,0.18)] active:scale-95 transition-all"
+            >
+              Contact Us
+            </button>
+          </motion.div>
+        ) : filtered.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center justify-center py-20 text-center gap-3"
+          >
+            <div className="w-14 h-14 rounded-3xl bg-white/80 border border-white/80 shadow-sm flex items-center justify-center text-slate-400 text-[22px] font-black">
+              —
+            </div>
+            <p className="text-[15px] font-black text-slate-500">No {activeTab.toLowerCase()} found</p>
+          </motion.div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((activity) => (
+              <ActivityItem key={activity.id} {...activity} onClick={() => handleItemClick(activity)} />
+            ))}
+          </div>
+        )}
       </div>
 
       <BottomNavbar />
@@ -143,4 +206,3 @@ const Activity = () => {
 };
 
 export default Activity;
-

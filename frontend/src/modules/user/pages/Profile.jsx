@@ -31,7 +31,7 @@ const Profile = () => {
           <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-orange-50 to-white opacity-50"></div>
           <div className="relative">
              <div className="w-[88px] h-[88px] rounded-[34px] bg-white p-1 border-2 border-primary/20 shadow-xl">
-                <img src="https://ui-avatars.com/api/?name=Hritik+Raghuwanshi&background=E85D04&color=fff" className="w-full h-full rounded-[28px] object-cover" alt="User" />
+                <img src="/man.png?v=2" className="w-full h-full rounded-[28px] object-cover" alt="User" />
              </div>
              <div className="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center p-1">
                 <div className="w-full h-full bg-white/20 rounded-full"></div>

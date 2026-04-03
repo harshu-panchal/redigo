@@ -35,7 +35,6 @@ const ComingSoon = lazy(() => import('./modules/shared/pages/ComingSoon'));
 const BikeRentalHome = lazy(() => import('./modules/user/pages/rental/BikeRentalHome'));
 const IntercityHome = lazy(() => import('./modules/user/pages/intercity/IntercityHome'));
 const CabSharing = lazy(() => import('./modules/user/pages/cabsharing/CabSharing'));
-const WorkshopRSA = lazy(() => import('./modules/user/pages/services/WorkshopRSA'));
 
 // Profile Settings Sub-pages
 const ProfileSettings = lazy(() => import('./modules/user/pages/profile/ProfileSettings'));
@@ -166,7 +165,6 @@ function App() {
             <Route path="/rental" element={<BikeRentalHome />} />
             <Route path="/intercity" element={<IntercityHome />} />
             <Route path="/cab-sharing" element={<CabSharing />} />
-            <Route path="/workshop-rsa" element={<WorkshopRSA />} />
             <Route path="/tours" element={<ComingSoon />} />
 
             <Route path="/activity" element={<Activity />} />
