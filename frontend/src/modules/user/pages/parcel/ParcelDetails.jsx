@@ -15,131 +15,123 @@ const ParcelDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const parcelType = location.state?.parcelType || 'Documents';
-
   const priceRange = WEIGHT_PRICES[weight];
 
   const handleNext = () => {
     if (description.trim().length < 3) {
-      setDescError('Please add at least a short description of your item.');
+      setDescError('Please add at least a short description.');
       return;
     }
     setDescError('');
-    navigate('/parcel/contacts', {
-      state: {
-        parcelType,
-        weight,
-        description,
-        estimatedFare: priceRange,
-      },
-    });
+    navigate('/parcel/contacts', { state: { parcelType, weight, description, estimatedFare: priceRange } });
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] max-w-lg mx-auto flex flex-col font-sans relative">
-      <header className="bg-white px-5 py-6 flex items-center gap-6 border-b border-gray-50 shadow-sm sticky top-0 z-20">
-         <button onClick={() => navigate(-1)} className="p-2 -ml-2 active:scale-90 transition-all">
-            <ArrowLeft size={24} className="text-gray-900" strokeWidth={3} />
-         </button>
-         <div>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-0.5">{parcelType}</p>
-            <h1 className="text-[20px] font-extrabold text-gray-900 tracking-tight leading-none">Parcel Details</h1>
-         </div>
-      </header>
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto flex flex-col font-sans relative overflow-hidden">
+      <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-orange-100/60 blur-3xl pointer-events-none" />
 
-      <div className="flex-1 p-5 space-y-7">
-         {/* Weight Toggle */}
-         <div className="space-y-4">
-             <h3 className="text-[16px] font-black text-gray-900 ml-1">Approximate Weight</h3>
-             <div className="grid grid-cols-2 gap-3 bg-white p-2 rounded-[28px] border border-gray-50 shadow-sm">
-                <button 
-                   onClick={() => setWeight('Under 5kg')}
-                   className={`py-5 rounded-[22px] flex flex-col items-center gap-2 transition-all ${
-                       weight === 'Under 5kg' ? 'bg-primary text-white shadow-lg shadow-orange-200' : 'bg-transparent text-gray-400'
-                   }`}
-                >
-                    <Scale size={24} />
-                    <span className="text-[14px] font-black uppercase tracking-tight">Under 5 kg</span>
-                </button>
-                <button 
-                   onClick={() => setWeight('Above 5kg')}
-                   className={`py-5 rounded-[22px] flex flex-col items-center gap-2 transition-all ${
-                       weight === 'Above 5kg' ? 'bg-primary text-white shadow-lg shadow-orange-200' : 'bg-transparent text-gray-400'
-                   }`}
-                >
-                    <Box size={24} />
-                    <span className="text-[14px] font-black uppercase tracking-tight">Above 5 kg</span>
-                </button>
-             </div>
+      {/* Header */}
+      <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+        className="bg-white/90 backdrop-blur-md px-5 py-4 flex items-center gap-3 border-b border-white/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)] sticky top-0 z-20">
+        <motion.button whileTap={{ scale: 0.9 }} onClick={() => navigate(-1)}
+          className="w-9 h-9 rounded-[12px] border border-white/80 bg-white/90 flex items-center justify-center shadow-[0_4px_12px_rgba(15,23,42,0.07)] shrink-0">
+          <ArrowLeft size={18} className="text-slate-900" strokeWidth={2.5} />
+        </motion.button>
+        <div className="flex-1 min-w-0">
+          <p className="text-[9px] font-black uppercase tracking-[0.26em] text-slate-400">{parcelType}</p>
+          <h1 className="text-[19px] font-black tracking-tight text-slate-900 leading-tight">Parcel Details</h1>
+        </div>
+        <div className="rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-[10px] font-black text-slate-600 shadow-sm shrink-0">
+          Step 2 of 3
+        </div>
+      </motion.header>
 
-             {/* Dynamic Price Preview */}
-             <AnimatePresence mode="wait">
-               <motion.div
-                 key={weight}
-                 initial={{ opacity: 0, y: -8 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 exit={{ opacity: 0, y: 8 }}
-                 className="flex items-center gap-3 bg-green-50 border border-green-100 rounded-2xl px-4 py-3"
-               >
-                 <ShieldCheck size={18} className="text-green-500 shrink-0" strokeWidth={2.5} />
-                 <p className="text-[13px] font-black text-green-700">
-                   Estimated fare: <span className="text-green-900">₹{priceRange.min} – ₹{priceRange.max}</span>
-                   <span className="text-[10px] font-bold text-green-500 ml-1">based on distance</span>
-                 </p>
-               </motion.div>
-             </AnimatePresence>
-         </div>
+      <div className="flex-1 px-5 pt-5 pb-32 space-y-4 overflow-y-auto no-scrollbar">
 
-         {/* Item Description */}
-         <div className="space-y-3">
-             <h3 className="text-[16px] font-black text-gray-900 ml-1">What are you sending?</h3>
-             <div className={`bg-white rounded-[24px] p-2 border shadow-sm transition-all ${descError ? 'border-red-200' : 'border-gray-50'}`}>
-                <textarea 
-                   rows="3"
-                   placeholder="e.g. My Laptop Charger and some clothes..."
-                   className="w-full bg-gray-50/30 border-none rounded-2xl p-5 text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-gray-300 resize-none"
-                   value={description}
-                   onChange={(e) => {
-                     setDescription(e.target.value);
-                     if (e.target.value.trim().length >= 3) setDescError('');
-                   }}
-                />
-             </div>
-             <AnimatePresence>
-               {descError && (
-                 <motion.p
-                   initial={{ opacity: 0, y: -4 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   exit={{ opacity: 0 }}
-                   className="text-[12px] font-black text-red-500 ml-2 flex items-center gap-1.5"
-                 >
-                   <AlertTriangle size={13} strokeWidth={3} />
-                   {descError}
-                 </motion.p>
-               )}
-             </AnimatePresence>
-         </div>
+        {/* Weight toggle */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+          className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] p-4 space-y-3">
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">Approximate Weight</p>
+          <div className="grid grid-cols-2 gap-2 bg-slate-50/80 p-1.5 rounded-[16px]">
+            {[
+              { key: 'Under 5kg', icon: Scale, label: 'Under 5 kg' },
+              { key: 'Above 5kg', icon: Box,   label: 'Above 5 kg' },
+            ].map(({ key, icon: Icon, label }) => (
+              <motion.button key={key} whileTap={{ scale: 0.97 }} onClick={() => setWeight(key)}
+                className={`flex flex-col items-center gap-2 py-4 rounded-[13px] transition-all ${
+                  weight === key
+                    ? 'bg-white shadow-[0_4px_12px_rgba(15,23,42,0.08)] text-slate-900'
+                    : 'text-slate-400'
+                }`}>
+                <div className={`w-9 h-9 rounded-[11px] flex items-center justify-center transition-all ${
+                  weight === key ? 'bg-orange-500 shadow-[0_4px_10px_rgba(249,115,22,0.25)]' : 'bg-slate-100'
+                }`}>
+                  <Icon size={17} className={weight === key ? 'text-white' : 'text-slate-400'} strokeWidth={2} />
+                </div>
+                <span className="text-[12px] font-black uppercase tracking-tight">{label}</span>
+              </motion.button>
+            ))}
+          </div>
 
-         {/* Restrictions Warning */}
-         <div className="bg-orange-50 border border-orange-100 rounded-[28px] p-5 flex gap-4">
-             <AlertTriangle size={24} className="text-primary shrink-0 mt-0.5" strokeWidth={3} />
-             <div className="space-y-1">
-                <span className="text-[13px] font-black text-gray-800 uppercase tracking-tight">Restricted Items</span>
-                <p className="text-[11px] font-bold text-gray-500 leading-normal">
-                   Drugs, Alcohol, Explosives, and Items above ₹5,000 are not allowed for delivery.
-                </p>
-             </div>
-         </div>
+          {/* Price preview */}
+          <AnimatePresence mode="wait">
+            <motion.div key={weight}
+              initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
+              className="flex items-center gap-2.5 bg-emerald-50 border border-emerald-100 rounded-[14px] px-3.5 py-2.5">
+              <ShieldCheck size={14} className="text-emerald-500 shrink-0" strokeWidth={2.5} />
+              <p className="text-[12px] font-black text-emerald-700">
+                Estimated fare: <span className="text-emerald-900">₹{priceRange.min} – ₹{priceRange.max}</span>
+                <span className="text-[10px] font-bold text-emerald-500 ml-1">based on distance</span>
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Description */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          className={`rounded-[20px] border bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] p-4 space-y-2 transition-all ${
+            descError ? 'border-red-200' : 'border-white/80'
+          }`}>
+          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">What are you sending?</p>
+          <textarea
+            rows={3}
+            placeholder="e.g. My Laptop Charger and some clothes..."
+            value={description}
+            onChange={(e) => { setDescription(e.target.value); if (e.target.value.trim().length >= 3) setDescError(''); }}
+            className="w-full bg-slate-50/60 rounded-[13px] px-3.5 py-3 text-[14px] font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-100 placeholder:text-slate-300 resize-none border-none"
+          />
+          <AnimatePresence>
+            {descError && (
+              <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="text-[11px] font-black text-red-500 flex items-center gap-1.5">
+                <AlertTriangle size={11} strokeWidth={3} /> {descError}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Restrictions */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+          className="flex items-start gap-3 rounded-[16px] border border-orange-100 bg-orange-50/80 px-4 py-3.5">
+          <div className="w-7 h-7 rounded-[9px] bg-orange-100 flex items-center justify-center shrink-0 mt-0.5">
+            <AlertTriangle size={13} className="text-orange-500" strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-[11px] font-black text-slate-800 uppercase tracking-wide">Restricted Items</p>
+            <p className="text-[11px] font-bold text-slate-500 mt-0.5 leading-relaxed">
+              Drugs, Alcohol, Explosives, and items above ₹5,000 are not allowed.
+            </p>
+          </div>
+        </motion.div>
+
       </div>
 
-      <div className="p-6 bg-white border-t border-gray-50 pb-10">
-         <motion.button 
-            whileTap={{ scale: 0.98 }}
-            onClick={handleNext}
-            className="w-full bg-[#1C2833] py-5 rounded-[28px] text-[18px] font-black text-white shadow-xl shadow-gray-200 active:bg-black transition-all flex items-center justify-center gap-2"
-         >
-            <span>Sender & Receiver</span>
-            <ChevronRight size={20} className="opacity-40" />
-         </motion.button>
+      {/* Sticky CTA */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg px-5 pb-6 pt-3 bg-gradient-to-t from-[#EEF2F7] via-[#F3F4F6]/95 to-transparent pointer-events-none z-30">
+        <motion.button whileTap={{ scale: 0.98 }} onClick={handleNext}
+          className="pointer-events-auto w-full bg-slate-900 py-4 rounded-[18px] text-[15px] font-black text-white shadow-[0_8px_24px_rgba(15,23,42,0.18)] flex items-center justify-center gap-2">
+          Sender & Receiver <ChevronRight size={17} strokeWidth={3} className="opacity-50" />
+        </motion.button>
       </div>
     </div>
   );

@@ -33,8 +33,17 @@ const ComingSoon = lazy(() => import('./modules/shared/pages/ComingSoon'));
 
 // New Feature Pages
 const BikeRentalHome = lazy(() => import('./modules/user/pages/rental/BikeRentalHome'));
+const RentalVehicleDetail = lazy(() => import('./modules/user/pages/rental/RentalVehicleDetail'));
+const RentalSchedule = lazy(() => import('./modules/user/pages/rental/RentalSchedule'));
+const RentalKYC = lazy(() => import('./modules/user/pages/rental/RentalKYC'));
+const RentalDeposit = lazy(() => import('./modules/user/pages/rental/RentalDeposit'));
+const RentalConfirmed = lazy(() => import('./modules/user/pages/rental/RentalConfirmed'));
 const IntercityHome = lazy(() => import('./modules/user/pages/intercity/IntercityHome'));
 const CabSharing = lazy(() => import('./modules/user/pages/cabsharing/CabSharing'));
+const CabHome = lazy(() => import('./modules/user/pages/cab/CabHome'));
+const SharedTaxi = lazy(() => import('./modules/user/pages/cab/SharedTaxi'));
+const SharedTaxiSeats = lazy(() => import('./modules/user/pages/cab/SharedTaxiSeats'));
+const SharedTaxiConfirm = lazy(() => import('./modules/user/pages/cab/SharedTaxiConfirm'));
 
 // Profile Settings Sub-pages
 const ProfileSettings = lazy(() => import('./modules/user/pages/profile/ProfileSettings'));
@@ -163,8 +172,17 @@ function App() {
 
             {/* New Service Routes — Real pages replacing ComingSoon */}
             <Route path="/rental" element={<BikeRentalHome />} />
+            <Route path="/rental/vehicle" element={<RentalVehicleDetail />} />
+            <Route path="/rental/schedule" element={<RentalSchedule />} />
+            <Route path="/rental/kyc" element={<RentalKYC />} />
+            <Route path="/rental/deposit" element={<RentalDeposit />} />
+            <Route path="/rental/confirmed" element={<RentalConfirmed />} />
             <Route path="/intercity" element={<IntercityHome />} />
             <Route path="/cab-sharing" element={<CabSharing />} />
+            <Route path="/cab" element={<CabHome />} />
+            <Route path="/cab/shared" element={<SharedTaxi />} />
+            <Route path="/cab/shared/seats" element={<SharedTaxiSeats />} />
+            <Route path="/cab/shared/confirm" element={<SharedTaxiConfirm />} />
             <Route path="/tours" element={<ComingSoon />} />
 
             <Route path="/activity" element={<Activity />} />

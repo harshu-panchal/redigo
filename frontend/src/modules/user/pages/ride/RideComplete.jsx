@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, CheckCircle2, ChevronRight, Share2, Info, MapPin, Navigation, Receipt, Clock } from 'lucide-react';
+import { Star, CheckCircle2, ChevronRight, Share2, Info, Receipt } from 'lucide-react';
 
 const TIP_OPTIONS = [10, 20, 50, 100];
 
@@ -22,21 +22,16 @@ const RideComplete = () => {
   const pickup = state.pickup || 'Pipaliyahana, Indore';
   const drop = state.drop || 'Vijay Nagar, Indore';
   const stops = state.stops || [];
-  const vehicle = state.vehicle || null;
-  const otp = state.otp || '----';
 
   const effectiveTip = selectedTip ?? (showCustomTip ? parseInt(customTip || '0', 10) : 0);
   const totalBill = fare + effectiveTip;
-
-  // Current time as ride end time
   const rideEndTime = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
-  const rideDate    = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  const rideDate = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
 
-  // Auto-navigate to home after rating is given
   useEffect(() => {
     if (ratingSubmitted) {
-      const timer = setTimeout(() => navigate('/'), 1500);
-      return () => clearTimeout(timer);
+      const t = setTimeout(() => navigate('/'), 1500);
+      return () => clearTimeout(t);
     }
   }, [ratingSubmitted, navigate]);
 
@@ -46,315 +41,234 @@ const RideComplete = () => {
   };
 
   const handleShare = () => {
-    const stopsText = stops.length > 0 ? `\nVia: ${stops.join(' → ')}` : '';
-    const receiptText = `Redigo Trip Receipt\nDate: ${rideDate} ${rideEndTime}\nRoute: ${pickup} → ${drop}${stopsText}\nFare: ₹${fare}${effectiveTip > 0 ? `\nTip: ₹${effectiveTip}` : ''}\nTotal: ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}\nVehicle: ${driver.vehicle || ''} (${driver.plate || ''})`;
-    if (navigator.share) {
-      navigator.share({ title: 'Redigo Trip Receipt', text: receiptText }).catch(() => {});
-    } else {
-      navigator.clipboard?.writeText(receiptText).then(() => {
-        setShareToast(true);
-        setTimeout(() => setShareToast(false), 2500);
-      });
-    }
+    const text = `Redigo Trip Receipt\n${rideDate} · Total ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}`;
+    if (navigator.share) { navigator.share({ title: 'Redigo Trip Receipt', text }).catch(() => {}); }
+    else { navigator.clipboard?.writeText(text).then(() => { setShareToast(true); setTimeout(() => setShareToast(false), 2500); }); }
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F3F7] max-w-lg mx-auto relative font-sans">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto font-sans relative overflow-hidden">
+      <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-emerald-100/60 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-28 left-[-40px] h-40 w-40 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" />
 
-      {/* Share Toast */}
+      {/* Toast */}
       <AnimatePresence>
         {shareToast && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white px-5 py-3 rounded-2xl text-sm font-black shadow-2xl whitespace-nowrap"
-          >
-            ✅ Receipt copied to clipboard!
+          <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-3 rounded-[14px] text-[12px] font-black shadow-xl whitespace-nowrap">
+            ✅ Receipt copied!
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Rating Submitted Overlay */}
+      {/* Rating submitted overlay */}
       <AnimatePresence>
         {ratingSubmitted && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="fixed inset-0 bg-white/95 z-50 flex flex-col items-center justify-center gap-4 max-w-lg mx-auto"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-              className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white"
-            >
-              <CheckCircle2 size={40} strokeWidth={3} />
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="fixed inset-0 bg-white/95 z-50 flex flex-col items-center justify-center gap-4 max-w-lg mx-auto">
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 300 }}
+              className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center">
+              <CheckCircle2 size={32} className="text-white" strokeWidth={2.5} />
             </motion.div>
-            <h2 className="text-xl font-black text-gray-900">Thanks for your feedback!</h2>
-            <p className="text-sm font-bold text-gray-400">Taking you back to Home...</p>
+            <h2 className="text-[18px] font-black text-slate-900">Thanks for your feedback!</h2>
+            <p className="text-[13px] font-bold text-slate-400">Taking you back to Home...</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="p-5 space-y-4 pb-8">
+      <div className="px-4 pt-10 pb-8 space-y-3">
 
-        {/* ── SUCCESS HEADER ── */}
-        <motion.div
-          initial={{ scale: 0.85, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="flex flex-col items-center gap-3 text-center pt-6 pb-2"
-        >
-          <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white shadow-2xl shadow-green-200">
-            <CheckCircle2 size={40} strokeWidth={3} />
+        {/* Success hero */}
+        <motion.div initial={{ scale: 0.88, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+          className="flex items-center gap-3 pb-1">
+          <div className="w-11 h-11 bg-emerald-500 rounded-full flex items-center justify-center shadow-[0_6px_16px_rgba(16,185,129,0.25)] shrink-0">
+            <CheckCircle2 size={22} className="text-white" strokeWidth={2.5} />
           </div>
-          <div className="space-y-1">
-            <h1 className="text-2xl font-black text-gray-900 tracking-tight leading-none">You've Arrived!</h1>
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-widest leading-none mt-1.5">Ride completed successfully</p>
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.26em] text-slate-400">Ride Completed</p>
+            <h1 className="text-[19px] font-black text-slate-900 tracking-tight leading-tight">You've Arrived!</h1>
           </div>
         </motion.div>
 
-        {/* ── TRIP DETAILS CARD (Invoice) ── */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-[32px] overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.07)] border border-gray-100"
-        >
+        {/* Invoice card */}
+        <motion.div initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.08 }}
+          className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_6px_18px_rgba(15,23,42,0.07)] overflow-hidden">
+
           {/* Invoice header */}
-          <div className="bg-gradient-to-r from-[#1C2833] to-[#2C3E50] px-5 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Receipt size={20} className="text-orange-400" />
+          <div className="bg-slate-900 px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-[8px] bg-orange-500/20 flex items-center justify-center">
+                <Receipt size={13} className="text-orange-400" strokeWidth={2} />
+              </div>
               <div>
-                <p className="text-white font-black text-[15px] leading-tight">Trip Invoice</p>
-                <p className="text-gray-400 text-[11px] font-bold">{rideDate} · {rideEndTime}</p>
+                <p className="text-white font-black text-[13px] leading-tight">Trip Invoice</p>
+                <p className="text-slate-400 text-[9px] font-bold">{rideDate} · {rideEndTime}</p>
               </div>
             </div>
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 transition-all px-3 py-1.5 rounded-full"
-            >
-              <Share2 size={14} className="text-white" />
-              <span className="text-white text-[11px] font-black">Share</span>
-            </button>
+            <motion.button whileTap={{ scale: 0.95 }} onClick={handleShare}
+              className="flex items-center gap-1 bg-white/10 px-2.5 py-1 rounded-full">
+              <Share2 size={11} className="text-white" />
+              <span className="text-white text-[10px] font-black">Share</span>
+            </motion.button>
           </div>
 
-          {/* Route section */}
-          <div className="px-5 py-4 border-b border-gray-50">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Route</p>
-
-            <div className="flex gap-3">
-              <div className="flex flex-col items-center pt-1 gap-1">
-                <div className="w-3 h-3 rounded-full bg-green-500 border-2 border-white shadow-sm" />
-                {stops.length > 0 && stops.map((_, i) => (
+          {/* Route */}
+          <div className="px-4 py-3 border-b border-slate-50">
+            <p className="text-[8px] font-black uppercase tracking-[0.22em] text-slate-400 mb-2">Route</p>
+            <div className="flex gap-2.5">
+              <div className="flex flex-col items-center pt-1 gap-0.5">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 border-2 border-white shadow-sm" />
+                {stops.map((_, i) => (
                   <React.Fragment key={i}>
-                    <div className="w-[1.5px] h-4 bg-dashed border-l border-dashed border-gray-200" />
-                    <div className="w-3 h-3 rounded-full bg-blue-400 border-2 border-white shadow-sm" />
+                    <div className="w-px h-3 border-l border-dashed border-slate-200" />
+                    <div className="w-2 h-2 rounded-full bg-blue-400 border-2 border-white shadow-sm" />
                   </React.Fragment>
                 ))}
-                <div className="w-[1.5px] h-4 border-l border-dashed border-gray-200" />
-                <div className="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow-sm" />
+                <div className="w-px h-3 border-l border-dashed border-slate-200" />
+                <div className="w-2 h-2 rounded-full bg-orange-500 border-2 border-white shadow-sm" />
               </div>
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-1.5">
                 <div>
-                  <p className="text-[14px] font-black text-gray-900 leading-tight">{pickup}</p>
-                  <p className="text-[11px] font-bold text-gray-400">Pickup</p>
+                  <p className="text-[12px] font-black text-slate-900 leading-tight">{pickup}</p>
+                  <p className="text-[9px] font-bold text-slate-400">Pickup</p>
                 </div>
                 {stops.map((s, i) => (
-                  <div key={i} className="pt-1">
-                    <p className="text-[14px] font-black text-blue-600 leading-tight">{s}</p>
-                    <p className="text-[11px] font-bold text-gray-400">Stop {i + 1}</p>
+                  <div key={i}>
+                    <p className="text-[12px] font-black text-blue-600 leading-tight">{s}</p>
+                    <p className="text-[9px] font-bold text-slate-400">Stop {i + 1}</p>
                   </div>
                 ))}
-                <div className="pt-1">
-                  <p className="text-[14px] font-black text-gray-900 leading-tight">{drop}</p>
-                  <p className="text-[11px] font-bold text-gray-400">Drop</p>
+                <div>
+                  <p className="text-[12px] font-black text-slate-900 leading-tight">{drop}</p>
+                  <p className="text-[9px] font-bold text-slate-400">Drop</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Driver section */}
-          <div className="px-5 py-4 border-b border-gray-50 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-              <img
-                src={`https://ui-avatars.com/api/?name=${(driver.name || 'D').replace(' ', '+')}&background=f0f0f0&color=000`}
-                className="w-full h-full object-cover"
-                alt="Driver"
-              />
+          {/* Driver */}
+          <div className="px-4 py-3 border-b border-slate-50 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-[11px] bg-slate-100 overflow-hidden border border-slate-100 shrink-0">
+              <img src={`https://ui-avatars.com/api/?name=${driver.name.replace(' ', '+')}&background=f1f5f9&color=0f172a`}
+                className="w-full h-full object-cover" alt="Driver" />
             </div>
-            <div className="flex-1">
-              <p className="text-[15px] font-black text-gray-900 leading-tight">{driver.name}</p>
-              <p className="text-[12px] font-bold text-gray-400">{driver.vehicle} · {driver.plate}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-black text-slate-900 leading-tight">{driver.name}</p>
+              <p className="text-[10px] font-bold text-slate-400">{driver.vehicle} · {driver.plate}</p>
             </div>
-            <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 rounded-full px-2.5 py-1">
-              <Star size={12} className="text-yellow-500 fill-yellow-500" />
-              <span className="text-[12px] font-black text-gray-800">{driver.rating || '4.9'}</span>
+            <div className="flex items-center gap-1 bg-yellow-50 border border-yellow-100 rounded-full px-2 py-0.5 shrink-0">
+              <Star size={9} className="text-yellow-500 fill-yellow-500" />
+              <span className="text-[10px] font-black text-slate-800">{driver.rating || '4.9'}</span>
             </div>
           </div>
 
           {/* Fare breakdown */}
-          <div className="px-5 py-4 space-y-2.5">
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Fare Breakdown</p>
-
+          <div className="px-4 py-3 space-y-1.5">
+            <p className="text-[8px] font-black uppercase tracking-[0.22em] text-slate-400 mb-1.5">Fare Breakdown</p>
             <div className="flex justify-between items-center">
-              <span className="text-[14px] font-bold text-gray-600">Base Fare</span>
-              <span className="text-[14px] font-black text-gray-900">₹{fare}.00</span>
+              <span className="text-[12px] font-bold text-slate-500">Base Fare</span>
+              <span className="text-[12px] font-black text-slate-900">₹{fare}.00</span>
             </div>
             {effectiveTip > 0 && (
               <div className="flex justify-between items-center">
-                <span className="text-[14px] font-bold text-green-600">Tip 🙏</span>
-                <span className="text-[14px] font-black text-green-600">₹{effectiveTip}.00</span>
+                <span className="text-[12px] font-bold text-emerald-600">Tip 🙏</span>
+                <span className="text-[12px] font-black text-emerald-600">₹{effectiveTip}.00</span>
               </div>
             )}
-            <div className="border-t border-gray-100 pt-2.5 flex justify-between items-center">
-              <span className="text-[16px] font-black text-gray-900">Total</span>
-              <span className="text-[20px] font-black text-gray-900 tracking-tight">₹{totalBill}.00</span>
+            <div className="border-t border-slate-50 pt-1.5 flex justify-between items-center">
+              <span className="text-[14px] font-black text-slate-900">Total</span>
+              <span className="text-[17px] font-black text-slate-900 tracking-tight">₹{totalBill}.00</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-[12px] font-bold text-gray-400 uppercase tracking-wide">Payment</span>
-              <span className="text-[12px] font-black text-gray-700 bg-gray-100 px-3 py-1 rounded-full">{paymentMethod}</span>
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Payment</span>
+              <span className="text-[10px] font-black text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full">{paymentMethod}</span>
             </div>
           </div>
         </motion.div>
 
-        {/* ── TIP SECTION ── */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.25 }}
-          className="bg-white rounded-[32px] p-5 shadow-sm border border-gray-100"
-        >
-          <h3 className="text-[14px] font-black text-gray-900 mb-3 text-center uppercase tracking-widest">
-            Tip your captain 🙏
-          </h3>
-          <div className="flex gap-2 justify-center flex-wrap">
+        {/* Tip section */}
+        <motion.div initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.18 }}
+          className="rounded-[18px] border border-white/80 bg-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.05)] px-4 py-3 space-y-2.5">
+          <p className="text-[9px] font-black uppercase tracking-[0.22em] text-slate-400 text-center">Tip your captain 🙏</p>
+          <div className="flex gap-1.5 justify-center flex-wrap">
             {TIP_OPTIONS.map((amount) => (
-              <motion.button
-                key={amount}
-                whileTap={{ scale: 0.93 }}
-                onClick={() => {
-                  setSelectedTip(selectedTip === amount ? null : amount);
-                  setShowCustomTip(false);
-                  setCustomTip('');
-                }}
-                className={`px-5 py-2.5 rounded-full text-[13px] font-black transition-all border ${
+              <motion.button key={amount} whileTap={{ scale: 0.93 }}
+                onClick={() => { setSelectedTip(selectedTip === amount ? null : amount); setShowCustomTip(false); setCustomTip(''); }}
+                className={`px-3.5 py-1.5 rounded-full text-[11px] font-black transition-all border ${
                   selectedTip === amount
-                    ? 'bg-[#E85D04] text-white border-[#E85D04] shadow-lg shadow-orange-100'
-                    : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-200'
-                }`}
-              >
+                    ? 'bg-orange-500 text-white border-orange-500 shadow-[0_3px_8px_rgba(249,115,22,0.25)]'
+                    : 'bg-slate-50 text-slate-600 border-slate-100'
+                }`}>
                 ₹{amount}
               </motion.button>
             ))}
-            <motion.button
-              whileTap={{ scale: 0.93 }}
-              onClick={() => {
-                setShowCustomTip(!showCustomTip);
-                setSelectedTip(null);
-              }}
-              className={`px-5 py-2.5 rounded-full text-[13px] font-black transition-all border ${
-                showCustomTip
-                  ? 'bg-gray-900 text-white border-gray-900'
-                  : 'bg-gray-50 text-gray-600 border-gray-100'
-              }`}
-            >
+            <motion.button whileTap={{ scale: 0.93 }}
+              onClick={() => { setShowCustomTip(!showCustomTip); setSelectedTip(null); }}
+              className={`px-3.5 py-1.5 rounded-full text-[11px] font-black transition-all border ${
+                showCustomTip ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-600 border-slate-100'
+              }`}>
               Custom
             </motion.button>
           </div>
           <AnimatePresence>
             {showCustomTip && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-3 overflow-hidden"
-              >
-                <div className="flex items-center gap-2 bg-gray-50 rounded-2xl px-4 py-3 border border-gray-100">
-                  <span className="text-[16px] font-black text-gray-400">₹</span>
-                  <input
-                    type="number"
-                    placeholder="Enter tip amount"
-                    value={customTip}
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+                <div className="flex items-center gap-2 bg-slate-50 rounded-[12px] px-3 py-2.5 border border-slate-100">
+                  <span className="text-[13px] font-black text-slate-400">₹</span>
+                  <input type="number" placeholder="Enter tip amount" value={customTip}
                     onChange={(e) => setCustomTip(e.target.value)}
-                    className="flex-1 bg-transparent border-none text-[15px] font-black text-gray-900 focus:outline-none placeholder:text-gray-300"
-                  />
+                    className="flex-1 bg-transparent border-none text-[13px] font-black text-slate-900 focus:outline-none placeholder:text-slate-300" />
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
           {effectiveTip > 0 && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-[12px] font-black text-green-600 mt-3">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              className="text-center text-[10px] font-black text-emerald-600">
               Includes ₹{effectiveTip} tip — Thank you! 🙏
             </motion.p>
           )}
         </motion.div>
 
-        {/* ── RATING SECTION ── */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="space-y-4 text-center bg-white rounded-[32px] p-6 shadow-sm border border-gray-100"
-        >
-          <h3 className="text-xl font-black text-gray-900 tracking-tight">
-            How was your ride with {driver.name?.split(' ')[0]}?
-          </h3>
-          <div className="flex justify-center gap-3">
+        {/* Rating section */}
+        <motion.div initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.26 }}
+          className="rounded-[18px] border border-white/80 bg-white/90 shadow-[0_4px_12px_rgba(15,23,42,0.05)] px-4 py-3 space-y-2.5 text-center">
+          <p className="text-[13px] font-black text-slate-900">How was your ride with {driver.name?.split(' ')[0]}?</p>
+          <div className="flex justify-center gap-1.5">
             {[1, 2, 3, 4, 5].map((num) => (
-              <motion.button
-                key={num}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => handleRating(num)}
-                className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
-                  rating >= num ? 'bg-[#F48C06] text-white shadow-lg shadow-orange-100' : 'bg-gray-100 text-gray-300'
-                }`}
-              >
-                <Star size={24} className={rating >= num ? 'fill-white' : ''} />
+              <motion.button key={num} whileTap={{ scale: 0.9 }} onClick={() => handleRating(num)}
+                className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-all ${
+                  rating >= num ? 'bg-orange-500 shadow-[0_3px_10px_rgba(249,115,22,0.25)]' : 'bg-slate-100'
+                }`}>
+                <Star size={18} className={rating >= num ? 'text-white fill-white' : 'text-slate-300'} />
               </motion.button>
             ))}
           </div>
           {rating > 0 && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-[#E85D04] font-black text-sm uppercase tracking-widest"
-            >
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              className="text-[10px] font-black text-orange-500 uppercase tracking-wider">
               {rating === 5 ? '⭐ Awesome Experience!' : rating >= 3 ? '👍 Thanks for rating!' : '📝 We will improve!'}
             </motion.p>
           )}
         </motion.div>
 
-        {/* ── BOTTOM ACTIONS ── */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="space-y-3 pb-4"
-        >
-          <div className="flex gap-3">
-            <button
-              onClick={handleShare}
-              className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-100 py-3.5 rounded-[24px] text-sm font-black text-gray-900 shadow-sm active:scale-95 transition-all"
-            >
-              <Share2 size={18} />
-              <span>Share Receipt</span>
-            </button>
-            <button
-              onClick={() => navigate('/support')}
-              className="flex-1 flex items-center justify-center gap-2 bg-white border border-gray-100 py-3.5 rounded-[24px] text-sm font-black text-gray-900 shadow-sm active:scale-95 transition-all"
-            >
-              <Info size={18} />
-              <span>Support</span>
-            </button>
+        {/* Bottom actions */}
+        <motion.div initial={{ y: 12, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.34 }}
+          className="space-y-2 pb-4">
+          <div className="flex gap-2">
+            <motion.button whileTap={{ scale: 0.97 }} onClick={handleShare}
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-[14px] border border-white/80 bg-white/90 py-3 text-[11px] font-black text-slate-700 shadow-[0_3px_10px_rgba(15,23,42,0.05)]">
+              <Share2 size={13} strokeWidth={2} /> Share Receipt
+            </motion.button>
+            <motion.button whileTap={{ scale: 0.97 }} onClick={() => navigate('/support')}
+              className="flex-1 flex items-center justify-center gap-1.5 rounded-[14px] border border-white/80 bg-white/90 py-3 text-[11px] font-black text-slate-700 shadow-[0_3px_10px_rgba(15,23,42,0.05)]">
+              <Info size={13} strokeWidth={2} /> Support
+            </motion.button>
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="w-full bg-[#1C2833] py-5 rounded-[28px] text-lg font-black text-white shadow-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2"
-          >
-            <span>Back to Home</span>
-            <ChevronRight size={22} className="opacity-50" />
-          </button>
+          <motion.button whileTap={{ scale: 0.98 }} onClick={() => navigate('/')}
+            className="w-full bg-slate-900 py-3.5 rounded-[16px] text-[14px] font-black text-white shadow-[0_6px_20px_rgba(15,23,42,0.18)] flex items-center justify-center gap-2">
+            Back to Home <ChevronRight size={15} strokeWidth={3} className="opacity-50" />
+          </motion.button>
         </motion.div>
 
       </div>

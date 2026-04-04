@@ -11,9 +11,9 @@ const ActionCard = ({ title, description, image, surfaceClass, titleClass, butto
     >
       <div className="absolute inset-0 bg-[radial-gradient(120px_90px_at_12%_20%,rgba(255,255,255,0.85),transparent_65%)]" aria-hidden="true" />
 
-      <div className="relative z-10 flex flex-1 flex-col">
+        <div className="relative z-10 flex flex-1 flex-col">
         <div className="max-w-[160px]">
-          <h3 className={`text-[22px] font-black leading-none tracking-tight ${titleClass}`}>{title}</h3>
+          <h3 className={`text-[18px] font-black leading-none tracking-tight ${titleClass}`}>{title}</h3>
           <p className="mt-2 text-[12px] font-semibold leading-snug text-slate-600">{description}</p>
         </div>
 
