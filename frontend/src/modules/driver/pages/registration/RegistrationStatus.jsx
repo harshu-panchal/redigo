@@ -11,7 +11,7 @@ import {
     Stars,
     ArrowRight
 } from 'lucide-react';
-import RedigoLogo from '@/assets/redigologo.png';
+import { BRAND_LOGO_SRC } from '@/branding/logo';
 
 const RegistrationStatus = () => {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ const RegistrationStatus = () => {
         <div className="min-h-screen bg-taxi-bg font-sans select-none overflow-x-hidden flex flex-col pt-8 pb-6">
             {/* Branded Header */}
             <div className="px-8 mb-6 flex items-center justify-center">
-                 <img src={RedigoLogo} alt="Redigo" className="h-12 object-contain drop-shadow-sm" />
+                 <img src={BRAND_LOGO_SRC} alt="Redigo" className="h-12 object-contain drop-shadow-sm" />
             </div>
 
             <main className="flex-1 px-8 flex flex-col items-center justify-center text-center">

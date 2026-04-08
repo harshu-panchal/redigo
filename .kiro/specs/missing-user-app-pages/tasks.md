@@ -2,7 +2,7 @@
 
 ## Overview
 
-Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + Tailwind CSS + Framer Motion mobile web app. Each phase wires new pages into `App.jsx` routes and updates the relevant entry-point components. All pages follow the existing glassmorphism design language: orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
+Implement 13 missing pages across 5 delivery phases for the Namma React 18 + Tailwind CSS + Framer Motion mobile web app. Each phase wires new pages into `App.jsx` routes and updates the relevant entry-point components. All pages follow the existing glassmorphism design language: orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
 
 ## Tasks
 
@@ -14,12 +14,12 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Cancel modal must confirm before navigating to `/`; preserve current stage on any backward transition attempt
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9_
 
-  - [ ]* 1.2 Write property test for stage monotonicity (Req 1 — Property: Stage monotonicity)
+  - [ ]\* 1.2 Write property test for stage monotonicity (Req 1 — Property: Stage monotonicity)
     - **Property 1: Stage monotonicity** — FOR ALL stage transition sequences, the stage index SHALL only increase (SEARCHING=0, ASSIGNED=1, ACCEPTED=2, COMPLETING=3)
     - **Validates: Requirements 1.8**
     - Use fast-check `fc.array(fc.integer({min:0,max:3}))` to generate transition sequences and assert no index ever decreases
 
-  - [ ]* 1.3 Write property test for OTP format (Req 1 — Property: OTP format)
+  - [ ]\* 1.3 Write property test for OTP format (Req 1 — Property: OTP format)
     - **Property 2: OTP format** — FOR ALL generated OTPs, the string SHALL be exactly 4 characters, each in `[0-9]`
     - **Validates: Requirements 1.5**
     - Run `generateOTP()` 1000 times via fast-check and assert `/^\d{4}$/` on every result
@@ -33,7 +33,7 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Replace all ride copy with parcel equivalents ("Delivery in progress", "Delivery Agent")
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8_
 
-  - [ ]* 1.5 Write property test for share idempotence (Req 2 — Property: Share idempotence)
+  - [ ]\* 1.5 Write property test for share idempotence (Req 2 — Property: Share idempotence)
     - **Property 3: Share idempotence** — FOR ALL invocations of the share action on the same delivery state, the produced share text SHALL be identical
     - **Validates: Requirements 2.5**
     - Use fast-check to generate arbitrary driver/pickup/drop state objects and assert `buildShareText(state) === buildShareText(state)` across multiple calls
@@ -62,12 +62,12 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Empty state: illustration + "You're all caught up"; error state: message + "Retry" button
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8_
 
-  - [ ]* 3.2 Write property test for unread count invariant (Req 4 — Property: Unread count invariant)
+  - [ ]\* 3.2 Write property test for unread count invariant (Req 4 — Property: Unread count invariant)
     - **Property 4: Unread count invariant** — FOR ALL notification list states, `unreadCount === notifications.filter(n => !n.read).length` and `unreadCount <= notifications.length`
     - **Validates: Requirements 4.7**
     - Use fast-check `fc.array(fc.record({ id: fc.string(), read: fc.boolean() }))` and assert both conditions
 
-  - [ ]* 3.3 Write property test for delete invariant (Req 4 — Property: Delete invariant)
+  - [ ]\* 3.3 Write property test for delete invariant (Req 4 — Property: Delete invariant)
     - **Property 5: Delete invariant** — FOR ALL delete operations on a list of length N, result has length N-1 and does not contain the deleted item
     - **Validates: Requirements 4.6**
     - Generate arbitrary notification arrays and a random index to delete; assert length and absence
@@ -81,12 +81,12 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Empty state: "No promo codes available right now"
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8_
 
-  - [ ]* 3.5 Write property test for discount bounds (Req 5 — Property: Discount bounds)
+  - [ ]\* 3.5 Write property test for discount bounds (Req 5 — Property: Discount bounds)
     - **Property 6: Discount bounds** — FOR ALL applied promo codes, `discount >= 0` and `discount <= fare`
     - **Validates: Requirements 5.3, 5.4**
     - Use fast-check `fc.record({ discount: fc.float({min:0}), fare: fc.float({min:0}) })` and assert the invariant after applying
 
-  - [ ]* 3.6 Write property test for applied idempotence (Req 5 — Property: Applied idempotence)
+  - [ ]\* 3.6 Write property test for applied idempotence (Req 5 — Property: Applied idempotence)
     - **Property 7: Applied idempotence** — FOR ALL promo codes already in applied state, tapping Apply again SHALL NOT change state or trigger API call
     - **Validates: Requirements 5.3**
     - Mock the API call counter and assert it remains 0 when Apply is invoked on an already-applied code
@@ -99,7 +99,7 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Empty state: "No referrals yet — share your code to start earning"; skeleton rows while loading
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
 
-  - [ ]* 3.8 Write property test for stats consistency (Req 6 — Property: Stats consistency)
+  - [ ]\* 3.8 Write property test for stats consistency (Req 6 — Property: Stats consistency)
     - **Property 8: Stats consistency** — FOR ALL referral history states, `totalInvites === referralHistory.length` and `totalRewards === sum(referralHistory.map(r => r.reward))`
     - **Validates: Requirements 6.5**
     - Use fast-check `fc.array(fc.record({ reward: fc.float({min:0}) }))` and assert both aggregate values
@@ -123,21 +123,21 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Prominent SOS trigger button with 3-second countdown before alerting contacts
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7_
 
-  - [ ]* 5.2 Write property test for SOS add invariant (Req 7 — Property: Add invariant)
+  - [ ]\* 5.2 Write property test for SOS add invariant (Req 7 — Property: Add invariant)
     - **Property 9: Add invariant** — FOR ALL successful add operations on a list of length N (<5), result has length N+1 and contains the new contact
     - **Validates: Requirements 7.3**
     - Use fast-check to generate contact arrays of length 0–4 and assert post-add length and membership
 
-  - [ ]* 5.3 Write property test for SOS delete invariant (Req 7 — Property: Delete invariant)
+  - [ ]\* 5.3 Write property test for SOS delete invariant (Req 7 — Property: Delete invariant)
     - **Property 10: Delete invariant** — FOR ALL successful delete operations on a list of length N, result has length N-1 and does not contain the deleted contact
     - **Validates: Requirements 7.5**
 
-  - [ ]* 5.4 Write property test for SOS uniqueness invariant (Req 7 — Property: Uniqueness invariant)
+  - [ ]\* 5.4 Write property test for SOS uniqueness invariant (Req 7 — Property: Uniqueness invariant)
     - **Property 11: Uniqueness invariant** — FOR ALL states of the SOS contact list, no two contacts share the same phone number
     - **Validates: Requirements 7.3**
     - Generate contact arrays and assert `new Set(contacts.map(c => c.phone)).size === contacts.length`
 
-  - [ ]* 5.5 Write property test for SOS limit invariant (Req 7 — Property: Limit invariant)
+  - [ ]\* 5.5 Write property test for SOS limit invariant (Req 7 — Property: Limit invariant)
     - **Property 12: Limit invariant** — FOR ALL states of the SOS contact list, `contacts.length <= 5`
     - **Validates: Requirements 7.7**
 
@@ -155,12 +155,12 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - Status badge colour coding consistent with list page
     - _Requirements: 8.5, 8.6, 8.7_
 
-  - [ ]* 5.8 Write property test for ticket status progression (Req 8 — Property: Status progression)
+  - [ ]\* 5.8 Write property test for ticket status progression (Req 8 — Property: Status progression)
     - **Property 13: Status progression** — FOR ALL status transitions, status SHALL only move Open → In_Progress → Resolved and SHALL NOT regress
     - **Validates: Requirements 8.1, 8.7**
     - Encode statuses as integers (0,1,2) and use fast-check to assert no transition decreases the index
 
-  - [ ]* 5.9 Write property test for reply append (Req 8 — Property: Reply append)
+  - [ ]\* 5.9 Write property test for reply append (Req 8 — Property: Reply append)
     - **Property 14: Reply append** — FOR ALL reply submissions on a thread of length N, result has length N+1 and last message equals submitted text
     - **Validates: Requirements 8.6**
 
@@ -191,7 +191,7 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - "Book Airport Cab" navigates to `/ride/select-location` with `{ isAirport: true, terminal, date, time, vehicle, fare }` via location state
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6_
 
-  - [ ]* 7.2 Write property test for fare monotonicity (Req 10 — Property: Fare monotonicity)
+  - [ ]\* 7.2 Write property test for fare monotonicity (Req 10 — Property: Fare monotonicity)
     - **Property 15: Fare monotonicity** — FOR ALL vehicle options ordered Mini < Sedan < SUV, `fare(Mini) <= fare(Sedan) <= fare(SUV)`
     - **Validates: Requirements 10.2**
     - Assert the static fare array satisfies the ordering invariant
@@ -211,7 +211,7 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - "Share Booking" button → `navigator.share` with booking summary
     - _Requirements: 12.1, 12.2, 12.3, 12.4, 12.6_
 
-  - [ ]* 7.5 Write property test for Booking ID format (Req 12 — Property: Booking ID format)
+  - [ ]\* 7.5 Write property test for Booking ID format (Req 12 — Property: Booking ID format)
     - **Property 16: Booking ID format** — FOR ALL generated Booking IDs, the string SHALL match `^IC-[A-Z0-9]{6}$`
     - **Validates: Requirements 12.6**
     - Run `generateBookingId()` 1000 times via fast-check and assert the regex on every result
@@ -240,12 +240,12 @@ Implement 13 missing pages across 5 delivery phases for the Rydon24 React 18 + T
     - "Skip" button on every slide → navigate immediately to `/login`
     - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5, 13.6, 13.7, 13.8_
 
-  - [ ]* 9.2 Write property test for slide index bounds (Req 13 — Property: Slide index bounds)
+  - [ ]\* 9.2 Write property test for slide index bounds (Req 13 — Property: Slide index bounds)
     - **Property 17: Slide index bounds** — FOR ALL "Next" interactions, `currentIndex` SHALL remain within `[0, slides.length - 1]`; tapping Next on the last slide SHALL NOT increment beyond `slides.length - 1`
     - **Validates: Requirements 13.3, 13.4**
     - Use fast-check `fc.array(fc.anything(), {minLength:1})` for slides and `fc.nat()` for tap count; assert index never exceeds `slides.length - 1`
 
-  - [ ]* 9.3 Write property test for skip idempotence (Req 13 — Property: Skip idempotence)
+  - [ ]\* 9.3 Write property test for skip idempotence (Req 13 — Property: Skip idempotence)
     - **Property 18: Skip idempotence** — FOR ALL slide positions, tapping "Skip" SHALL always navigate to `/login` regardless of current index
     - **Validates: Requirements 13.5**
     - Use fast-check `fc.integer({min:0, max:10})` for current index and assert the navigation target is always `/login`

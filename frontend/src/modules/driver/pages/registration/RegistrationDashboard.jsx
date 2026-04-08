@@ -17,7 +17,7 @@ import {
     ShieldCheck
 } from 'lucide-react';
 import RegistrationProgress from '../../../shared/components/RegistrationProgress';
-import RedigoLogo from '@/assets/redigologo.png';
+import { BRAND_LOGO_SRC } from '@/branding/logo';
 
 const RegistrationDashboard = () => {
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ const RegistrationDashboard = () => {
                     animate={{ scale: 1, opacity: 1 }}
                     className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-taxi-text shadow-2xl overflow-hidden p-2"
                 >
-                    <img src={RedigoLogo} alt="Redigo" className="w-full h-full object-contain" />
+                    <img src={BRAND_LOGO_SRC} alt="Redigo" className="w-full h-full object-contain" />
                 </motion.div>
                 
                 <motion.div 

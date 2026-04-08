@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document covers the technical design for all 13 missing pages in the Rydon24 user app, grouped into 5 phases. All pages follow the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, Framer Motion entrance animations, and mobile-first `max-w-lg` layout.
+This document covers the technical design for all 13 missing pages in the Namma user app, grouped into 5 phases. All pages follow the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, Framer Motion entrance animations, and mobile-first `max-w-lg` layout.
 
 ---
 
@@ -76,20 +76,19 @@ frontend/src/modules/user/pages/
 
 ### Entry point wiring (existing files to update)
 
-| Page | Entry point file | Change |
-|---|---|---|
-| WorkshopRSA | `Profile.jsx` | Add menu item `{ title: 'Workshop & RSA', path: '/services/workshop-rsa' }` |
-| Notifications | `Profile.jsx` | Change Notifications path from `/profile/notifications` to `/notifications` |
-| Referral | `Wallet.jsx` | Fix referral card navigate from `/taxi/driver/referral` → `/referral` |
-| Airport Cab | `CabHome.jsx` | Change airport service path from `/ride/select-location` → `/cab/airport` |
-| Spiritual Trip | `CabHome.jsx` | Change spiritual service path from `/ride/select-location` → `/cab/spiritual` |
-| Intercity Confirm | `IntercityHome.jsx` | Change Book CTA navigate from `/ride/select-location` → `/intercity/confirm` |
-| Parcel Searching | `SenderReceiverDetails.jsx` | Change submit navigate to `/parcel/searching` |
-| Delete Account | `SecuritySettings.jsx` | Add delete account link to `/profile/delete-account` |
-| Onboarding | `App.jsx` | Add redirect: if no `onboarding_complete` in localStorage, redirect `/login` → `/onboarding` |
+| Page              | Entry point file            | Change                                                                                       |
+| ----------------- | --------------------------- | -------------------------------------------------------------------------------------------- |
+| WorkshopRSA       | `Profile.jsx`               | Add menu item `{ title: 'Workshop & RSA', path: '/services/workshop-rsa' }`                  |
+| Notifications     | `Profile.jsx`               | Change Notifications path from `/profile/notifications` to `/notifications`                  |
+| Referral          | `Wallet.jsx`                | Fix referral card navigate from `/taxi/driver/referral` → `/referral`                        |
+| Airport Cab       | `CabHome.jsx`               | Change airport service path from `/ride/select-location` → `/cab/airport`                    |
+| Spiritual Trip    | `CabHome.jsx`               | Change spiritual service path from `/ride/select-location` → `/cab/spiritual`                |
+| Intercity Confirm | `IntercityHome.jsx`         | Change Book CTA navigate from `/ride/select-location` → `/intercity/confirm`                 |
+| Parcel Searching  | `SenderReceiverDetails.jsx` | Change submit navigate to `/parcel/searching`                                                |
+| Delete Account    | `SecuritySettings.jsx`      | Add delete account link to `/profile/delete-account`                                         |
+| Onboarding        | `App.jsx`                   | Add redirect: if no `onboarding_complete` in localStorage, redirect `/login` → `/onboarding` |
 
 ---
-
 
 ---
 
@@ -102,22 +101,27 @@ frontend/src/modules/user/pages/
 **Component:** `ParcelSearchingDriver.jsx`
 
 **State:**
+
 ```js
-const [stage, setStage]                   = useState(STAGES.SEARCHING);
-const [showCancelConfirm, setShowCancel]  = useState(false);
-const [otp]                               = useState(() => String(Math.floor(1000 + Math.random() * 9000)));
-const [driver]                            = useState(() => MOCK_AGENTS[Math.floor(Math.random() * MOCK_AGENTS.length)]);
+const [stage, setStage] = useState(STAGES.SEARCHING);
+const [showCancelConfirm, setShowCancel] = useState(false);
+const [otp] = useState(() => String(Math.floor(1000 + Math.random() * 9000)));
+const [driver] = useState(
+  () => MOCK_AGENTS[Math.floor(Math.random() * MOCK_AGENTS.length)],
+);
 ```
 
 **STAGES constant:** `{ SEARCHING, ASSIGNED, ACCEPTED, COMPLETING }` — identical to ride flow.
 
 **Timer sequence (useEffect):**
+
 - 0 ms → SEARCHING
 - +5 s → ASSIGNED
 - +5 s → ACCEPTED
 - +5 s → COMPLETING → navigate(`/parcel/tracking`, { state: { driver, otp, ...routeState } })
 
 **Copy differences from SearchingDriver:**
+
 - "Finding your delivery agent..." (was "Finding your captain...")
 - "Connecting with delivery agents nearby"
 - Banner: "Delivery Agent Found!" / "Delivery Accepted!"
@@ -137,11 +141,13 @@ const [driver]                            = useState(() => MOCK_AGENTS[Math.floo
 **Props from location.state:** `{ driver, otp, pickup, drop, fare, paymentMethod }`
 
 **State:**
+
 ```js
 const [showCancelModal, setShowCancelModal] = useState(false);
 ```
 
 **Layout:**
+
 - Full-screen `/map image.avif` background
 - Top-left back button → `/`
 - Top-right safety badge → `/support`
@@ -153,12 +159,16 @@ const [showCancelModal, setShowCancelModal] = useState(false);
   - "Cancel Delivery" button → cancel modal
 
 **Share handler:**
+
 ```js
 const shareText = `Parcel delivery in progress!\nAgent: ${driver.name}\nPickup: ${pickup}\nDrop: ${drop}\nOTP: ${otp}`;
-navigator.share ? navigator.share({ text: shareText }) : navigator.clipboard.writeText(shareText);
+navigator.share
+  ? navigator.share({ text: shareText })
+  : navigator.clipboard.writeText(shareText);
 ```
 
 **Copy differences from RideTracking:**
+
 - "Delivery in progress" (was "Ride in progress")
 - "Your delivery agent is on the way"
 
@@ -170,6 +180,7 @@ navigator.share ? navigator.share({ text: shareText }) : navigator.clipboard.wri
 
 1. `App.jsx` — add lazy import + route (shown in Architecture section above)
 2. `Profile.jsx` — add to `menuItems` array:
+
 ```js
 { icon: Wrench, title: 'Workshop & RSA', sub: 'Roadside help on demand', path: '/services/workshop-rsa', bg: 'bg-emerald-50', color: 'text-emerald-500' }
 ```
@@ -183,28 +194,33 @@ navigator.share ? navigator.share({ text: shareText }) : navigator.clipboard.wri
 **Component:** `Notifications.jsx`
 
 **State:**
+
 ```js
 const [notifications, setNotifications] = useState([]);
-const [loading, setLoading]             = useState(true);
-const [error, setError]                 = useState(null);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 ```
 
 **Data flow:**
+
 - `useEffect` → `GET /api/v1/notifications/get-notification` → set notifications
 - Delete: `POST /api/v1/notifications/delete-notification/:id` → filter from state
 - Mark read: local state toggle (optimistic)
 
 **Layout (top → bottom):**
+
 - Sticky header: back arrow, "Notifications" title, unread count badge (orange pill)
 - Scrollable list of `NotificationCard` components
 - Empty state: bell icon + "You're all caught up"
 - Error state: warning icon + "Retry" button
 
 **NotificationCard sub-component:**
+
 ```
 [unread dot] [icon bg] [title + body] [timestamp]
              [type icon]              [delete btn]
 ```
+
 - Unread: white bg, left orange border `border-l-4 border-orange-400`
 - Read: `bg-white/60`, no border
 - Slide-out delete: `AnimatePresence` + `motion.div` with `exit={{ x: -100, opacity: 0 }}`
@@ -222,20 +238,23 @@ const [error, setError]                 = useState(null);
 **Component:** `PromoCodes.jsx`
 
 **State:**
+
 ```js
-const [promos, setPromos]         = useState([]);
-const [loading, setLoading]       = useState(true);
-const [appliedCode, setApplied]   = useState(null);
-const [manualCode, setManualCode] = useState('');
-const [toast, setToast]           = useState(null); // { type: 'success'|'error', msg }
+const [promos, setPromos] = useState([]);
+const [loading, setLoading] = useState(true);
+const [appliedCode, setApplied] = useState(null);
+const [manualCode, setManualCode] = useState("");
+const [toast, setToast] = useState(null); // { type: 'success'|'error', msg }
 ```
 
 **Data flow:**
+
 - `useEffect` → `GET /api/v1/request/promocode-list` → set promos
 - Apply: `POST /api/v1/request/promocode-redeem` → on success set appliedCode, show toast
 - Guard: if `appliedCode === promo.code` skip API call
 
 **Layout (top → bottom):**
+
 - Sticky header: back arrow, "Promo Codes" title
 - Manual entry card: text input + "Apply" button
 - Section label "Available Offers"
@@ -243,10 +262,12 @@ const [toast, setToast]           = useState(null); // { type: 'success'|'error'
 - Empty state: ticket icon + "No promo codes available right now"
 
 **PromoCard sub-component:**
+
 ```
 [discount badge]  [code string]  [expiry]
 [service type tag]               [Apply / Applied ✓ button]
 ```
+
 - Applied state: green checkmark, button disabled, `bg-emerald-50 border-emerald-200`
 - Normal state: `bg-white/90`, orange "Apply" button
 
@@ -261,19 +282,22 @@ const [toast, setToast]           = useState(null); // { type: 'success'|'error'
 **Component:** `Referral.jsx`
 
 **State:**
+
 ```js
-const [history, setHistory]   = useState([]);
-const [loading, setLoading]   = useState(true);
-const [copied, setCopied]     = useState(false);
-const REFERRAL_CODE           = 'RYDON-HR24'; // from user profile
+const [history, setHistory] = useState([]);
+const [loading, setLoading] = useState(true);
+const [copied, setCopied] = useState(false);
+const REFERRAL_CODE = "RYDON-HR24"; // from user profile
 ```
 
 **Data flow:**
+
 - `useEffect` → `GET /api/v1/common/referral/history` → set history
 - Copy: `navigator.clipboard.writeText(REFERRAL_CODE)` → setCopied(true) → reset after 2 s
-- Share: `navigator.share({ text: \`Join Rydon24 with my code ${REFERRAL_CODE}...\` })` or WhatsApp fallback
+- Share: `navigator.share({ text: \`Join Namma with my code ${REFERRAL_CODE}...\` })` or WhatsApp fallback
 
 **Layout (top → bottom):**
+
 - Sticky header: back arrow, "Referral" title
 - Referral code card (orange gradient): large code text, copy icon, share button
 - Stats row: "X Invites" | "₹Y Earned" (derived from history)
@@ -282,14 +306,16 @@ const REFERRAL_CODE           = 'RYDON-HR24'; // from user profile
 - Empty state: gift icon + "No referrals yet — share your code to start earning"
 
 **ReferralRow sub-component:**
+
 ```
 [avatar initials]  [name + join date]  [₹reward badge]
 ```
 
 **Stats derivation:**
+
 ```js
 const totalInvites = history.length;
-const totalEarned  = history.reduce((sum, r) => sum + (r.reward || 0), 0);
+const totalEarned = history.reduce((sum, r) => sum + (r.reward || 0), 0);
 ```
 
 **Entry point:** `Wallet.jsx` referral card navigate fixed to `/referral`
@@ -303,23 +329,25 @@ const totalEarned  = history.reduce((sum, r) => sum + (r.reward || 0), 0);
 **Component:** `SOSContacts.jsx`
 
 **State:**
+
 ```js
-const [contacts, setContacts]         = useState([]);
+const [contacts, setContacts] = useState([]);
 const [showAddSheet, setShowAddSheet] = useState(false);
-const [name, setName]                 = useState('');
-const [phone, setPhone]               = useState('');
-const [errors, setErrors]             = useState({});
-const [sosActive, setSosActive]       = useState(false);
-const [countdown, setCountdown]       = useState(3);
+const [name, setName] = useState("");
+const [phone, setPhone] = useState("");
+const [errors, setErrors] = useState({});
+const [sosActive, setSosActive] = useState(false);
+const [countdown, setCountdown] = useState(3);
 const [deleteTarget, setDeleteTarget] = useState(null);
 ```
 
 **Validation:**
+
 ```js
 const validate = () => ({
-  name:  !name.trim()                          ? 'Name is required' : null,
-  phone: !/^\d{10}$/.test(phone)               ? 'Enter valid 10-digit number' : null,
-  dup:   contacts.some(c => c.phone === phone) ? 'Contact already added' : null,
+  name: !name.trim() ? "Name is required" : null,
+  phone: !/^\d{10}$/.test(phone) ? "Enter valid 10-digit number" : null,
+  dup: contacts.some((c) => c.phone === phone) ? "Contact already added" : null,
 });
 ```
 
@@ -330,6 +358,7 @@ const validate = () => ({
 **SOS trigger:** tap SOS button → setSosActive(true) → 3-second countdown interval → alert (mock) → reset
 
 **Layout (top → bottom):**
+
 - Sticky header: back arrow, "SOS Contacts" title, "Add" button (disabled if contacts.length >= 5)
 - Large red SOS trigger button with countdown ring
 - List of `SOSContactCard` components (name, phone, delete icon)
@@ -345,14 +374,15 @@ const validate = () => ({
 **Components:** `SupportTickets.jsx`, `SupportTicketDetail.jsx`
 
 **SupportTickets state:**
+
 ```js
-const [tickets, setTickets]       = useState([]);
-const [loading, setLoading]       = useState(true);
-const [showNewForm, setShowNew]   = useState(false);
-const [subject, setSubject]       = useState('');
-const [category, setCategory]     = useState('');
-const [description, setDesc]      = useState('');
-const [errors, setErrors]         = useState({});
+const [tickets, setTickets] = useState([]);
+const [loading, setLoading] = useState(true);
+const [showNewForm, setShowNew] = useState(false);
+const [subject, setSubject] = useState("");
+const [category, setCategory] = useState("");
+const [description, setDesc] = useState("");
+const [errors, setErrors] = useState({});
 ```
 
 **CATEGORIES:** `['Ride Issue', 'Payment', 'Driver Behaviour', 'App Bug', 'Other']`
@@ -360,6 +390,7 @@ const [errors, setErrors]         = useState({});
 **STATUS_COLORS:** `{ Open: 'orange', 'In Progress': 'blue', Resolved: 'green' }`
 
 **Layout (SupportTickets):**
+
 - Sticky header: back arrow, "Support" title, "+" new ticket button
 - Tab row: All | Open | Resolved
 - List of `TicketCard` components → navigate(`/support/ticket/${ticket.id}`)
@@ -367,13 +398,15 @@ const [errors, setErrors]         = useState({});
 - New ticket bottom sheet: subject input, category select, description textarea, "Submit" CTA
 
 **SupportTicketDetail state:**
+
 ```js
-const [ticket, setTicket]   = useState(null);
-const [reply, setReply]     = useState('');
+const [ticket, setTicket] = useState(null);
+const [reply, setReply] = useState("");
 const [sending, setSending] = useState(false);
 ```
 
 **Layout (SupportTicketDetail):**
+
 - Sticky header: back arrow, ticket subject, status badge
 - Scrollable message thread (user messages right-aligned, support left-aligned)
 - Fixed bottom reply bar: text input + send button
@@ -388,11 +421,12 @@ const [sending, setSending] = useState(false);
 **Component:** `DeleteAccount.jsx`
 
 **State:**
+
 ```js
-const [reason, setReason]         = useState('');
+const [reason, setReason] = useState("");
 const [showConfirm, setShowConfirm] = useState(false);
-const [loading, setLoading]       = useState(false);
-const [error, setError]           = useState(null);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
 ```
 
 **REASONS:** `['I use another app', 'Too expensive', 'Privacy concerns', 'Technical issues', 'Other']`
@@ -400,6 +434,7 @@ const [error, setError]           = useState(null);
 **Delete flow:** select reason → enable "Delete My Account" button → tap → show confirm modal → confirm → `POST /api/v1/user/delete-user-account` → navigate(`/login`) on success
 
 **Layout (top → bottom):**
+
 - Header: back arrow, "Delete Account" title (red)
 - Warning card: red border, list of consequences (ride history lost, wallet balance forfeited, saved data removed)
 - Reason selector: radio-style list
@@ -417,22 +452,42 @@ const [error, setError]           = useState(null);
 **Component:** `AirportCab.jsx`
 
 **State:**
+
 ```js
-const [pickup, setPickup]         = useState('');
-const [terminal, setTerminal]     = useState('');
-const [date, setDate]             = useState('');
-const [time, setTime]             = useState('');
-const [vehicle, setVehicle]       = useState('mini');
-const [errors, setErrors]         = useState({});
+const [pickup, setPickup] = useState("");
+const [terminal, setTerminal] = useState("");
+const [date, setDate] = useState("");
+const [time, setTime] = useState("");
+const [vehicle, setVehicle] = useState("mini");
+const [errors, setErrors] = useState({});
 ```
 
 **VEHICLES:**
+
 ```js
 [
-  { id: 'mini',  name: 'Mini Cab',  icon: '🚕', fare: 499,  desc: 'Swift, Alto, WagonR' },
-  { id: 'sedan', name: 'Sedan',     icon: '🚗', fare: 699,  desc: 'Dzire, Amaze, Aspire' },
-  { id: 'suv',   name: 'SUV',       icon: '🚙', fare: 999,  desc: 'Ertiga, Innova, Crysta' },
-]
+  {
+    id: "mini",
+    name: "Mini Cab",
+    icon: "🚕",
+    fare: 499,
+    desc: "Swift, Alto, WagonR",
+  },
+  {
+    id: "sedan",
+    name: "Sedan",
+    icon: "🚗",
+    fare: 699,
+    desc: "Dzire, Amaze, Aspire",
+  },
+  {
+    id: "suv",
+    name: "SUV",
+    icon: "🚙",
+    fare: 999,
+    desc: "Ertiga, Innova, Crysta",
+  },
+];
 ```
 
 **Validation:** pickup non-empty, terminal selected, date non-empty, time non-empty
@@ -440,6 +495,7 @@ const [errors, setErrors]         = useState({});
 **Book flow:** validate → navigate(`/ride/select-location`, { state: { isAirport: true, pickup, terminal, date, time, vehicle } })
 
 **Layout (top → bottom):**
+
 - Header: back arrow, "Airport Cab" title, "Fixed Fare" badge
 - Airport illustration banner (use `/airport_illustration.png`)
 - Pickup address input
@@ -457,18 +513,48 @@ const [errors, setErrors]         = useState({});
 **Component:** `SpiritualTrip.jsx`
 
 **DESTINATIONS:**
+
 ```js
 [
-  { id: 'ujjain',     name: 'Ujjain',      subtitle: 'Mahakaleshwar Jyotirlinga', dist: '55 km',  fare: '₹800–₹1,200',  emoji: '🛕' },
-  { id: 'omkareshwar',name: 'Omkareshwar', subtitle: 'Jyotirlinga on Narmada',   dist: '77 km',  fare: '₹1,000–₹1,500', emoji: '🙏' },
-  { id: 'maheshwar',  name: 'Maheshwar',   subtitle: 'Ahilya Fort & Ghats',      dist: '91 km',  fare: '₹1,200–₹1,800', emoji: '⛵' },
-  { id: 'orchha',     name: 'Orchha',      subtitle: 'Ram Raja Temple',          dist: '320 km', fare: '₹3,500–₹5,000', emoji: '🏯' },
-]
+  {
+    id: "ujjain",
+    name: "Ujjain",
+    subtitle: "Mahakaleshwar Jyotirlinga",
+    dist: "55 km",
+    fare: "₹800–₹1,200",
+    emoji: "🛕",
+  },
+  {
+    id: "omkareshwar",
+    name: "Omkareshwar",
+    subtitle: "Jyotirlinga on Narmada",
+    dist: "77 km",
+    fare: "₹1,000–₹1,500",
+    emoji: "🙏",
+  },
+  {
+    id: "maheshwar",
+    name: "Maheshwar",
+    subtitle: "Ahilya Fort & Ghats",
+    dist: "91 km",
+    fare: "₹1,200–₹1,800",
+    emoji: "⛵",
+  },
+  {
+    id: "orchha",
+    name: "Orchha",
+    subtitle: "Ram Raja Temple",
+    dist: "320 km",
+    fare: "₹3,500–₹5,000",
+    emoji: "🏯",
+  },
+];
 ```
 
 **Tap flow:** navigate(`/ride/select-location`, { state: { isSpiritualTrip: true, destination: dest.name, drop: dest.name } })
 
 **Layout (top → bottom):**
+
 - Header: back arrow, "Spiritual Trips" title, "Guided Tours" badge (purple)
 - Intro card: temple image, tagline "Sacred journeys from Indore"
 - 2-column destination grid of `DestinationCard` components
@@ -485,17 +571,22 @@ const [errors, setErrors]         = useState({});
 **Props from location.state:** `{ fromCity, toCity, tripType, date, passengers, vehicle, estimatedFare }`
 
 **Booking ID generation:**
+
 ```js
-const bookingId = 'IC-' + Math.random().toString(36).toUpperCase().slice(2, 8);
+const bookingId = "IC-" + Math.random().toString(36).toUpperCase().slice(2, 8);
 ```
 
 **Share handler:**
+
 ```js
 const summary = `Intercity booking confirmed!\nID: ${bookingId}\n${fromCity} → ${toCity}\nDate: ${date}\nVehicle: ${vehicle.name}\nFare: ₹${estimatedFare}`;
-navigator.share ? navigator.share({ text: summary }) : navigator.clipboard.writeText(summary);
+navigator.share
+  ? navigator.share({ text: summary })
+  : navigator.clipboard.writeText(summary);
 ```
 
 **Layout (top → bottom):**
+
 - Full-screen gradient background (slate-900 → slate-800)
 - Animated checkmark (scale-in, `motion.div`)
 - "Booking Confirmed!" heading (white)
@@ -515,47 +606,75 @@ navigator.share ? navigator.share({ text: summary }) : navigator.clipboard.write
 **Component:** `Onboarding.jsx`
 
 **SLIDES (fallback seed):**
+
 ```js
 [
-  { id: 1, title: 'Fast & Affordable Rides', body: 'Bike, auto, and cab rides at the best prices in Indore.', image: '/1_Bike.png', accent: 'from-orange-400 to-orange-600' },
-  { id: 2, title: 'Your Safety, Our Priority', body: 'SOS contacts, live tracking, and verified drivers on every trip.', image: '/Everyones Safety Matters.jpg', accent: 'from-blue-500 to-blue-700' },
-  { id: 3, title: 'Earn with Every Referral', body: 'Share your code and earn ₹50 for every friend who joins.', image: '/man.png', accent: 'from-emerald-500 to-emerald-700' },
-]
+  {
+    id: 1,
+    title: "Fast & Affordable Rides",
+    body: "Bike, auto, and cab rides at the best prices in Indore.",
+    image: "/1_Bike.png",
+    accent: "from-orange-400 to-orange-600",
+  },
+  {
+    id: 2,
+    title: "Your Safety, Our Priority",
+    body: "SOS contacts, live tracking, and verified drivers on every trip.",
+    image: "/Everyones Safety Matters.jpg",
+    accent: "from-blue-500 to-blue-700",
+  },
+  {
+    id: 3,
+    title: "Earn with Every Referral",
+    body: "Share your code and earn ₹50 for every friend who joins.",
+    image: "/man.png",
+    accent: "from-emerald-500 to-emerald-700",
+  },
+];
 ```
 
 **State:**
+
 ```js
-const [slides, setSlides]   = useState(FALLBACK_SLIDES);
+const [slides, setSlides] = useState(FALLBACK_SLIDES);
 const [current, setCurrent] = useState(0);
 ```
 
 **localStorage guard (useEffect on mount):**
+
 ```js
-if (localStorage.getItem('onboarding_complete')) navigate('/', { replace: true });
+if (localStorage.getItem("onboarding_complete"))
+  navigate("/", { replace: true });
 ```
 
 **API fetch (useEffect on mount):**
+
 ```js
-fetch('/api/v1/on-boarding')
-  .then(r => r.json())
-  .then(data => { if (data?.slides?.length) setSlides(data.slides); })
+fetch("/api/v1/on-boarding")
+  .then((r) => r.json())
+  .then((data) => {
+    if (data?.slides?.length) setSlides(data.slides);
+  })
   .catch(() => {}); // silent fallback
 ```
 
 **Next handler:**
+
 ```js
-if (current < slides.length - 1) setCurrent(c => c + 1);
+if (current < slides.length - 1) setCurrent((c) => c + 1);
 ```
 
 **Get Started handler:**
+
 ```js
-localStorage.setItem('onboarding_complete', '1');
-navigate('/login');
+localStorage.setItem("onboarding_complete", "1");
+navigate("/login");
 ```
 
 **Skip handler:** same as Get Started
 
 **Layout (full-screen):**
+
 - Gradient background (per slide accent)
 - Large slide image (centered, drop-shadow)
 - Title (white, font-black, text-[28px])
@@ -564,6 +683,7 @@ navigate('/login');
 - Bottom row: "Skip" (ghost left) + "Next" / "Get Started" (filled right)
 
 **Animations:**
+
 - Slide image: `AnimatePresence` + `motion.img` with `initial={{ x: 60, opacity: 0 }}` / `exit={{ x: -60, opacity: 0 }}`
 - Dot: `layoutId="onboarding-dot"` for smooth transition
 
@@ -574,40 +694,55 @@ navigate('/login');
 ## Shared Patterns
 
 ### Toast component (inline, no new file)
+
 All pages use the same pattern:
+
 ```jsx
-{toast && (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
-    className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-2xl text-[12px] font-black shadow-2xl z-50 whitespace-nowrap"
-  >
-    {toast}
-  </motion.div>
-)}
+{
+  toast && (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-2xl text-[12px] font-black shadow-2xl z-50 whitespace-nowrap">
+      {toast}
+    </motion.div>
+  );
+}
 ```
+
 Auto-dismiss via `setTimeout(() => setToast(null), 2500)`.
 
 ### Skeleton card (inline)
+
 ```jsx
 <div className="animate-pulse rounded-[20px] bg-white/60 h-20 w-full" />
 ```
 
 ### Page header pattern (reused across all new pages)
+
 ```jsx
 <header className="bg-white/90 backdrop-blur-md px-5 pt-10 pb-4 sticky top-0 z-20 border-b border-white/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
   <div className="flex items-center gap-3">
-    <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-[12px] border border-white/80 bg-white/90 flex items-center justify-center shadow-sm">
+    <button
+      onClick={() => navigate(-1)}
+      className="w-9 h-9 rounded-[12px] border border-white/80 bg-white/90 flex items-center justify-center shadow-sm">
       <ArrowLeft size={18} className="text-slate-900" strokeWidth={2.5} />
     </button>
     <div>
-      <p className="text-[9px] font-black uppercase tracking-[0.26em] text-slate-400">{subtitle}</p>
-      <h1 className="text-[19px] font-black tracking-tight text-slate-900">{title}</h1>
+      <p className="text-[9px] font-black uppercase tracking-[0.26em] text-slate-400">
+        {subtitle}
+      </p>
+      <h1 className="text-[19px] font-black tracking-tight text-slate-900">
+        {title}
+      </h1>
     </div>
   </div>
 </header>
 ```
 
 ### Confirm modal pattern (reused for cancel/delete)
+
 ```jsx
 <motion.div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[82%] max-w-sm bg-white rounded-[28px] p-7 z-[101] shadow-2xl text-center">
   <div className="w-14 h-14 bg-red-50 rounded-[18px] flex items-center justify-center mx-auto mb-4">
@@ -615,7 +750,15 @@ Auto-dismiss via `setTimeout(() => setToast(null), 2500)`.
   </div>
   <h3 className="text-[18px] font-black text-slate-900 mb-1.5">{title}</h3>
   <p className="text-[13px] font-bold text-slate-400 mb-6">{body}</p>
-  <button onClick={onConfirm} className="w-full bg-slate-900 text-white py-3.5 rounded-[16px] text-[13px] font-black uppercase tracking-widest mb-2">{confirmLabel}</button>
-  <button onClick={onCancel} className="w-full py-3.5 text-[13px] font-black text-slate-400 uppercase tracking-widest">{cancelLabel}</button>
+  <button
+    onClick={onConfirm}
+    className="w-full bg-slate-900 text-white py-3.5 rounded-[16px] text-[13px] font-black uppercase tracking-widest mb-2">
+    {confirmLabel}
+  </button>
+  <button
+    onClick={onCancel}
+    className="w-full py-3.5 text-[13px] font-black text-slate-400 uppercase tracking-widest">
+    {cancelLabel}
+  </button>
 </motion.div>
 ```

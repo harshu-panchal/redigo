@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, ShieldCheck, Wallet, Clock, Star } from 'lucide-react';
 import DriverHero from '@/assets/driver_welcome_hero.png';
-import RedigoLogo from '@/assets/redigologo.png';
+import { BRAND_LOGO_SRC } from '@/branding/logo';
 
 const DriverWelcome = () => {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const DriverWelcome = () => {
                 
                 {/* Branding Top Overlay */}
                 <div className="absolute top-10 left-8 z-20">
-                     <img src={RedigoLogo} alt="Redigo" className="h-14 drop-shadow-xl" />
+                     <img src={BRAND_LOGO_SRC} alt="Redigo" className="h-14 drop-shadow-xl" />
                 </div>
 
                 {/* Overlay Greeting */}

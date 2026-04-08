@@ -2,15 +2,15 @@
 
 ## Introduction
 
-Rydon24 is a React 18 + Tailwind CSS + Framer Motion ride-hailing mobile web app (max-width 512 px, mobile-first). A deep codebase audit identified 13 pages that are either missing entirely or registered without a route. This document specifies all 13 pages grouped into five delivery phases, ordered by user-journey criticality. Every page must conform to the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
+Namma is a React 18 + Tailwind CSS + Framer Motion ride-hailing mobile web app (max-width 512 px, mobile-first). A deep codebase audit identified 13 pages that are either missing entirely or registered without a route. This document specifies all 13 pages grouped into five delivery phases, ordered by user-journey criticality. Every page must conform to the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
 
 ---
 
 ## Glossary
 
-- **App**: The Rydon24 React single-page application served at the root URL.
+- **App**: The Namma React single-page application served at the root URL.
 - **Router**: React Router v6 `<Routes>` tree defined in `App.jsx`.
-- **User**: An authenticated Rydon24 customer using the mobile web app.
+- **User**: An authenticated Namma customer using the mobile web app.
 - **Delivery_Agent**: The driver assigned to a parcel delivery request.
 - **Ride_Driver**: The driver assigned to a ride or cab booking.
 - **Notification_Item**: A single push/in-app notification object returned by `GET /api/v1/notifications/get-notification`.
