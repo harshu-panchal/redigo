@@ -19,7 +19,7 @@ const RideTracking = () => {
   const dropLocation = state.drop || 'Vijay Nagar, Indore';
 
   const handleShare = () => {
-    const text = `I'm riding with Redigo!\nDriver: ${driver.name} (${driver.plate})\nFrom: ${pickupLocation}\nTo: ${dropLocation}`;
+    const text = `I'm riding with Rydon24!\nDriver: ${driver.name} (${driver.plate})\nFrom: ${pickupLocation}\nTo: ${dropLocation}`;
     if (navigator.share) { navigator.share({ title: 'Track My Ride', text }).catch(() => {}); }
     else { navigator.clipboard?.writeText(text).then(() => { setShareToast(true); setTimeout(() => setShareToast(false), 2500); }); }
   };

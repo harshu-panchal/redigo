@@ -1,0 +1,1894 @@
+{
+  "info": {
+    "name": "User app — Rider (Flutter ApiEndpoints)",
+    "description": "Saari **user/rider** app endpoints jo Flutter `ApiEndpoints` list se aati hain (`/api/v1/...`).\n\n**Token:** `userAccessToken` = `POST /api/v1/user/login` (ya register flow) ke response se `access_token`.\n\n**Methods:** Backend ke hisaab se set kiye gaye (e.g. `list-recent-searches` = **POST**, `delete-favourite-location` = **GET** + id path mein).\n\n**Maps:** Google Routes URL app direct call karti hai — neeche optional placeholder.\n\nRegenerate: `npm run postman:user`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "userAccessToken",
+      "value": ""
+    },
+    {
+      "key": "requestId",
+      "value": ""
+    },
+    {
+      "key": "notificationId",
+      "value": ""
+    },
+    {
+      "key": "supportTicketId",
+      "value": ""
+    },
+    {
+      "key": "sosId",
+      "value": ""
+    },
+    {
+      "key": "favouriteLocationId",
+      "value": ""
+    },
+    {
+      "key": "cardId",
+      "value": ""
+    },
+    {
+      "key": "complaintTitleId",
+      "value": ""
+    },
+    {
+      "key": "mobilePage",
+      "value": "privacy"
+    },
+    {
+      "key": "googleRoutesKey",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Public & config",
+      "item": [
+        {
+          "name": "Translation list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/translation/list",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Countries",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/countries",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Onboarding",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/on-boarding",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Common modules",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/modules",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Ride modules",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/ride_modules",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Promotions popup",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/promotions/popup",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Auth (no token)",
+      "item": [
+        {
+          "name": "Validate mobile for login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/validate-mobile-for-login",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9999999999\"\n}"
+            }
+          }
+        },
+        {
+          "name": "User login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/login",
+            "description": "Response se `access_token` ko collection variable `userAccessToken` mein daalein.",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9999999999\",\n  \"password\": \"your_password\",\n  \"device_token\": \"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Send mobile OTP",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/mobile-otp",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9999999999\",\n  \"country_code\": \"+91\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Validate OTP",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/validate-otp",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9999999999\",\n  \"otp\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Send email OTP",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/send-mail-otp",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Validate email OTP",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/validate-email-otp",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"otp\": \"123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Register user",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/register",
+            "description": "Body apne registration schema ke mutabiq bharein.",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Update password",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/update-password",
+            "description": "Exact fields validation middleware se verify karein.",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9999999999\",\n  \"password\": \"new_password\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Session",
+      "item": [
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/logout",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Update referral",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/update/user/referral",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"referral_code\": \"REFCODE\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. User profile & account",
+      "item": [
+        {
+          "name": "User details (me)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/user/",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update profile",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/profile",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rider Name\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update language",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/update-my-lang",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lang\": \"en\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update location",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/update-location",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lat\": 12.97,\n  \"lng\": 77.59,\n  \"address\": \"Bangalore\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete account",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/delete-user-account",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Add favourite location",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/user/add-favourite-location",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"Home\",\n  \"lat\": 12.97,\n  \"lng\": 77.59,\n  \"landmark\": \"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Remove favourite location",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/user/delete-favourite-location/{{favouriteLocationId}}",
+            "description": "Backend: **GET** with Mongo id path param (Flutter string check karein).",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Download invoice (user)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/user/download-invoice/{{requestId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Service location",
+      "item": [
+        {
+          "name": "Service locations",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/servicelocation",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Home & discovery",
+      "item": [
+        {
+          "name": "Recent searches",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/list-recent-searches",
+            "description": "Backend par **POST** hai; body app ke mutabiq.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Booking & trip",
+      "item": [
+        {
+          "name": "ETA",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/eta",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pick_lat\": 12.97,\n  \"pick_lng\": 77.59,\n  \"drop_lat\": 12.93,\n  \"drop_lng\": 77.62\n}"
+            }
+          }
+        },
+        {
+          "name": "Rental — list packages",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/list-packages",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Vehicle pricing options",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/vehicle-pricing-options",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create request",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/create",
+            "description": "Full booking payload — app se copy karein.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Cancel request",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/cancel",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"{{requestId}}\",\n  \"reason\": \"\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delivery create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/delivery/create",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Update ETA amount",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/eta/update-amount",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Respond for bid",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/respond-for-bid",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Change drop location",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/change-drop-location",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Change payment method",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/user/payment-method",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"{{requestId}}\",\n  \"payment_opt\": \"cash\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Service verify",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/serviceVerify",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Driver tip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/user/driver-tip",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "User review / rating",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/rating",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. History & invoice",
+      "item": [
+        {
+          "name": "Trip history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/history",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Download invoice (request)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/invoice/{{requestId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Outstation rides",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/outstation_rides",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Promo",
+      "item": [
+        {
+          "name": "Promo code list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/promocode-list",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Promo redeem",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/promocode-redeem",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Promo clear",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/promocode-clear",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Chat (driver) & admin support",
+      "item": [
+        {
+          "name": "Chat history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/chat-history/{{requestId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send chat message",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/send",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Chat message seen",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/seen",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Admin chat history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/request/user-chat-history",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send admin message",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/user-send-message",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Admin message seen / notification count",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/request/update-notification-count",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Common — goods, cancel, FAQ, complaint, SOS",
+      "item": [
+        {
+          "name": "Goods types",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/goods-types",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cancellation reasons",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/cancallation/reasons",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "FAQ list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/faq/list",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complaint titles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/complaint-titles",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Make complaint",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/common/make-complaint",
+            "description": "`title_id` / `message` / `complaint_text` bhi supported.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"complaint_title_id\": \"{{complaintTitleId}}\",\n  \"description\": \"Details\",\n  \"request_id\": \"{{requestId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add SOS contact",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/common/sos/store",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Emergency\",\n  \"number\": \"+919999999999\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete SOS contact",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/common/sos/delete/{{sosId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. Support tickets",
+      "item": [
+        {
+          "name": "Ticket titles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/ticket-titles",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Make ticket",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/common/make-ticket",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title_id\": \"REPLACE_WITH_MONGO_ID\",\n  \"message\": \"Support message\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reply ticket",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/common/reply-message/{{supportTicketId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Reply text\"\n}"
+            }
+          }
+        },
+        {
+          "name": "View ticket",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/view-ticket/{{supportTicketId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ticket list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/list",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Referral & legal (mobile HTML)",
+      "item": [
+        {
+          "name": "Referral condition",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/referral/referral-condition",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Referral history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/referral/history",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mobile privacy HTML",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/mobile/privacy",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Mobile terms HTML",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/mobile/terms",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        },
+        {
+          "name": "Mobile page (privacy|terms|…)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/common/mobile/{{mobilePage}}",
+            "auth": {
+              "type": "noauth"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "13. Notifications",
+      "item": [
+        {
+          "name": "Get notifications",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/notifications/get-notification",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete notification",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/notifications/delete-notification/{{notificationId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Clear all notifications",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/notifications/delete-all-notification",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "14. Wallet & payments",
+      "item": [
+        {
+          "name": "Wallet history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/payment/wallet/history",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Transfer money from wallet",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/wallet/transfer-money-from-wallet",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Stripe create setup intent",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/stripe/create-setup-intent",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Stripe save card",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/stripe/save-card",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Saved cards list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/payment/cards/list",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete card",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/cards/delete/{{cardId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Stripe add money to wallet",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/stripe/add-money-to-wallet",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Razorpay create order",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/razorpay/create-order",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "Razorpay verify payment",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/payment/razorpay/verify-payment",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAccessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "15. External maps (app direct)",
+      "item": [
+        {
+          "name": "Google Routes — computeRoutes",
+          "request": {
+            "method": "POST",
+            "url": "https://routes.googleapis.com/directions/v2:computeRoutes",
+            "description": "Ye **Google** URL hai — Node backend par route nahi. `googleRoutesKey` mein Routes API key daalein.",
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Goog-Api-Key",
+                "value": "{{googleRoutesKey}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Goog-FieldMask",
+                "value": "routes.polyline",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": {\n    \"location\": {\n      \"latLng\": {\n        \"latitude\": 12.97,\n        \"longitude\": 77.59\n      }\n    }\n  },\n  \"destination\": {\n    \"location\": {\n      \"latLng\": {\n        \"latitude\": 12.93,\n        \"longitude\": 77.62\n      }\n    }\n  },\n  \"travelMode\": \"DRIVE\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

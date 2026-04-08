@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Upload, CheckCircle2, ChevronRight, ShieldCheck, X } from 'lucide-react';
 
-// Simulate: first-time user hasn't uploaded DL yet
 const IS_KYC_DONE = false;
 
 const RentalKYC = () => {
@@ -13,25 +12,35 @@ const RentalKYC = () => {
   if (!state.vehicle) { navigate('/rental'); return null; }
 
   const [dlImage, setDlImage] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [dlPreview, setDlPreview] = useState(null);
+  const [aadhaarImage, setAadhaarImage] = useState(null);
+  const [aadhaarPreview, setAadhaarPreview] = useState(null);
+  
   const [uploading, setUploading] = useState(false);
   const [done, setDone] = useState(IS_KYC_DONE);
-  const inputRef = useRef();
+  const dlInputRef = useRef();
+  const aadhaarInputRef = useRef();
 
-  const handleFile = (file) => {
+  const handleDlFile = (file) => {
     if (!file) return;
     setDlImage(file);
-    setPreview(URL.createObjectURL(file));
+    setDlPreview(URL.createObjectURL(file));
+  };
+  
+  const handleAadhaarFile = (file) => {
+    if (!file) return;
+    setAadhaarImage(file);
+    setAadhaarPreview(URL.createObjectURL(file));
   };
 
   const handleUpload = () => {
-    if (!dlImage && !done) return;
+    if ((!dlImage || !aadhaarImage) && !done) return;
     setUploading(true);
     setTimeout(() => { setUploading(false); setDone(true); }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto font-sans pb-28 relative overflow-hidden">
+    <div className="min-h-[100vh] bg-[linear-gradient(180deg,#F8FAFC_0%,#F3F4F6_38%,#EEF2F7_100%)] max-w-lg mx-auto font-sans pb-32 relative overflow-y-auto no-scrollbar">
       <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-orange-100/60 blur-3xl pointer-events-none" />
 
       <motion.header initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
@@ -43,12 +52,12 @@ const RentalKYC = () => {
           </motion.button>
           <div className="flex-1 min-w-0">
             <p className="text-[9px] font-black uppercase tracking-[0.26em] text-slate-400">Step 4 of 5 · KYC Verification</p>
-            <h1 className="text-[18px] font-black tracking-tight text-slate-900 leading-tight">Driving License</h1>
+            <h1 className="text-[18px] font-black tracking-tight text-slate-900 leading-tight">Identity Documents</h1>
           </div>
         </div>
       </motion.header>
 
-      <div className="px-5 pt-5 space-y-4">
+      <div className="px-5 pt-5 space-y-6">
         {/* Info */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="flex items-start gap-3 rounded-[16px] border border-white/80 bg-white/90 px-4 py-3.5 shadow-[0_4px_14px_rgba(15,23,42,0.04)]">
@@ -56,55 +65,93 @@ const RentalKYC = () => {
             <ShieldCheck size={15} className="text-blue-500" strokeWidth={2} />
           </div>
           <p className="text-[12px] font-bold text-slate-500 leading-relaxed">
-            Upload a clear photo of your valid Driving License. This is a one-time verification — you won't need to do this again.
+            Upload clear photos of your valid Driving License and Aadhaar Card. This is a one-time verification.
           </p>
         </motion.div>
 
-        {/* Upload area */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] overflow-hidden">
-          {done ? (
-            <div className="flex flex-col items-center justify-center py-10 gap-3">
-              <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center">
-                <CheckCircle2 size={28} className="text-emerald-500" strokeWidth={2} />
-              </div>
-              <p className="text-[15px] font-black text-slate-900">KYC Verified</p>
-              <p className="text-[12px] font-bold text-slate-400">Your driving license is on file.</p>
+        {done ? (
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] overflow-hidden flex flex-col items-center justify-center py-10 gap-3">
+            <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center">
+              <CheckCircle2 size={28} className="text-emerald-500" strokeWidth={2} />
             </div>
-          ) : preview ? (
-            <div className="relative">
-              <img src={preview} alt="DL preview" className="w-full h-48 object-cover" />
-              <button onClick={() => { setPreview(null); setDlImage(null); }}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
-                <X size={14} className="text-white" />
-              </button>
+            <p className="text-[15px] font-black text-slate-900">KYC Verified</p>
+            <p className="text-[12px] font-bold text-slate-400">Your documents are on file.</p>
+          </motion.div>
+        ) : (
+          <div className="space-y-4">
+            {/* DL Upload */}
+            <div className="space-y-2">
+              <label className="text-[14px] font-black text-slate-900 ml-1">1. Driving License</label>
+              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] overflow-hidden">
+                {dlPreview ? (
+                  <div className="relative">
+                    <img src={dlPreview} alt="DL preview" className="w-full h-40 object-cover" />
+                    <button onClick={() => { setDlPreview(null); setDlImage(null); }}
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
+                      <X size={14} className="text-white" />
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => dlInputRef.current?.click()}
+                    className="w-full flex flex-col items-center justify-center py-8 gap-3 border-2 border-dashed border-slate-200 rounded-[20px] active:bg-slate-50 transition-all cursor-pointer">
+                    <div className="w-12 h-12 rounded-[14px] bg-slate-50 flex items-center justify-center">
+                      <Upload size={20} className="text-slate-400" strokeWidth={2} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[13px] font-black text-slate-700">Tap to upload DL photo</p>
+                      <p className="text-[11px] font-bold text-slate-400 mt-0.5">JPG, PNG · Max 5MB</p>
+                    </div>
+                  </button>
+                )}
+                <input ref={dlInputRef} type="file" accept="image/*" className="hidden"
+                  onChange={e => handleDlFile(e.target.files?.[0])} />
+              </motion.div>
             </div>
-          ) : (
-            <button onClick={() => inputRef.current?.click()}
-              className="w-full flex flex-col items-center justify-center py-10 gap-3 border-2 border-dashed border-slate-200 rounded-[20px] active:bg-slate-50 transition-all">
-              <div className="w-12 h-12 rounded-[14px] bg-slate-50 flex items-center justify-center">
-                <Upload size={20} className="text-slate-400" strokeWidth={2} />
-              </div>
-              <div className="text-center">
-                <p className="text-[13px] font-black text-slate-700">Tap to upload DL photo</p>
-                <p className="text-[11px] font-bold text-slate-400 mt-0.5">JPG, PNG · Max 5MB</p>
-              </div>
-            </button>
-          )}
-          <input ref={inputRef} type="file" accept="image/*" className="hidden"
-            onChange={e => handleFile(e.target.files?.[0])} />
-        </motion.div>
 
-        {/* Upload button (only if image selected but not yet verified) */}
+            {/* Aadhaar Upload */}
+            <div className="space-y-2">
+              <label className="text-[14px] font-black text-slate-900 ml-1">2. Aadhaar Card</label>
+              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                className="rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.05)] overflow-hidden">
+                {aadhaarPreview ? (
+                  <div className="relative">
+                    <img src={aadhaarPreview} alt="Aadhaar preview" className="w-full h-40 object-cover" />
+                    <button onClick={() => { setAadhaarPreview(null); setAadhaarImage(null); }}
+                      className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center">
+                      <X size={14} className="text-white" />
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => aadhaarInputRef.current?.click()}
+                    className="w-full flex flex-col items-center justify-center py-8 gap-3 border-2 border-dashed border-slate-200 rounded-[20px] active:bg-slate-50 transition-all cursor-pointer">
+                    <div className="w-12 h-12 rounded-[14px] bg-slate-50 flex items-center justify-center">
+                      <Upload size={20} className="text-slate-400" strokeWidth={2} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[13px] font-black text-slate-700">Tap to upload Aadhaar photo</p>
+                      <p className="text-[11px] font-bold text-slate-400 mt-0.5">Front side · JPG, PNG · Max 5MB</p>
+                    </div>
+                  </button>
+                )}
+                <input ref={aadhaarInputRef} type="file" accept="image/*" className="hidden"
+                  onChange={e => handleAadhaarFile(e.target.files?.[0])} />
+              </motion.div>
+            </div>
+          </div>
+        )}
+
+        {/* Upload button (only if BOTH images selected but not yet verified) */}
         <AnimatePresence>
-          {preview && !done && (
+          {dlPreview && aadhaarPreview && !done && (
             <motion.button initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
               whileTap={{ scale: 0.97 }} onClick={handleUpload} disabled={uploading}
               className="w-full bg-blue-600 text-white py-3.5 rounded-[16px] text-[13px] font-black flex items-center justify-center gap-2 shadow-[0_6px_16px_rgba(37,99,235,0.25)]">
               {uploading ? (
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <><Upload size={14} strokeWidth={3} /> Submit for Verification</>
+                <><Upload size={14} strokeWidth={3} /> Submit Documents</>
               )}
             </motion.button>
           )}

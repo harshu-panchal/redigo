@@ -41,8 +41,8 @@ const RideComplete = () => {
   };
 
   const handleShare = () => {
-    const text = `Redigo Trip Receipt\n${rideDate} · Total ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}`;
-    if (navigator.share) { navigator.share({ title: 'Redigo Trip Receipt', text }).catch(() => {}); }
+    const text = `Rydon24 Trip Receipt\n${rideDate} · Total ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}`;
+    if (navigator.share) { navigator.share({ title: 'Rydon24 Trip Receipt', text }).catch(() => {}); }
     else { navigator.clipboard?.writeText(text).then(() => { setShareToast(true); setTimeout(() => setShareToast(false), 2500); }); }
   };
 

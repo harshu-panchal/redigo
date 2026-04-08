@@ -31,8 +31,8 @@ const HeaderGreeting = () => {
             />
             <motion.img
               src={RedigoLogo}
-              alt="Redigo"
-              className="relative z-10 h-6 object-contain drop-shadow-sm"
+              alt="Rydon24"
+              className="relative z-10 h-10 object-contain drop-shadow-sm"
               animate={{ y: [0, -2, 0], scale: [1, 1.02, 1] }}
               transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
             />

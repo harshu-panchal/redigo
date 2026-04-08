@@ -9,9 +9,9 @@ const RideDetail = () => {
   const [shareToast, setShareToast] = useState(false);
 
   const handleShare = () => {
-    const text = `My Redigo Trip #RDG${id || '8231'} — Pipaliyahana → Vijay Nagar Square | ₹22.00`;
+    const text = `My Rydon24 Trip #RDG${id || '8231'} — Pipaliyahana → Vijay Nagar Square | ₹22.00`;
     if (navigator.share) {
-      navigator.share({ title: 'Redigo Trip', text }).catch(() => {});
+      navigator.share({ title: 'Rydon24 Trip', text }).catch(() => {});
     } else {
       navigator.clipboard?.writeText(text).then(() => {
         setShareToast(true);

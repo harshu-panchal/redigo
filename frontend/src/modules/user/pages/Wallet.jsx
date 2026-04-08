@@ -1,15 +1,21 @@
 ﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Plus, Download, History, CreditCard, Gift, Send } from 'lucide-react';
+import { ArrowLeft, Plus, Download, History, CreditCard, Gift, Send, QrCode } from 'lucide-react';
 
 const Wallet = () => {
   const navigate = useNavigate();
 
   const [showAddMoney, setShowAddMoney] = React.useState(false);
+  const [showSend, setShowSend] = React.useState(false);
+  const [showReceive, setShowReceive] = React.useState(false);
   const [amount, setAmount] = React.useState('');
+  const [sendAmount, setSendAmount] = React.useState('');
+  const [sendPhone, setSendPhone] = React.useState('');
   const [isAdding, setIsAdding] = React.useState(false);
+  const [isSending, setIsSending] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isSendSuccess, setIsSendSuccess] = React.useState(false);
 
   const handleAddMoney = () => {
     if (!amount) return;
@@ -22,6 +28,21 @@ const Wallet = () => {
             setShowAddMoney(false);
             setAmount('');
         }, 2000);
+    }, 1500);
+  };
+
+  const handleSend = () => {
+    if (!sendAmount || !sendPhone) return;
+    setIsSending(true);
+    setTimeout(() => {
+      setIsSending(false);
+      setIsSendSuccess(true);
+      setTimeout(() => {
+        setIsSendSuccess(false);
+        setShowSend(false);
+        setSendAmount('');
+        setSendPhone('');
+      }, 2000);
     }, 1500);
   };
 
@@ -102,6 +123,104 @@ const Wallet = () => {
                   </button>
                 </div>
               )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* SEND MODAL */}
+      <AnimatePresence>
+        {showSend && (
+          <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/60 backdrop-blur-sm p-4">
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              className="bg-white w-full max-w-md rounded-[32px] p-8 pb-10 space-y-8 shadow-2xl relative"
+            >
+              <button onClick={() => setShowSend(false)} className="absolute top-6 right-6 w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 active:scale-90">
+                <Plus size={20} className="rotate-45" />
+              </button>
+              <div className="text-center space-y-2">
+                <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Send Money</h3>
+                <p className="text-[12px] font-bold text-gray-400 tracking-widest uppercase">Transfer to a phone number</p>
+              </div>
+              {isSendSuccess ? (
+                <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="flex flex-col items-center py-8 gap-4">
+                  <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shadow-inner">
+                    <Send size={36} strokeWidth={2.5} />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-lg font-black text-gray-900 leading-none">Money Sent!</p>
+                    <p className="text-[11px] font-bold text-gray-400 mt-2 uppercase tracking-widest">Transfer successful</p>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="space-y-5">
+                  <input
+                    type="tel"
+                    value={sendPhone}
+                    onChange={(e) => setSendPhone(e.target.value)}
+                    placeholder="Recipient phone number"
+                    className="w-full h-16 bg-gray-50 border-2 border-gray-100 rounded-[20px] px-6 text-[15px] font-bold text-gray-900 focus:outline-none focus:border-blue-300 transition-all placeholder:text-gray-300"
+                  />
+                  <div className="relative">
+                    <span className="absolute left-6 top-1/2 -translate-y-1/2 text-xl font-black text-gray-400">₹</span>
+                    <input
+                      type="number"
+                      value={sendAmount}
+                      onChange={(e) => setSendAmount(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full h-16 bg-gray-50 border-2 border-gray-100 rounded-[20px] pl-10 pr-6 text-2xl font-black text-gray-900 focus:outline-none focus:border-blue-300 transition-all text-center placeholder:text-gray-200"
+                    />
+                  </div>
+                  <button
+                    onClick={handleSend}
+                    disabled={isSending || !sendAmount || !sendPhone}
+                    className={`w-full h-16 rounded-[24px] font-black text-[15px] uppercase tracking-widest shadow-xl transition-all flex items-center justify-center gap-3 active:scale-95 ${
+                      isSending || !sendAmount || !sendPhone ? 'bg-gray-100 text-gray-300 shadow-none' : 'bg-blue-600 text-white shadow-blue-200'
+                    }`}
+                  >
+                    {isSending ? 'Sending...' : <><Send size={18} strokeWidth={2.5} /> Send Money</>}
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* RECEIVE MODAL */}
+      <AnimatePresence>
+        {showReceive && (
+          <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/60 backdrop-blur-sm p-4">
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              className="bg-white w-full max-w-md rounded-[32px] p-8 pb-10 space-y-8 shadow-2xl relative"
+            >
+              <button onClick={() => setShowReceive(false)} className="absolute top-6 right-6 w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 active:scale-90">
+                <Plus size={20} className="rotate-45" />
+              </button>
+              <div className="text-center space-y-2">
+                <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">Receive Money</h3>
+                <p className="text-[12px] font-bold text-gray-400 tracking-widest uppercase">Share your QR or UPI ID</p>
+              </div>
+              <div className="flex flex-col items-center gap-6">
+                <div className="w-48 h-48 bg-gray-50 border-2 border-dashed border-gray-200 rounded-[28px] flex items-center justify-center text-gray-300">
+                  <QrCode size={80} strokeWidth={1.5} />
+                </div>
+                <div className="w-full bg-gray-50 rounded-[20px] px-6 py-4 flex items-center justify-between gap-3">
+                  <span className="text-[13px] font-bold text-gray-500 truncate">user@rydon24</span>
+                  <button
+                    onClick={() => navigator.clipboard?.writeText('user@rydon24')}
+                    className="text-[11px] font-black text-green-600 uppercase tracking-widest shrink-0 active:scale-95"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
             </motion.div>
           </div>
         )}
@@ -191,13 +310,13 @@ const Wallet = () => {
 
       {/* QUICK ACTIONS */}
       <div className="px-5 mt-8 grid grid-cols-3 gap-3">
-         <div className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-blue-100 group">
+         <div onClick={() => setShowSend(true)} className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-blue-100 group">
             <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
                <Send size={20} strokeWidth={2.5} />
             </div>
             <span className="text-[11px] font-black text-gray-700 uppercase tracking-widest">Send</span>
          </div>
-         <div className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-green-100 group">
+         <div onClick={() => setShowReceive(true)} className="bg-white border border-gray-100 rounded-[28px] p-5 flex flex-col items-center justify-center gap-3 shadow-sm cursor-pointer active:scale-95 transition-all hover:border-green-100 group">
             <div className="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors shadow-sm">
                <Download size={20} strokeWidth={2.5} />
             </div>
@@ -217,7 +336,7 @@ const Wallet = () => {
       {/* PROMO */}
       <div className="px-5 mt-8">
          <div 
-            onClick={() => navigate('/taxi/driver/referral')}
+            onClick={() => navigate('/referral')}
             className="bg-gradient-to-r from-orange-50 to-white border border-orange-100 rounded-[32px] p-6 flex items-center gap-5 cursor-pointer active:scale-98 transition-all shadow-sm group"
          >
             <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-orange-500 shadow-xl shadow-orange-100 group-hover:bg-orange-500 group-hover:text-white transition-all shrink-0 border border-orange-50">
@@ -225,7 +344,7 @@ const Wallet = () => {
             </div>
             <div className="flex-1">
                <h4 className="text-[15px] font-black text-gray-900 tracking-tight">Refer & Earn â‚¹50</h4>
-               <p className="text-[11px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">Invite friends to Redigo</p>
+               <p className="text-[11px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">Invite friends to Rydon24</p>
             </div>
             <ArrowLeft size={20} className="text-orange-200 rotate-180 group-hover:text-orange-500 transition-colors" />
          </div>

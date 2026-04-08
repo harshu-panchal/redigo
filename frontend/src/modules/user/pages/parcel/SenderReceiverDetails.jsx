@@ -5,6 +5,45 @@ import { ArrowLeft, User, Phone, MapPin, Search, AlertCircle, CheckCircle2, Chev
 
 const PHONE_REGEX = /^[6-9]\d{9}$/;
 
+const PhoneInput = ({ label, value, onChange, error, name, onClearError }) => (
+  <div className="space-y-1">
+    <label className="text-[12px] font-black text-gray-400 ml-1">{label}</label>
+    <div className={`flex items-center gap-3 rounded-2xl p-4 ring-2 transition-all ${
+      error ? 'bg-red-50 ring-red-100' : value && PHONE_REGEX.test(value) ? 'bg-green-50 ring-green-100' : 'bg-gray-50/50 ring-transparent'
+    }`}>
+      <Phone size={18} className={error ? 'text-red-400' : value && PHONE_REGEX.test(value) ? 'text-green-500' : 'text-gray-400'} />
+      <input 
+        type="tel"
+        maxLength={10}
+        className="flex-1 bg-transparent border-none text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-gray-300"
+        value={value}
+        placeholder="10-digit mobile number"
+        onChange={(e) => {
+          const val = e.target.value.replace(/\D/g, '');
+          onChange(val);
+          if (onClearError) onClearError(name);
+        }}
+      />
+      {value && PHONE_REGEX.test(value) && (
+        <CheckCircle2 size={16} className="text-green-500 shrink-0" />
+      )}
+    </div>
+    <AnimatePresence>
+      {error && (
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="text-[11px] font-black text-red-500 ml-2 flex items-center gap-1"
+        >
+          <AlertCircle size={11} strokeWidth={3} />
+          {error}
+        </motion.p>
+      )}
+    </AnimatePresence>
+  </div>
+);
+
 const SenderReceiverDetails = () => {
   const [senderName, setSenderName] = useState('Hritik Raghuwanshi');
   const [senderMobile, setSenderMobile] = useState('9876543210');
@@ -29,7 +68,7 @@ const SenderReceiverDetails = () => {
 
   const handleProceed = () => {
     if (!validate()) return;
-    navigate('/ride/select-location', {
+    navigate('/parcel/searching', {
       state: {
         ...parcelState,
         senderName,
@@ -40,45 +79,6 @@ const SenderReceiverDetails = () => {
       },
     });
   };
-
-  const PhoneInput = ({ label, value, onChange, error, name }) => (
-    <div className="space-y-1">
-      <label className="text-[12px] font-black text-gray-400 ml-1">{label}</label>
-      <div className={`flex items-center gap-3 rounded-2xl p-4 ring-2 transition-all ${
-        error ? 'bg-red-50 ring-red-100' : value && PHONE_REGEX.test(value) ? 'bg-green-50 ring-green-100' : 'bg-gray-50/50 ring-transparent'
-      }`}>
-        <Phone size={18} className={error ? 'text-red-400' : value && PHONE_REGEX.test(value) ? 'text-green-500' : 'text-gray-400'} />
-        <input 
-          type="tel"
-          maxLength={10}
-          className="flex-1 bg-transparent border-none text-[15px] font-bold text-gray-900 focus:outline-none placeholder:text-gray-300"
-          value={value}
-          placeholder="10-digit mobile number"
-          onChange={(e) => {
-            const val = e.target.value.replace(/\D/g, '');
-            onChange(val);
-            if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-          }}
-        />
-        {value && PHONE_REGEX.test(value) && (
-          <CheckCircle2 size={16} className="text-green-500 shrink-0" />
-        )}
-      </div>
-      <AnimatePresence>
-        {error && (
-          <motion.p
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="text-[11px] font-black text-red-500 ml-2 flex items-center gap-1"
-          >
-            <AlertCircle size={11} strokeWidth={3} />
-            {error}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] max-w-lg mx-auto flex flex-col font-sans relative">
@@ -125,7 +125,16 @@ const SenderReceiverDetails = () => {
                      </p>
                    )}
                 </div>
-                <PhoneInput label="Sender Mobile" value={senderMobile} onChange={setSenderMobile} error={errors.senderMobile} name="senderMobile" />
+                <PhoneInput 
+                  label="Sender Mobile" 
+                  value={senderMobile} 
+                  onChange={setSenderMobile} 
+                  error={errors.senderMobile} 
+                  name="senderMobile" 
+                  onClearError={(name) => {
+                    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+                  }}
+                />
              </div>
          </div>
 
@@ -158,7 +167,16 @@ const SenderReceiverDetails = () => {
                      </p>
                    )}
                 </div>
-                <PhoneInput label="Receiver Mobile" value={receiverMobile} onChange={setReceiverMobile} error={errors.receiverMobile} name="receiverMobile" />
+                <PhoneInput 
+                  label="Receiver Mobile" 
+                  value={receiverMobile} 
+                  onChange={setReceiverMobile} 
+                  error={errors.receiverMobile} 
+                  name="receiverMobile" 
+                  onClearError={(name) => {
+                    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+                  }}
+                />
              </div>
 
              {/* Estimated fare summary */}

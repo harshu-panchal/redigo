@@ -5,11 +5,6 @@ import { ArrowLeft, ArrowRight, MapPin, Calendar, Users, ChevronRight, Repeat } 
 
 const CITIES = ['Indore', 'Bhopal', 'Ujjain', 'Jabalpur', 'Ratlam', 'Dewas', 'Mumbai', 'Delhi', 'Pune'];
 
-const VEHICLES = [
-  { id: 'mini', name: 'Mini Cab', icon: '🚕', seats: 4, desc: 'Swift, Alto, WagonR', pricePerKm: 12, baseFare: 499 },
-  { id: 'sedan', name: 'Sedan', icon: '🚗', seats: 4, desc: 'Dzire, Amaze, Aspire', pricePerKm: 15, baseFare: 699 },
-  { id: 'suv', name: 'SUV', icon: '🚙', seats: 6, desc: 'Ertiga, Innova, Crysta', pricePerKm: 20, baseFare: 999 },
-];
 
 const CITY_DISTANCES = {
   'Indore-Bhopal': 195, 'Indore-Ujjain': 55, 'Indore-Jabalpur': 330,
@@ -28,14 +23,9 @@ const IntercityHome = () => {
   const [fromCity, setFromCity] = useState('Indore');
   const [toCity, setToCity] = useState('Bhopal');
   const [date, setDate] = useState('');
-  const [passengers, setPassengers] = useState(1);
-  const [selectedVehicle, setSelectedVehicle] = useState('mini');
   const navigate = useNavigate();
 
   const distance = getDistance(fromCity, toCity);
-  const vehicle = VEHICLES.find(v => v.id === selectedVehicle);
-  const estimatedFare = vehicle ? Math.round(vehicle.baseFare + (vehicle.pricePerKm * distance)) : 0;
-  const roundTripFare = Math.round(estimatedFare * 1.8);
 
   const swapCities = () => {
     const temp = fromCity;
@@ -128,98 +118,33 @@ const IntercityHome = () => {
           </div>
         </div>
 
-        {/* Date & Passengers */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-white rounded-2xl p-4 border border-gray-50 shadow-sm space-y-1.5">
-            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-              <Calendar size={11} strokeWidth={3} /> Travel Date
-            </label>
-            <input
-              type="date"
-              value={date}
-              min={new Date().toISOString().split('T')[0]}
-              onChange={e => setDate(e.target.value)}
-              className="w-full bg-transparent border-none text-[14px] font-black text-gray-900 focus:outline-none"
-            />
-          </div>
-          <div className="bg-white rounded-2xl p-4 border border-gray-50 shadow-sm space-y-1.5">
-            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-              <Users size={11} strokeWidth={3} /> Passengers
-            </label>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setPassengers(p => Math.max(1, p - 1))}
-                className="w-7 h-7 bg-gray-100 rounded-full text-gray-600 font-black flex items-center justify-center active:scale-90 transition-all"
-              >−</button>
-              <span className="text-[18px] font-black text-gray-900 w-6 text-center">{passengers}</span>
-              <button
-                onClick={() => setPassengers(p => Math.min(6, p + 1))}
-                className="w-7 h-7 bg-gray-100 rounded-full text-gray-600 font-black flex items-center justify-center active:scale-90 transition-all"
-              >+</button>
-            </div>
+        {/* Date Selector */}
+        <div className="bg-white rounded-[32px] p-5 shadow-sm border border-gray-50 space-y-3">
+          <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5 ml-1">
+            <Calendar size={11} strokeWidth={3} /> Travel Date (Select to view pricing)
+          </label>
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3">
+             <input
+                type="date"
+                value={date}
+                min={new Date().toISOString().split('T')[0]}
+                onChange={e => setDate(e.target.value)}
+                className="w-full bg-transparent border-none text-[16px] font-black text-gray-900 focus:outline-none"
+             />
           </div>
         </div>
 
-        {/* Vehicle Selection */}
-        <div className="space-y-3">
-          <h3 className="text-[16px] font-black text-gray-900 ml-1">Choose Vehicle</h3>
-          {VEHICLES.map(v => (
-            <motion.button
-              key={v.id}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedVehicle(v.id)}
-              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left ${
-                selectedVehicle === v.id
-                  ? 'border-primary bg-orange-50/50 shadow-md shadow-orange-100/30'
-                  : 'border-gray-100 bg-white'
-              }`}
-            >
-              <span className="text-3xl">{v.icon}</span>
-              <div className="flex-1">
-                <h4 className="text-[15px] font-black text-gray-900 leading-none">{v.name}</h4>
-                <p className="text-[12px] font-bold text-gray-400 mt-0.5">{v.desc} · {v.seats} seats</p>
-              </div>
-              <div className="text-right">
-                <p className="text-[16px] font-black text-gray-900">
-                  ₹{Math.round(v.baseFare + v.pricePerKm * distance).toLocaleString()}
-                </p>
-                <p className="text-[10px] font-bold text-gray-400">one way</p>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Fare Summary + Book CTA */}
-        <div className="bg-[#1C2833] rounded-[32px] p-6 text-white space-y-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-[11px] font-black text-white/40 uppercase tracking-widest">
-                {fromCity} → {toCity}
-              </p>
-              <p className="text-[28px] font-black tracking-tight mt-1">
-                ₹{estimatedFare.toLocaleString()}
-              </p>
-              {tripType === 'Round Trip' && (
-                <p className="text-[12px] font-black text-yellow-400 mt-0.5">
-                  Round Trip: ₹{roundTripFare.toLocaleString()}
-                </p>
-              )}
-            </div>
-            <div className="text-right space-y-1">
-              <p className="text-[11px] font-black text-white/40 uppercase tracking-widest">Distance</p>
-              <p className="text-[18px] font-black">{distance} km</p>
-            </div>
-          </div>
-
+        {/* CTA */}
+        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg px-5 pb-6 pt-3 bg-gradient-to-t from-[#F8F9FB] via-[#F8F9FB]/95 to-transparent z-30">
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={() => date
-              ? navigate('/ride/select-location', { state: { isIntercity: true, fromCity, toCity, tripType, date, passengers, vehicle } })
+              ? navigate('/intercity/vehicle', { state: { fromCity, toCity, tripType, date, distance } })
               : alert('Please select a travel date')
             }
-            className="w-full bg-yellow-400 text-[#1C2833] py-4 rounded-2xl text-[16px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all"
+            className="w-full bg-[#1C2833] text-white py-4 rounded-2xl text-[16px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all"
           >
-            Book Intercity Cab <ChevronRight size={18} strokeWidth={3} />
+            Select Vehicle <ChevronRight size={18} strokeWidth={3} className="text-yellow-400" />
           </motion.button>
         </div>
       </div>

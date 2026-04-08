@@ -7,6 +7,7 @@ import imgShared    from '@/assets/3d images/AutoCab/taxi.png';
 import imgAirport   from '@/assets/3d images/AutoCab/airoplan.png';
 import imgSpiritual from '@/assets/3d images/AutoCab/temple.png';
 import imgOneWay    from '@/assets/3d images/AutoCab/one way.png';
+import imgBus       from '@/assets/3d images/AutoCab/bus.png';
 
 const services = [
   {
@@ -24,7 +25,7 @@ const services = [
     title: 'Airport Cab',
     sub: 'On-time airport transfers',
     img: imgAirport,
-    path: '/ride/select-location',
+    path: '/cab/airport',
     accent: 'bg-[linear-gradient(135deg,#EFF6FF_0%,#DBEAFE_100%)]',
     tag: 'Fixed fare',
     tagColor: 'bg-blue-50 text-blue-600 border-blue-100',
@@ -34,7 +35,7 @@ const services = [
     title: 'Spiritual Trips',
     sub: 'Ujjain, Omkareshwar & more',
     img: imgSpiritual,
-    path: '/ride/select-location',
+    path: '/cab/spiritual',
     accent: 'bg-[linear-gradient(135deg,#FDF4FF_0%,#F3E8FF_100%)]',
     tag: 'Guided tours',
     tagColor: 'bg-purple-50 text-purple-600 border-purple-100',
@@ -44,10 +45,20 @@ const services = [
     title: 'One Way',
     sub: 'Intercity drop at best price',
     img: imgOneWay,
-    path: '/ride/select-location',
+    path: '/intercity',
     accent: 'bg-[linear-gradient(135deg,#FFF7ED_0%,#FFE5C2_100%)]',
     tag: 'No return charge',
     tagColor: 'bg-orange-50 text-orange-600 border-orange-100',
+  },
+  {
+    id: 'bus',
+    title: 'Bus Booking',
+    sub: 'Comfortable intercity buses',
+    img: imgBus,
+    path: '/bus',
+    accent: 'bg-[linear-gradient(135deg,#FFF1F2_0%,#FECDD3_100%)]',
+    tag: 'Sleeper & Seater',
+    tagColor: 'bg-rose-50 text-rose-600 border-rose-100',
   },
 ];
 
@@ -77,7 +88,7 @@ const CabHome = () => {
 
       <div className="px-5 pt-5 space-y-3">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.26em] text-slate-400">4 services available</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.26em] text-slate-400">5 services available</p>
           <h2 className="mt-0.5 text-[16px] font-black tracking-tight text-slate-900">What do you need?</h2>
         </div>
 
@@ -88,8 +99,8 @@ const CabHome = () => {
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate(s.path)}
             className="w-full flex items-center gap-4 rounded-[20px] border border-white/80 bg-white/90 shadow-[0_4px_14px_rgba(15,23,42,0.06)] px-4 py-4 text-left">
-            <div className={`w-12 h-12 rounded-[16px] flex items-center justify-center shrink-0 ${s.accent}`}>
-              <img src={s.img} alt={s.title} className="w-9 h-9 object-contain drop-shadow-md" />
+            <div className={`w-12 h-12 rounded-[16px] flex items-center justify-center shrink-0 overflow-visible ${s.accent}`}>
+              <img src={s.img} alt={s.title} className="w-14 h-14 object-contain drop-shadow-md" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">

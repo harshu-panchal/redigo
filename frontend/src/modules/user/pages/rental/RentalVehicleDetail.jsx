@@ -87,7 +87,7 @@ const RentalVehicleDetail = () => {
           <div className="flex items-start gap-2.5">
             <MapPin size={15} className="text-orange-400 shrink-0 mt-0.5" strokeWidth={2.5} />
             <div>
-              <p className="text-[13px] font-black text-slate-800">Redigo Hub — Sector 12, City Center</p>
+              <p className="text-[13px] font-black text-slate-800">Rydon24 Hub — Sector 12, City Center</p>
               <p className="text-[11px] font-bold text-slate-400 mt-0.5">Open 6 AM – 10 PM · Condition photos required at pickup</p>
             </div>
           </div>

@@ -28,7 +28,7 @@ const DriverWelcome = () => {
                 
                 {/* Branding Top Overlay */}
                 <div className="absolute top-10 left-8 z-20">
-                     <img src={RedigoLogo} alt="Redigo" className="h-10 drop-shadow-xl" />
+                     <img src={RedigoLogo} alt="Redigo" className="h-14 drop-shadow-xl" />
                 </div>
 
                 {/* Overlay Greeting */}

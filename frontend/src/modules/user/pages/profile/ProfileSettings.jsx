@@ -5,7 +5,7 @@ import { ArrowLeft, User, Mail, Smartphone, Camera, CheckCircle2 } from 'lucide-
 
 const ProfileSettings = () => {
   const [name, setName] = useState('Hritik Raghuwanshi');
-  const [email, setEmail] = useState('hritik@redigo.com');
+  const [email, setEmail] = useState('hritik@rydon24.com');
   const navigate = useNavigate();
 
   return (

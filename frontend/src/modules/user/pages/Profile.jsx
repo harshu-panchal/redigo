@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Wallet, Bell, Shield, LogOut, ChevronRight, HelpCircle, MapPin, Star, Package } from 'lucide-react';
+import { User, Wallet, Bell, Shield, LogOut, ChevronRight, HelpCircle, MapPin, Star, Package, Wrench, Gift } from 'lucide-react';
 import BottomNavbar from '../components/BottomNavbar';
 
 const menuItems = [
@@ -9,9 +9,11 @@ const menuItems = [
   { icon: Wallet,      title: 'Wallet',             sub: 'Balance, transactions & top-up',   path: '/wallet',                bg: 'bg-blue-50',    color: 'text-blue-500'   },
   { icon: MapPin,      title: 'Saved Addresses',    sub: 'Home, office & others',            path: '/profile/addresses',     bg: 'bg-emerald-50', color: 'text-emerald-500'},
   { icon: Package,     title: 'My Rides',           sub: 'History & receipts',               path: '/activity',              bg: 'bg-violet-50',  color: 'text-violet-500' },
-  { icon: Bell,        title: 'Notifications',      sub: 'Offers, news & safety alerts',     path: '/profile/notifications', bg: 'bg-purple-50',  color: 'text-purple-500' },
+  { icon: Bell,        title: 'Notifications',      sub: 'Offers, news & safety alerts',     path: '/notifications',         bg: 'bg-purple-50',  color: 'text-purple-500' },
   { icon: Shield,      title: 'Security',           sub: 'Manage your privacy',              path: '/profile/security',      bg: 'bg-red-50',     color: 'text-red-500'    },
-  { icon: HelpCircle,  title: 'Support',            sub: 'Get help with your experience',    path: '/support',               bg: 'bg-slate-100',  color: 'text-slate-500'  },
+  { icon: Gift,        title: 'Referral',           sub: 'Invite friends & earn ₹50',        path: '/referral',              bg: 'bg-yellow-50',  color: 'text-yellow-500' },
+  { icon: HelpCircle,  title: 'Support',            sub: 'Get help with your experience',    path: '/support/tickets',       bg: 'bg-slate-100',  color: 'text-slate-500'  },
+  { icon: Wrench,      title: 'Workshop & RSA',     sub: 'Roadside assistance on demand',    path: '/services/workshop-rsa', bg: 'bg-amber-50',   color: 'text-amber-500'  },
 ];
 
 const Profile = () => {
@@ -97,7 +99,7 @@ const Profile = () => {
         </motion.button>
 
         {/* App version */}
-        <p className="text-center text-[10px] font-bold text-slate-300 pt-1">Redigo v2.4.1</p>
+        <p className="text-center text-[10px] font-bold text-slate-300 pt-1">Rydon24 v2.4.1</p>
       </div>
 
       <BottomNavbar />
