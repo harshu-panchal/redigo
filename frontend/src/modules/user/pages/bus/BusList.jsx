@@ -26,7 +26,7 @@ const BusList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#FFF1F2_0%,#FDF2F8_15%,#F8FAFC_100%)] max-w-lg mx-auto font-sans pb-10">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#EFF6FF_0%,#F8FAFC_40%,#F1F5F9_100%)] max-w-lg mx-auto font-sans pb-10">
       {/* Header */}
       <div className="bg-white/90 backdrop-blur-md px-5 pt-10 pb-4 sticky top-0 z-20 border-b border-white/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
         <div className="flex items-center gap-3">
@@ -83,13 +83,13 @@ const BusList = () => {
 
                <div className="text-right">
                   <p className="text-[10px] font-bold text-slate-400 mb-0.5">{bus.seats} Seats Left</p>
-                  <p className="text-[20px] font-black text-rose-600 leading-none">₹{bus.price}</p>
+                  <p className="text-[20px] font-black text-slate-900 leading-none">₹{bus.price}</p>
                </div>
             </div>
             
             <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
                <p className="text-[10px] font-bold text-slate-400">Amenities: WiFi, Water, Charging</p>
-               <div className="flex items-center gap-1 text-[11px] font-black text-rose-600 uppercase tracking-wider">
+               <div className="flex items-center gap-1 text-[11px] font-black text-slate-900 uppercase tracking-wider">
                   Select Seats <ChevronRight size={14} strokeWidth={3} />
                </div>
             </div>

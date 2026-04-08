@@ -23,7 +23,7 @@ const BusConfirm = () => {
       if (navigator.share) {
         await navigator.share({
           title: 'Bus Ticket',
-          text: `Here is my ticket PMR: ${pnr} for bus from ${fromCity} to ${toCity} on ${date}. Seats: ${selectedSeats.map(s => s.id).join(',')}`
+          text: `Here is my ticket PNR: ${pnr} for bus from ${fromCity} to ${toCity} on ${date}. Seats: ${selectedSeats.map(s => s.id).join(',')}`
         });
       }
     } catch (e) {
@@ -32,9 +32,9 @@ const BusConfirm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#F0FDF4_0%,#DCFCE7_15%,#F8FAFC_100%)] max-w-lg mx-auto font-sans pb-32">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#EFF6FF_0%,#F8FAFC_45%,#F1F5F9_100%)] max-w-lg mx-auto font-sans pb-32">
        {/* Background glow */}
-       <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-emerald-300/20 blur-[80px] pointer-events-none" />
+       <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-sky-300/20 blur-[80px] pointer-events-none" />
 
        {/* Header */}
       <div className="bg-transparent px-5 pt-10 pb-4 sticky top-0 z-20">
@@ -51,7 +51,7 @@ const BusConfirm = () => {
                initial={{ scale: 0, opacity: 0 }} 
                animate={{ scale: 1, opacity: 1 }} 
                transition={{ type: 'spring', damping: 15 }}
-               className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(34,197,94,0.3)] mb-5"
+               className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center shadow-[0_10px_26px_rgba(2,6,23,0.22)] mb-5"
             >
                <CheckCircle2 size={40} className="text-white" strokeWidth={3} />
             </motion.div>
@@ -69,8 +69,8 @@ const BusConfirm = () => {
                className="w-full bg-white rounded-[24px] shadow-[0_12px_40px_rgba(15,23,42,0.08)] relative overflow-hidden"
             >
                {/* Ticket cutting circles */}
-               <div className="absolute left-[-12px] top-[140px] w-6 h-6 rounded-full bg-[#f6fbd4] shadow-inner" style={{ backgroundColor: '#EEFBF0' }} />
-               <div className="absolute right-[-12px] top-[140px] w-6 h-6 rounded-full bg-[#f6fbd4] shadow-inner" style={{ backgroundColor: '#EEFBF0' }} />
+               <div className="absolute left-[-12px] top-[140px] w-6 h-6 rounded-full bg-slate-100 shadow-inner" />
+               <div className="absolute right-[-12px] top-[140px] w-6 h-6 rounded-full bg-slate-100 shadow-inner" />
                <div className="absolute left-4 right-4 top-[152px] h-0 border-t-2 border-dashed border-slate-200" />
 
                {/* Top Section */}
@@ -137,7 +137,7 @@ const BusConfirm = () => {
         <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/')}
-            className="flex-[2] bg-green-500 text-white py-4 rounded-[18px] text-[15px] font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(34,197,94,0.3)] transition-all"
+            className="flex-[2] bg-slate-900 text-white py-4 rounded-[18px] text-[15px] font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_10px_26px_rgba(2,6,23,0.22)] transition-all"
         >
           <Home size={18} strokeWidth={2.5} /> Go to Home
         </motion.button>

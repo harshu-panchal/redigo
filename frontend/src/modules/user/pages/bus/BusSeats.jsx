@@ -52,7 +52,7 @@ const BusSeats = () => {
   const totalFare = selectedSeats.length * bus.price;
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#FFF1F2_0%,#FDF2F8_15%,#F8FAFC_100%)] max-w-lg mx-auto font-sans pb-32">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#EFF6FF_0%,#F8FAFC_40%,#F1F5F9_100%)] max-w-lg mx-auto font-sans pb-32">
       {/* Header */}
       <div className="bg-white/90 backdrop-blur-md px-5 pt-10 pb-4 sticky top-0 z-20 border-b border-white/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
         <div className="flex items-center gap-3">
@@ -90,12 +90,12 @@ const BusSeats = () => {
                            onClick={() => toggleSeat(seat.id)}
                            className={`aspect-square w-full rounded-[8px] flex items-center justify-center border-2 transition-all relative
                              ${seat.status === 'booked' ? 'bg-slate-100 border-slate-200 cursor-not-allowed opacity-50' : 
-                               seat.status === 'selected' ? 'bg-rose-500 border-rose-600 shadow-[0_4px_12px_rgba(225,29,72,0.3)]' : 
-                               'bg-white border-slate-300 hover:border-rose-300'}
+                               seat.status === 'selected' ? 'bg-slate-900 border-slate-900 shadow-[0_6px_16px_rgba(2,6,23,0.22)]' : 
+                               'bg-white border-slate-300 hover:border-sky-300'}
                            `}
                         >
                            {/* Seat recline visual indicator */}
-                           <div className={`absolute -top-1 w-full h-2 rounded-t-sm transition-colors ${seat.status === 'selected' ? 'bg-rose-400' : 'bg-slate-200'}`} />
+                           <div className={`absolute -top-1 w-full h-2 rounded-t-sm transition-colors ${seat.status === 'selected' ? 'bg-sky-400' : 'bg-slate-200'}`} />
                            
                            <span className={`text-[9px] font-black leading-none ${seat.status === 'selected' ? 'text-white' : seat.status === 'booked' ? 'text-slate-400' : 'text-slate-600'}`}>
                              {seat.status === 'booked' ? '×' : seat.id}
@@ -107,7 +107,7 @@ const BusSeats = () => {
              
              <div className="mt-8 pt-4 border-t border-slate-50 flex justify-between gap-2">
                  <div className="flex items-center gap-1.5"><div className="w-3.5 h-3.5 rounded border-2 bg-white border-slate-300" /><span className="text-[9px] font-bold text-slate-500 uppercase">Avail</span></div>
-                 <div className="flex items-center gap-1.5"><div className="w-3.5 h-3.5 rounded border-2 bg-rose-500 border-rose-600" /><span className="text-[9px] font-bold text-slate-500 uppercase">Selected</span></div>
+                 <div className="flex items-center gap-1.5"><div className="w-3.5 h-3.5 rounded border-2 bg-slate-900 border-slate-900" /><span className="text-[9px] font-bold text-slate-500 uppercase">Selected</span></div>
                  <div className="flex items-center gap-1.5"><div className="w-3.5 h-3.5 rounded border-2 bg-slate-100 border-slate-200 opacity-50" /><span className="text-[9px] font-bold text-slate-500 uppercase">Booked</span></div>
              </div>
          </div>
@@ -121,7 +121,7 @@ const BusSeats = () => {
               <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }}
                  className="pointer-events-auto bg-white/90 rounded-[20px] border border-white/80 shadow-[0_4px_14px_rgba(15,23,42,0.06)] px-5 py-4 flex items-center justify-between mb-3">
                  <div>
-                    <p className="text-[11px] font-black text-rose-600 uppercase tracking-widest mb-0.5">
+                    <p className="text-[11px] font-black text-slate-900 uppercase tracking-widest mb-0.5">
                        {selectedSeats.length} Seat{selectedSeats.length > 1 ? 's' : ''} Selected
                     </p>
                     <p className="text-[12px] font-bold text-slate-600 leading-tight">
@@ -140,7 +140,7 @@ const BusSeats = () => {
             whileTap={{ scale: 0.97 }}
             onClick={() => navigate('/bus/details', { state: { ...state, selectedSeats, totalFare } })}
             className={`w-full py-4 rounded-[18px] text-[15px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${
-               selectedSeats.length > 0 ? 'bg-rose-600 text-white shadow-[0_8px_24px_rgba(225,29,72,0.3)] active:scale-95' : 'bg-slate-200 text-slate-400'
+               selectedSeats.length > 0 ? 'bg-slate-900 text-white shadow-[0_10px_26px_rgba(2,6,23,0.22)] active:scale-95' : 'bg-slate-200 text-slate-400'
             }`}
         >
           Proceed <ChevronRight size={18} strokeWidth={3} className={selectedSeats.length > 0 ? 'opacity-80' : 'opacity-40'} />

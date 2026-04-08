@@ -23,8 +23,8 @@ const BusHome = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#FFF1F2_0%,#FDF2F8_38%,#F8FAFC_100%)] max-w-lg mx-auto font-sans pb-32 relative overflow-hidden">
-      <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-rose-200/40 blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-[linear-gradient(180deg,#EFF6FF_0%,#F8FAFC_55%,#F1F5F9_100%)] max-w-lg mx-auto font-sans pb-32 relative overflow-hidden">
+      <div className="absolute -top-16 right-[-40px] h-44 w-44 rounded-full bg-sky-200/30 blur-3xl pointer-events-none" />
 
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-md px-5 pt-10 pb-4 sticky top-0 z-20 border-b border-white/80 shadow-[0_4px_20px_rgba(15,23,42,0.05)]">
@@ -41,9 +41,9 @@ const BusHome = () => {
 
       <div className="px-5 pt-5 space-y-4">
         {/* Banner */}
-        <div className="rounded-[20px] bg-gradient-to-br from-rose-500 to-rose-700 p-5 text-white shadow-[0_8px_24px_rgba(225,29,72,0.25)] flex items-center justify-between">
+        <div className="rounded-[20px] bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900 p-5 text-white shadow-[0_10px_26px_rgba(2,6,23,0.22)] flex items-center justify-between">
            <div>
-               <p className="text-[10px] font-black text-rose-200 uppercase tracking-widest mb-1">Premium Buses</p>
+               <p className="text-[10px] font-black text-sky-200 uppercase tracking-widest mb-1">Premium Buses</p>
                <h2 className="text-[18px] font-black leading-tight">Comfortable<br />Intercity Rides</h2>
            </div>
            <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
@@ -60,13 +60,13 @@ const BusHome = () => {
           <div className="relative z-10">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 pl-9">Leaving From</label>
             <div className="mt-1 flex items-center gap-3">
-               <div className="w-6 h-6 bg-rose-100 rounded-full flex items-center justify-center shrink-0 border border-rose-200 shadow-sm">
-                  <div className="w-2 h-2 bg-rose-500 rounded-full" />
+               <div className="w-6 h-6 bg-sky-100 rounded-full flex items-center justify-center shrink-0 border border-sky-200 shadow-sm">
+                  <div className="w-2 h-2 bg-sky-600 rounded-full" />
                </div>
                <select
                  value={fromCity}
                  onChange={e => setFromCity(e.target.value)}
-                 className="flex-1 bg-slate-50 border border-slate-100 rounded-[14px] px-4 py-3 text-[16px] font-black text-slate-900 focus:outline-none focus:border-rose-300"
+                 className="flex-1 bg-slate-50 border border-slate-100 rounded-[14px] px-4 py-3 text-[16px] font-black text-slate-900 focus:outline-none focus:border-sky-300"
                >
                  {CITIES.filter(c => c !== toCity).map(c => <option key={c} value={c}>{c}</option>)}
                </select>
@@ -91,7 +91,7 @@ const BusHome = () => {
                <select
                  value={toCity}
                  onChange={e => setToCity(e.target.value)}
-                 className="flex-1 bg-slate-50 border border-slate-100 rounded-[14px] px-4 py-3 text-[16px] font-black text-slate-900 focus:outline-none focus:border-rose-300"
+                 className="flex-1 bg-slate-50 border border-slate-100 rounded-[14px] px-4 py-3 text-[16px] font-black text-slate-900 focus:outline-none focus:border-sky-300"
                >
                  {CITIES.filter(c => c !== fromCity).map(c => <option key={c} value={c}>{c}</option>)}
                </select>
@@ -109,7 +109,7 @@ const BusHome = () => {
                value={date}
                min={new Date().toISOString().split('T')[0]}
                onChange={e => setDate(e.target.value)}
-               className="w-full bg-slate-50 border border-slate-100 rounded-[16px] px-4 py-3.5 text-[15px] font-bold text-slate-900 focus:outline-none focus:border-rose-300 shadow-sm"
+               className="w-full bg-slate-50 border border-slate-100 rounded-[16px] px-4 py-3.5 text-[15px] font-bold text-slate-900 focus:outline-none focus:border-sky-300 shadow-sm"
            />
         </div>
 
@@ -120,7 +120,7 @@ const BusHome = () => {
         <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleSearch}
-            className="w-full bg-rose-600 text-white py-4 rounded-[18px] text-[15px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(225,29,72,0.3)] active:scale-95 transition-all"
+            className="w-full bg-slate-900 text-white py-4 rounded-[18px] text-[15px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-[0_10px_26px_rgba(2,6,23,0.22)] active:scale-95 transition-all"
         >
           Search Buses <ChevronRight size={18} strokeWidth={3} className="opacity-80" />
         </motion.button>
