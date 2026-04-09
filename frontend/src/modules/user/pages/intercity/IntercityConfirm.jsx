@@ -42,7 +42,7 @@ const IntercityConfirm = () => {
     const text = `Intercity booking confirmed!\nID: ${bookingId}\n${fromCity} → ${toCity}\nDate: ${date}\nVehicle: ${vehicle.name}\nPassengers: ${passengers}\nFare: ₹${fare.toLocaleString()}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "Namma Intercity Booking", text });
+        await navigator.share({ title: "Redigo Intercity Booking", text });
       } else {
         await navigator.clipboard.writeText(text);
         setShareToast(true);

@@ -12,7 +12,7 @@ import {
 
 const ProfileSettings = () => {
   const [name, setName] = useState("Hritik Raghuwanshi");
-  const [email, setEmail] = useState("hritik@Namma.com");
+  const [email, setEmail] = useState("hritik@Redigo.com");
   const navigate = useNavigate();
 
   return (

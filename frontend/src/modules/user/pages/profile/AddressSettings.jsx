@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 
-const STORAGE_KEY = "Namma:savedAddresses";
+const STORAGE_KEY = "Redigo:savedAddresses";
 
 const createId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 

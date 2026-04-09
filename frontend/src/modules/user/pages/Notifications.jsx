@@ -41,7 +41,7 @@ const MOCK_NOTIFICATIONS = [
   {
     id: "4",
     title: "Referral Reward",
-    body: "Congratulations! You earned ₹50 for referring Priya to Namma.",
+    body: "Congratulations! You earned ₹50 for referring Priya to Redigo.",
     time: "Yesterday",
     read: true,
     type: "referral",

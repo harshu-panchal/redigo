@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document covers the technical design for all 13 missing pages in the Namma user app, grouped into 5 phases. All pages follow the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, Framer Motion entrance animations, and mobile-first `max-w-lg` layout.
+This document covers the technical design for all 13 missing pages in the Redigo user app, grouped into 5 phases. All pages follow the existing design language: glassmorphism cards, orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, Framer Motion entrance animations, and mobile-first `max-w-lg` layout.
 
 ---
 
@@ -294,7 +294,7 @@ const REFERRAL_CODE = "RYDON-HR24"; // from user profile
 
 - `useEffect` → `GET /api/v1/common/referral/history` → set history
 - Copy: `navigator.clipboard.writeText(REFERRAL_CODE)` → setCopied(true) → reset after 2 s
-- Share: `navigator.share({ text: \`Join Namma with my code ${REFERRAL_CODE}...\` })` or WhatsApp fallback
+- Share: `navigator.share({ text: \`Join Redigo with my code ${REFERRAL_CODE}...\` })` or WhatsApp fallback
 
 **Layout (top → bottom):**
 

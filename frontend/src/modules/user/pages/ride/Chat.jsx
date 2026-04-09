@@ -82,7 +82,7 @@ const Chat = () => {
     }
   };
 
-  const otherName = isAdminChat ? "Namma Support" : "Kishan Kumawat";
+  const otherName = isAdminChat ? "Redigo Support" : "Kishan Kumawat";
   const otherSub = isAdminChat ? "Active now" : "Driver · Active now";
 
   return (

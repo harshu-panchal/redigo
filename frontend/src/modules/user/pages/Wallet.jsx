@@ -265,10 +265,12 @@ const Wallet = () => {
                 </div>
                 <div className="w-full bg-gray-50 rounded-[20px] px-6 py-4 flex items-center justify-between gap-3">
                   <span className="text-[13px] font-bold text-gray-500 truncate">
-                    user@Namma
+                    user@Redigo
                   </span>
                   <button
-                    onClick={() => navigator.clipboard?.writeText("user@Namma")}
+                    onClick={() =>
+                      navigator.clipboard?.writeText("user@Redigo")
+                    }
                     className="text-[11px] font-black text-green-600 uppercase tracking-widest shrink-0 active:scale-95">
                     Copy
                   </button>
@@ -430,7 +432,7 @@ const Wallet = () => {
               Refer & Earn â‚¹50
             </h4>
             <p className="text-[11px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">
-              Invite friends to Namma
+              Invite friends to Redigo
             </p>
           </div>
           <ArrowLeft

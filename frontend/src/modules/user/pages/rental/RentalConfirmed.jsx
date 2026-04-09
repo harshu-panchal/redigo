@@ -97,7 +97,7 @@ const RentalConfirmed = () => {
             <div className="flex items-center gap-2.5">
               <MapPin size={13} className="text-orange-400 shrink-0" />
               <p className="text-[11px] font-black text-slate-700">
-                Namma Hub — Sector 12, City Center
+                Redigo Hub — Sector 12, City Center
               </p>
             </div>
             <div className="border-t border-slate-50 pt-2.5 flex justify-between">

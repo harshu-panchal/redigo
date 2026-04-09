@@ -209,7 +209,7 @@ const Profile = () => {
 
         {/* App version */}
         <p className="text-center text-[10px] font-bold text-slate-300 pt-1">
-          Namma v2.4.1
+          Redigo v2.4.1
         </p>
       </div>
 

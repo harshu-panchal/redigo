@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MapPin, Search, Wallet } from "lucide-react";
-import { BRAND_LOGO_SRC } from "@/branding/logo";
+import { BrandLogo } from "@/branding/logo";
 
 const fallingCoins = [
   { id: 1, left: "24%", delay: 0 },
@@ -32,17 +32,16 @@ const HeaderGreeting = () => {
                 ease: "easeInOut",
               }}
             />
-            <motion.img
-              src={BRAND_LOGO_SRC}
-              alt="Namma"
-              className="relative z-10 h-10 object-contain drop-shadow-sm"
+            <motion.div
+              className="relative z-10"
               animate={{ y: [0, -2, 0], scale: [1, 1.02, 1] }}
               transition={{
                 duration: 3.2,
                 repeat: Infinity,
                 ease: "easeInOut",
-              }}
-            />
+              }}>
+              <BrandLogo className="h-10 drop-shadow-sm" />
+            </motion.div>
           </motion.div>
 
           <motion.button

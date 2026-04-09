@@ -62,9 +62,9 @@ const RideComplete = () => {
   };
 
   const handleShare = () => {
-    const text = `Namma Trip Receipt\n${rideDate} · Total ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}`;
+    const text = `Redigo Trip Receipt\n${rideDate} · Total ₹${totalBill}\nPayment: ${paymentMethod}\nDriver: ${driver.name}`;
     if (navigator.share) {
-      navigator.share({ title: "Namma Trip Receipt", text }).catch(() => {});
+      navigator.share({ title: "Redigo Trip Receipt", text }).catch(() => {});
     } else {
       navigator.clipboard?.writeText(text).then(() => {
         setShareToast(true);

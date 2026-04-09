@@ -48,7 +48,7 @@ const WorkshopRSA = () => {
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(
-      "Hi Namma, I need Workshop / RSA support.",
+      "Hi Redigo, I need Workshop / RSA support.",
     );
     window.open(`https://wa.me/919876543210?text=${message}`, "_blank");
   };
@@ -84,7 +84,7 @@ const WorkshopRSA = () => {
                 Workshop visits, towing, and emergency roadside assistance.
               </h2>
               <p className="mt-2 text-[13px] font-bold leading-relaxed text-gray-500">
-                Reach Namma support and get connected to the nearest available
+                Reach Redigo support and get connected to the nearest available
                 workshop partner.
               </p>
             </div>
@@ -134,7 +134,7 @@ const WorkshopRSA = () => {
             </div>
             <div>
               <h2 className="text-[16px] font-black tracking-tight text-gray-900">
-                Why use Namma RSA?
+                Why use Redigo RSA?
               </h2>
               <p className="mt-1 text-[12px] font-bold leading-relaxed text-gray-500">
                 Verified local partners, faster coordination, and direct support

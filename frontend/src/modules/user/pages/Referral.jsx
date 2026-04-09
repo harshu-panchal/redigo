@@ -84,10 +84,10 @@ const Referral = () => {
   };
 
   const handleShare = async () => {
-    const text = `Join Namma — Indore's fastest ride app! Use my code ${REFERRAL_CODE} to get ₹50 off your first ride. Download: https://Namma.app`;
+    const text = `Join Redigo — Indore's fastest ride app! Use my code ${REFERRAL_CODE} to get ₹50 off your first ride. Download: https://Redigo.app`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "Join Namma", text });
+        await navigator.share({ title: "Join Redigo", text });
       } else {
         window.open(
           `https://wa.me/?text=${encodeURIComponent(text)}`,

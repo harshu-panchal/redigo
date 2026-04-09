@@ -2,7 +2,7 @@
 
 ## Overview
 
-Implement 13 missing pages across 5 delivery phases for the Namma React 18 + Tailwind CSS + Framer Motion mobile web app. Each phase wires new pages into `App.jsx` routes and updates the relevant entry-point components. All pages follow the existing glassmorphism design language: orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
+Implement 13 missing pages across 5 delivery phases for the Redigo React 18 + Tailwind CSS + Framer Motion mobile web app. Each phase wires new pages into `App.jsx` routes and updates the relevant entry-point components. All pages follow the existing glassmorphism design language: orange/slate palette, `rounded-[20px+]` corners, `font-black` typography, and Framer Motion entrance animations.
 
 ## Tasks
 

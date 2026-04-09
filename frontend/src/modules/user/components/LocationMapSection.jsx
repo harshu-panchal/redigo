@@ -4,7 +4,7 @@ import { MapPin, Navigation } from "lucide-react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const STORAGE_KEY = "Namma:lastLocation";
+const STORAGE_KEY = "Redigo:lastLocation";
 const DEFAULT_CENTER = { lat: 17.385, lon: 78.4867 };
 const DEFAULT_ZOOM = 16;
 

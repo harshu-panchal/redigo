@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { BRAND_LOGO_SRC } from "@/branding/logo";
+import { BrandLogo } from "@/branding/logo";
 
 const AuthLayout = ({ children, title, subtitle }) => {
   return (
@@ -8,11 +8,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
       {/* Left side (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#E85D04] via-[#F48C06] to-[#FFB700] relative items-center justify-center p-12">
         <div className="absolute top-10 left-10">
-          <img
-            src={BRAND_LOGO_SRC}
-            alt="Namma"
-            className="h-16 object-contain drop-shadow-xl"
-          />
+          <BrandLogo className="h-16 drop-shadow-xl" />
         </div>
 
         <div className="relative z-10 text-center max-w-md">
@@ -31,7 +27,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
 
           <img
             src="/1_Log In Anytime. Earn Anytime.jpg"
-            alt="Namma Promo"
+            alt="Redigo Promo"
             className="w-full max-w-sm mx-auto shadow-2xl rounded-3xl mt-6 transform -rotate-2 hover:rotate-0 transition-transform duration-500"
           />
         </div>
@@ -45,13 +41,9 @@ const AuthLayout = ({ children, title, subtitle }) => {
       <div className="flex-1 flex items-center justify-center p-6 md:p-12 relative">
         {/* Mobile Header (Visible only on small screens) */}
         <div className="lg:hidden absolute top-8 left-0 right-0 flex flex-col items-center">
-          <img
-            src={BRAND_LOGO_SRC}
-            alt="Namma"
-            className="h-12 object-contain drop-shadow-sm"
-          />
+          <BrandLogo className="h-12 drop-shadow-sm" />
           <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1">
-            Smart Mobility & Local Logistics — Namma
+            Smart Mobility & Local Logistics — Redigo
           </p>
         </div>
 

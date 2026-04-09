@@ -34,7 +34,7 @@ const RideTracking = () => {
   const dropLocation = state.drop || "Vijay Nagar, Indore";
 
   const handleShare = () => {
-    const text = `I'm riding with Namma!\nDriver: ${driver.name} (${driver.plate})\nFrom: ${pickupLocation}\nTo: ${dropLocation}`;
+    const text = `I'm riding with Redigo!\nDriver: ${driver.name} (${driver.plate})\nFrom: ${pickupLocation}\nTo: ${dropLocation}`;
     if (navigator.share) {
       navigator.share({ title: "Track My Ride", text }).catch(() => {});
     } else {

@@ -155,7 +155,7 @@ const RentalVehicleDetail = () => {
             />
             <div>
               <p className="text-[13px] font-black text-slate-800">
-                Namma Hub — Sector 12, City Center
+                Redigo Hub — Sector 12, City Center
               </p>
               <p className="text-[11px] font-bold text-slate-400 mt-0.5">
                 Open 6 AM – 10 PM · Condition photos required at pickup
