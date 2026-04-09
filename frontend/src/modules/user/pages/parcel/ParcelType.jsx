@@ -101,7 +101,7 @@ const ParcelType = () => {
           transition={{ duration: 0.4, delay: 0.08, ease: 'easeOut' }}
           className="mb-4"
         >
-          <p className="text-[10px] font-black uppercase tracking-[0.26em] text-slate-400">Step 1 of 3</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.26em] text-slate-400">Step 1 of 4</p>
           <h2 className="mt-0.5 text-[16px] font-black tracking-tight text-slate-900">Select Category</h2>
           <p className="mt-0.5 text-[11px] font-bold text-slate-500">Tap a category that best describes your item.</p>
         </motion.div>
