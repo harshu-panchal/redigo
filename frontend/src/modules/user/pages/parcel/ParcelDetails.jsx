@@ -23,7 +23,7 @@ const ParcelDetails = () => {
       return;
     }
     setDescError('');
-    navigate('/parcel/contacts', { state: { parcelType, weight, description, estimatedFare: priceRange } });
+    navigate('/parcel/vehicle', { state: { parcelType, weight, description, estimatedFare: priceRange } });
   };
 
   return (
@@ -42,7 +42,7 @@ const ParcelDetails = () => {
           <h1 className="text-[19px] font-black tracking-tight text-slate-900 leading-tight">Parcel Details</h1>
         </div>
         <div className="rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-[10px] font-black text-slate-600 shadow-sm shrink-0">
-          Step 2 of 3
+          Step 2 of 4
         </div>
       </motion.header>
 
@@ -130,7 +130,7 @@ const ParcelDetails = () => {
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg px-5 pb-6 pt-3 bg-gradient-to-t from-[#EEF2F7] via-[#F3F4F6]/95 to-transparent pointer-events-none z-30">
         <motion.button whileTap={{ scale: 0.98 }} onClick={handleNext}
           className="pointer-events-auto w-full bg-slate-900 py-4 rounded-[18px] text-[15px] font-black text-white shadow-[0_8px_24px_rgba(15,23,42,0.18)] flex items-center justify-center gap-2">
-          Sender & Receiver <ChevronRight size={17} strokeWidth={3} className="opacity-50" />
+          Select Delivery Vehicle <ChevronRight size={17} strokeWidth={3} className="opacity-50" />
         </motion.button>
       </div>
     </div>
